@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time-based Image Display</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 上半部: 圖片顯示區 -->
+        <div class="image-display" id="image-display">
+            <h2>請選擇一個時間段來顯示圖片</h2>
+        </div>
+
+        <!-- 下半部: 時間軸按鈕 -->
+        <div class="timeline">
+            <button class="timeline-btn" onclick="showImage('1.png')">09:00</button>
+            <button class="timeline-btn" onclick="showImage('2.png')">12:00</button>
+            <button class="timeline-btn" onclick="showImage('3.png')">15:00</button>
+            <button class="timeline-btn" onclick="showImage('4.png')">18:00</button>
+        </div>        
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

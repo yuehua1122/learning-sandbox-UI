@@ -1,0 +1,68 @@
+/* 全局樣式 */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* 上半部圖片顯示區域，佔用70% */
+.image-display {
+    flex: 7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    border-bottom: 2px solid #ccc;
+    position: relative; /* 讓圖片有更好的定位 */
+    padding: 20px; /* 給圖片區域添加留白 */
+}
+
+.image-display img {
+    max-width: 80%; /* 固定圖片大小 */
+    max-height: 80%; /* 固定圖片高度 */
+    border: 5px solid #333; /* 添加圖片邊框 */
+    border-radius: 10px; /* 圓角邊框 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加陰影效果 */
+    background-color: white;
+    padding: 10px;
+}
+
+/* 可以加個提示文字或標題在圖片區域 */
+.image-display h2 {
+    position: absolute;
+    top: 20px;
+    font-size: 24px;
+    color: #555;
+}
+
+/* 下半部時間軸區域，佔用30% */
+.timeline {
+    flex: 3;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #333;
+    padding: 20px;
+}
+
+.timeline-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 16px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.timeline-btn:hover {
+    background-color: #45a049;
+}
