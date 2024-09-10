@@ -14,6 +14,7 @@ from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from kivy.core.text import LabelBase
 from kivy.uix.filechooser import FileChooserIconView
+from kivy.uix.checkbox import CheckBox
 
 # 註冊粉圓體字體
 LabelBase.register(name="BiauKai", fn_regular="font/粉圓體.ttf")
@@ -22,6 +23,8 @@ class ModifyExamPage(Screen):
     def __init__(self, **kwargs):
         super(ModifyExamPage, self).__init__(**kwargs)
         self.exam_id = None  # 保存當前要修改的考試ID
+        self.checkbox_dict = {}  # 保存禁用網站的Checkbox
+        self.restricted_websites = []  # 初始化用於保存選中的禁用網站
 
         layout = BoxLayout(orientation='vertical', padding=20, spacing=20)
 
@@ -139,6 +142,31 @@ class ModifyExamPage(Screen):
         form_layout.add_widget(Label(text="提示功能:", font_size=22, font_name="BiauKai"))
         form_layout.add_widget(self.hint_main_button)
 
+        # 禁用的網站 (顯示CheckBox和網站名稱)
+        websites_dict = {
+            "ChatGPT"  : "https://openai.com/blog/openai-codex",
+            "Copilot"  : "https://github.com/features/copilot",
+            "Tabnine"  : "https://www.tabnine.com",
+            "Claude"   : "https://claude.ai/new",
+            "Snyk Code": "https://snyk.io/product/snyk-code"
+        }
+
+        self.checkbox_dict = {}  # 用來存放每個網站的CheckBox
+
+        form_layout.add_widget(Label(text="禁用的網站:", font_size=22, font_name="BiauKai"))
+
+        # 為每個網站生成一個垂直的CheckBox和網站名稱
+        website_layout = BoxLayout(orientation='vertical', size_hint=(1.2, None), height=200)
+        for name, site in websites_dict.items():
+            site_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height=40, size_hint_x=None, width=250, spacing=150)
+            checkbox = CheckBox()
+            checkbox.bind(active=lambda checkbox, value, site=site: self.on_checkbox_active(checkbox, value, site))
+            self.checkbox_dict[site] = checkbox  # 將 CheckBox 和網站網址存入字典
+            site_layout.add_widget(checkbox)
+            site_layout.add_widget(Label(text=name, font_size=18, font_name="BiauKai", halign='left', size_hint_x=0.8, text_size=(300, None)))
+            website_layout.add_widget(site_layout)
+        form_layout.add_widget(website_layout)
+
         scroll_view.add_widget(form_layout)
         middle_layout.add_widget(scroll_view)
         layout.add_widget(middle_layout)
@@ -161,6 +189,14 @@ class ModifyExamPage(Screen):
         layout.add_widget(bottom_layout)
 
         self.add_widget(layout)
+        
+    def on_checkbox_active(self, checkbox, value, site):
+        """處理Checkbox選中狀態變更"""
+        if value:
+            self.restricted_websites.append(site)
+        else:
+            if site in self.restricted_websites:
+                self.restricted_websites.remove(site)
 
     def open_time_selector(self, time_type, current_time):
         # 打開時間選擇器彈窗並預填充當前時間
@@ -313,7 +349,7 @@ class ModifyExamPage(Screen):
             cursor.execute("""
                 SELECT exam_name, subject, start_time, end_time, 
                     duration, exam_type, exam_code, exam_file_name, grading_file_name, 
-                    hint_function 
+                    hint_function, restricted_websites
                 FROM exams WHERE id = %s
             """, (exam_id,))
             exam = cursor.fetchone()
@@ -331,6 +367,13 @@ class ModifyExamPage(Screen):
                 self.exam_file_label.text = exam[7]
                 self.grading_file_label.text = exam[8]
                 self.hint_main_button.text = '開' if exam[9] else '關'
+
+                # 獲取已選中的禁用網站並勾選
+                if exam[10]:
+                    restricted_websites = exam[10].split(',')
+                    for site in restricted_websites:
+                        if site in self.checkbox_dict:
+                            self.checkbox_dict[site].active = True  # 勾選對應的禁用網站
 
         except mysql.connector.Error as err:
             self.show_error_popup(f"錯誤: {err}")
@@ -350,6 +393,9 @@ class ModifyExamPage(Screen):
                 self.show_error_popup("結束時間需大於開始時間")
                 return
 
+            # 收集選中的禁用網站
+            selected_websites = ','.join([site for site, checkbox in self.checkbox_dict.items() if checkbox.active])
+
             conn = mysql.connector.connect(
                 host="localhost",
                 user="root",
@@ -360,7 +406,7 @@ class ModifyExamPage(Screen):
             query = """
                 UPDATE exams SET exam_name=%s, subject=%s, start_time=%s, end_time=%s, 
                 duration=%s, exam_type=%s, exam_file_name=%s, grading_file_name=%s, 
-                hint_function=%s WHERE id=%s
+                hint_function=%s, restricted_websites=%s WHERE id=%s
             """
             cursor.execute(query, (
                 self.name_main_button.text, 
@@ -371,6 +417,7 @@ class ModifyExamPage(Screen):
                 self.exam_file_label.text,
                 self.grading_file_label.text,
                 self.hint_main_button.text == "開",
+                selected_websites,  # 更新選中的禁用網站
                 self.exam_id
             ))
             conn.commit()

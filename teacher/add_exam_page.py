@@ -16,6 +16,7 @@ from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.popup import Popup
 from kivy.uix.filechooser import FileChooserIconView
 from kivy.core.text import LabelBase
+from kivy.uix.checkbox import CheckBox
 
 # 註冊粉圓體字體
 LabelBase.register(name="BiauKai", fn_regular="font/粉圓體.ttf")
@@ -24,6 +25,7 @@ class AddExamPage(Screen):
     def __init__(self, **kwargs):
         super(AddExamPage, self).__init__(**kwargs)
         self.teacher_id = None  # 用於保存 teacher_id
+        self.restricted_websites = []  # 保存選擇的禁用網站
         layout = BoxLayout(orientation='vertical', padding=20, spacing=20)
 
         # 上方部分
@@ -140,10 +142,35 @@ class AddExamPage(Screen):
 
         form_layout.add_widget(Label(text="提示功能:", font_size=22, font_name="BiauKai"))
         form_layout.add_widget(self.hint_main_button)
+        
+        # 禁用的網站 (顯示CheckBox和網站名稱)
+        websites_dict = {
+            "ChatGPT"  : "https://openai.com/blog/openai-codex",
+            "Copilot"  : "https://github.com/features/copilot",
+            "Tabnine"  : "https://www.tabnine.com",
+            "Claude"   : "https://claude.ai/new",
+            "Snyk Code": "https://snyk.io/product/snyk-code"
+        }
+
+        self.checkbox_dict = {}  # 用來存放每個網站的CheckBox
+
+        form_layout.add_widget(Label(text="禁用的網站:", font_size=22, font_name="BiauKai"))
+
+        # 為每個網站生成一個垂直的CheckBox和網站名稱
+        website_layout = BoxLayout(orientation='vertical', size_hint=(1.2, None), height=200)
+        for name, site in websites_dict.items():
+            site_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height=40, size_hint_x=None, width=250, spacing=150)
+            checkbox = CheckBox()
+            checkbox.bind(active=lambda checkbox, value, site=site: self.on_checkbox_active(checkbox, value, site))
+            self.checkbox_dict[site] = checkbox  # 將 CheckBox 和網站網址存入字典
+            site_layout.add_widget(checkbox)
+            site_layout.add_widget(Label(text=name, font_size=18, font_name="BiauKai", halign='left', size_hint_x=0.8, text_size=(300, None)))
+            website_layout.add_widget(site_layout)
+        form_layout.add_widget(website_layout)
 
         scroll_view.add_widget(form_layout)
         middle_layout.add_widget(scroll_view)
-        layout.add_widget(middle_layout)
+        layout.add_widget(middle_layout)              
 
         # 底部部分
         bottom_layout = AnchorLayout(anchor_x='center', anchor_y='bottom', size_hint=(1, 0.2))
@@ -167,7 +194,8 @@ class AddExamPage(Screen):
             self.exam_code, 
             self.exam_file, 
             self.grading_file,
-            self.hint_main_button.text
+            self.hint_main_button.text,
+            self.restricted_websites
         ))
         button_layout.add_widget(confirm_button)
 
@@ -175,6 +203,14 @@ class AddExamPage(Screen):
         layout.add_widget(bottom_layout)
 
         self.add_widget(layout)
+
+    def on_checkbox_active(self, checkbox, value, site):
+        """處理Checkbox選中狀態變更"""
+        if value:
+            self.restricted_websites.append(site)
+        else:
+            if site in self.restricted_websites:
+                self.restricted_websites.remove(site)
 
     def open_time_selector(self, time_type):
         year_dropdown = DropDown()
@@ -359,7 +395,7 @@ class AddExamPage(Screen):
         """設置教師ID"""
         self.teacher_id = teacher_id
 
-    def save_exam_to_db(self, teacher_id, name, subject, start_time, end_time, duration, exam_type, exam_code, exam_file, grading_file, hint_function):
+    def save_exam_to_db(self, teacher_id, name, subject, start_time, end_time, duration, exam_type, exam_code, exam_file, grading_file, hint_function, restricted_websites):
         # 檢查每個欄位是否已填寫
         if not name or name == "選擇名稱":
             self.show_error_popup("請選擇考試名稱")
@@ -388,6 +424,10 @@ class AddExamPage(Screen):
         if not hint_function or hint_function == "選擇提示功能":
             self.show_error_popup("請選擇提示功能")
             return
+        if not restricted_websites:
+            restricted_websites_str = ""
+        else:
+            restricted_websites_str = ','.join(restricted_websites)
 
         try:
             # 讀取上傳的檔案內容並獲取檔案名稱
@@ -423,12 +463,12 @@ class AddExamPage(Screen):
 
             # 新增資料到資料庫
             query = """
-                INSERT INTO exams (id, teacher_id, exam_name, subject, start_time, end_time, duration, exam_type, exam_code, exam_file, exam_file_name, grading_file, grading_file_name, hint_function)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                INSERT INTO exams (id, teacher_id, exam_name, subject, start_time, end_time, duration, exam_type, exam_code, exam_file, exam_file_name, grading_file, grading_file_name, hint_function, restricted_websites)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             cursor.execute(query, (
                 new_id, teacher_id, name, subject, start_time, end_time, duration, exam_type, 
-                exam_code, exam_file_blob, exam_file_name, grading_file_blob, grading_file_name, hint_function
+                exam_code, exam_file_blob, exam_file_name, grading_file_blob, grading_file_name, hint_function, restricted_websites_str
             ))
             conn.commit()
             cursor.close()
@@ -453,6 +493,12 @@ class AddExamPage(Screen):
         self.grading_file = ''
         self.grading_file_label.text = ''
         self.hint_main_button.text = '選擇提示功能'
+        self.restricted_websites = []  # 清空禁用網站
+        
+        # 取消所有复选框勾选状态
+        for site, checkbox in self.checkbox_dict.items():
+            if isinstance(checkbox, CheckBox):
+                checkbox.active = False
 
     def show_success_popup(self, message):
         popup = Popup(
