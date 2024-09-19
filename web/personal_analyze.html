@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>考試時間軸</title>
+    <link href="https://unpkg.com/vis-timeline/dist/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css/analyze.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- 上方內容區域 -->
+    <div class="top-section">
+        <!-- 左半邊：按鈕和內容 -->
+        <div class="left-section">
+            <div class="info-buttons">
+                <button id="code-button">程式碼</button>
+                <button id="completion-button">完成度</button>
+                <button id="hint-button">提示</button>
+                <button id="show-website-button">顯示查詢網站</button>
+                <button id="home-button">回到首頁</button>
+            </div>
+            <div id="display-area" class="display-area">請選擇一個操作</div>
+        </div>
+
+        <!-- 右半邊：圓餅圖 -->
+        <div class="chart-container">
+            <canvas id="myPieChart"></canvas>
+        </div>
+    </div>
+
+    <!-- 下方時間軸區域 -->
+    <div class="bottom-section">
+        <div id="timeline-container" class="timeline-container"></div>
+    </div>
+
+    <!-- 引入vis-timeline的JS和自訂的JavaScript -->
+    <script src="https://unpkg.com/vis-timeline/standalone/umd/vis-timeline-graph2d.min.js"></script>
+    <script src="js/analyze.js"></script>
+</body>
+</html>

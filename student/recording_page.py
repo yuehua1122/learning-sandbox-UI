@@ -174,22 +174,4 @@ class RecordingPage(Screen):
         self.manager.transition = SlideTransition(direction='left')
         self.manager.current = 'recording_in_progress'
         
-        # 使用 subprocess 打開 VS Code
-        try:
-            subprocess.Popen([r"C:\Users\user\AppData\Local\Programs\Microsoft VS Code\Code.exe", "--new-window", "."])
-        except FileNotFoundError as e:
-            print(f"Error: {e}")
-
-        # 等待 VS Code 完全打開
-        time.sleep(2)
-
-        # 初始化WScript.Shell
-        wsh = comclt.Dispatch("WScript.Shell")
-
-        # 模擬按下 Ctrl+Shift+P 打開命令面板
-        wsh.SendKeys('^+p')  # ^ 代表Ctrl，+ 代表Shift
-        time.sleep(0.5)  # 等待命令面板打開
-
-        # 輸入命令 'startMonitoring'
-        wsh.SendKeys('startMonitoring')
-        wsh.SendKeys('~')  # ~ 代表Enter鍵
+        

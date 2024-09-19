@@ -1,0 +1,880 @@
+00:00:00 開始錄影 - 視窗: 主程式
+00:00:01 編輯器區域被按下 - 視窗: 象象牌螢幕錄影程式
+00:00:03 編輯器區域被按下 - 視窗: ● b1044202_1.py - 專題 - Visual Studio Code
+
+[Code Snapshot 1 - 00:00:21 - 定時快照 - 檔案: b1044202_1.py]
+original_num = 56762
+num = original_num
+
+arr = []
+
+--- End of Code Snapshot ---
+
+[Code Snapshot 2 - 00:00:43 - 定時快照 - 檔案: b1044202_1.py]
+original_num = 56762
+num = original_num
+
+arr = []
+
+while num != 0:
+    arr.insert(0, str(num % 10))
+    num = num // 10
+
+--- End of Code Snapshot ---
+
+[Code Snapshot 3 - 00:01:04 - 定時快照 - 檔案: b1044202_1.py]
+original_num = 56762
+num = original_num
+
+arr = []
+
+while num != 0:
+    arr.insert(0, str(num % 10))
+    num = num // 10
+
+print('%s 為 %d 位數' % (''.join(arr), len(arr)))
+
+arr.reverse()
+
+print('倒序输出', ''.join(arr))
+
+--- End of Code Snapshot ---
+00:01:09 編輯器區域被按下 - 視窗: ● b1044202_1.py - 專題 - Visual Studio Code
+
+[Code Snapshot 4 - 00:01:25 - 定時快照 - 檔案: b1044202_1.py]
+original_num = 56762
+num = original_num
+
+arr = []
+
+while num != 0:
+    arr.insert(0, str(num % 10))
+    num = num // 10
+
+print('%s 為 %d 位數' % (''.join(arr), len(arr)))
+
+arr.reverse()
+
+print('倒序输出', ''.join(arr))
+
+def palindrome(s):
+    for i in range(len(s) // 2):
+        if s[i] != s[-i - 1]:
+
+--- End of Code Snapshot ---
+00:01:28 編輯器區域被按下 - 視窗: ● b1044202_1.py - 專題 - Visual Studio Code
+
+[Code Snapshot 5 - 00:01:47 - 定時快照 - 檔案: b1044202_1.py]
+original_num = 56762
+num = original_num
+
+arr = []
+
+while num != 0:
+    arr.insert(0, str(num % 10))
+    num = num // 10
+
+print('%s 為 %d 位數' % (''.join(arr), len(arr)))
+
+arr.reverse()
+
+print('倒序输出', ''.join(arr))
+
+def palindrome(s):
+    for i in range(len(s) // 2):
+        if s[i] != s[-i - 1]:
+            return False
+    return True
+
+print('是否為回文數：', palindrome(str(original_num)))
+--- End of Code Snapshot ---
+00:01:50 執行按鈕被按下 - 視窗: b1044202_1.py - 專題 - Visual Studio Code
+
+[Code Snapshot 6 - 00:01:51 - 執行 - 檔案: b1044202_1.py]
+original_num = 56762
+num = original_num
+
+arr = []
+
+while num != 0:
+    arr.insert(0, str(num % 10))
+    num = num // 10
+
+print('%s 為 %d 位數' % (''.join(arr), len(arr)))
+
+arr.reverse()
+
+print('倒序输出', ''.join(arr))
+
+def palindrome(s):
+    for i in range(len(s) // 2):
+        if s[i] != s[-i - 1]:
+            return False
+    return True
+
+print('是否為回文數：', palindrome(str(original_num)))
+--- End of Code Snapshot ---
+00:01:55 編輯器區域被按下 - 視窗: b1044202_1.py - 專題 - Visual Studio Code
+00:01:56 編輯器區域被按下 - 視窗: ● b1044202_2.py - 專題 - Visual Studio Code
+00:02:03 執行按鈕被按下 - 視窗: b1044202_2.py - 專題 - Visual Studio Code
+
+[Code Snapshot 7 - 00:02:04 - 執行 - 檔案: b1044202_2.py]
+from math import sqrt
+
+min = 101
+max = 230
+
+
+--- End of Code Snapshot ---
+00:02:05 編輯器區域被按下 - 視窗: b1044202_2.py - 專題 - Visual Studio Code
+00:02:06 編輯器區域被按下 - 視窗: b1044202_2.py - 專題 - Visual Studio Code
+00:02:07 編輯器區域被按下 - 視窗: ● b1044202_2.py - 專題 - Visual Studio Code
+
+[Code Snapshot 8 - 00:02:08 - 定時快照 - 檔案: b1044202_2.py]
+from math import sqrt
+
+min = 101
+max = 230
+
+prime = list()
+
+for i in range(min, max + 1):
+
+--- End of Code Snapshot ---
+00:02:10 執行按鈕被按下 - 視窗: b1044202_2.py - 專題 - Visual Studio Code
+
+[Code Snapshot 9 - 00:02:11 - 執行 - 檔案: b1044202_2.py]
+from math import sqrt
+
+min = 101
+max = 230
+
+prime = list()
+
+for i in range(min, max + 1):
+
+--- End of Code Snapshot ---
+
+[Code Snapshot 10 - 00:02:30 - 定時快照 - 檔案: b1044202_2.py]
+from math import sqrt
+
+min = 101
+max = 230
+
+prime = list()
+
+for i in range(min, max + 1):
+    temp = int(sqrt(i))
+    flag = True
+    for j in range(2, temp + 1):
+        if (i % j) == 0:
+            flag = False
+            break
+    if flag == True:
+
+--- End of Code Snapshot ---
+00:02:45 執行按鈕被按下 - 視窗: b1044202_2.py - 專題 - Visual Studio Code
+
+[Code Snapshot 11 - 00:02:45 - 執行 - 檔案: b1044202_2.py]
+from math import sqrt
+
+min = 101
+max = 230
+
+prime = list()
+
+for i in range(min, max + 1):
+    temp = int(sqrt(i))
+    flag = True
+    for j in range(2, temp + 1):
+        if (i % j) == 0:
+            flag = False
+            break
+    if flag == True:
+        prime.append(i)
+
+print('%d-%d 之間共有 %d 個質數' % (min, max, len(prime)))
+
+SIZE = 4
+HIDE = '    '
+d=0
+
+for y in range(SIZE - 1, -SIZE, -1):
+
+--- End of Code Snapshot ---
+
+[Code Snapshot 12 - 00:02:51 - 定時快照 - 檔案: b1044202_2.py]
+from math import sqrt
+
+min = 101
+max = 230
+
+prime = list()
+
+for i in range(min, max + 1):
+    temp = int(sqrt(i))
+    flag = True
+    for j in range(2, temp + 1):
+        if (i % j) == 0:
+            flag = False
+            break
+    if flag == True:
+        prime.append(i)
+
+print('%d-%d 之間共有 %d 個質數' % (min, max, len(prime)))
+
+SIZE = 4
+HIDE = '    '
+d=0
+
+for y in range(SIZE - 1, -SIZE, -1):
+    for x in range(-SIZE + 1, SIZE, 1):
+        if (y > x - SIZE) and (y < x + SIZE) and \
+                (y > -x - SIZE) and (y < -x + SIZE):
+
+--- End of Code Snapshot ---
+00:02:58 編輯器區域被按下 - 視窗: b1044202_2.py - 專題 - Visual Studio Code
+00:02:58 編輯器區域被按下 - 視窗: b1044202_2.py - 專題 - Visual Studio Code
+00:02:59 編輯器區域被按下 - 視窗: ● b1044202_2.py - 專題 - Visual Studio Code
+
+[Code Snapshot 13 - 00:03:12 - 定時快照 - 檔案: b1044202_2.py]
+from math import sqrt
+
+min = 101
+max = 230
+
+prime = list()
+
+for i in range(min, max + 1):
+    temp = int(sqrt(i))
+    flag = True
+    for j in range(2, temp + 1):
+        if (i % j) == 0:
+            flag = False
+            break
+    if flag == True:
+        prime.append(i)
+
+print('%d-%d 之間共有 %d 個質數' % (min, max, len(prime)))
+
+SIZE = 4
+HIDE = '    '
+d=0
+
+for y in range(SIZE - 1, -SIZE, -1):
+    for x in range(-SIZE + 1, SIZE, 1):
+        if (y > x - SIZE) and (y < x + SIZE) and \
+                (y > -x - SIZE) and (y < -x + SIZE):
+            print(prime[d], end=' ')
+            d=d+1
+        else:
+
+--- End of Code Snapshot ---
+00:03:21 執行按鈕被按下 - 視窗: b1044202_2.py - 專題 - Visual Studio Code
+
+[Code Snapshot 14 - 00:03:21 - 執行 - 檔案: b1044202_2.py]
+from math import sqrt
+
+min = 101
+max = 230
+
+prime = list()
+
+for i in range(min, max + 1):
+    temp = int(sqrt(i))
+    flag = True
+    for j in range(2, temp + 1):
+        if (i % j) == 0:
+            flag = False
+            break
+    if flag == True:
+        prime.append(i)
+
+print('%d-%d 之間共有 %d 個質數' % (min, max, len(prime)))
+
+SIZE = 4
+HIDE = '    '
+d=0
+
+for y in range(SIZE - 1, -SIZE, -1):
+    for x in range(-SIZE + 1, SIZE, 1):
+        if (y > x - SIZE) and (y < x + SIZE) and \
+                (y > -x - SIZE) and (y < -x + SIZE):
+            print(prime[d], end=' ')
+            d=d+1
+        else:
+            print(HIDE, end='')
+    print()
+
+--- End of Code Snapshot ---
+00:03:25 編輯器區域被按下 - 視窗: b1044202_2.py - 專題 - Visual Studio Code
+00:03:26 編輯器區域被按下 - 視窗: ● b1044202_3.py - 專題 - Visual Studio Code
+
+[Code Snapshot 15 - 00:03:34 - 定時快照 - 檔案: b1044202_3.py]
+def age(n):
+    if n == 1:
+        return 10
+
+--- End of Code Snapshot ---
+00:03:36 編輯器區域被按下 - 視窗: b1044202_3.py - 專題 - Visual Studio Code
+00:03:54 執行按鈕被按下 - 視窗: b1044202_3.py - 專題 - Visual Studio Code
+
+[Code Snapshot 17 - 00:03:55 - 定時快照 - 檔案: b1044202_3.py]
+def age(n):
+    if n == 1:
+        return 10
+    return age(n - 1) + 2
+
+for i in range(1,6):
+    print('第',i,'個人', age(i), '歲')
+
+--- End of Code Snapshot ---
+
+[Code Snapshot 17 - 00:03:55 - 執行 - 檔案: b1044202_3.py]
+def age(n):
+    if n == 1:
+        return 10
+    return age(n - 1) + 2
+
+for i in range(1,6):
+    print('第',i,'個人', age(i), '歲')
+
+--- End of Code Snapshot ---
+00:03:59 編輯器區域被按下 - 視窗: b1044202_3.py - 專題 - Visual Studio Code
+00:03:59 編輯器區域被按下 - 視窗: ● b1044202_4.py - 專題 - Visual Studio Code
+00:04:08 編輯器區域被按下 - 視窗: ● b1044202_4.py - 專題 - Visual Studio Code
+
+[Code Snapshot 18 - 00:04:16 - 定時快照 - 檔案: b1044202_4.py]
+score = 98
+rank = None
+
+if 0 <= score and score < 60:
+    rank = 'C'
+
+--- End of Code Snapshot ---
+00:04:22 編輯器區域被按下 - 視窗: ● b1044202_4.py - 專題 - Visual Studio Code
+
+[Code Snapshot 19 - 00:04:38 - 定時快照 - 檔案: b1044202_4.py]
+score = 98
+rank = None
+
+if 0 <= score and score < 60:
+    rank = 'C'
+elif 60 <= score and score < 90:
+    rank = 'B'
+elif 90 <= score and score <= 100:
+    rank = 'A'
+
+if rank != None:
+    print('%d 属于等级 %s' % (score, rank))
+
+--- End of Code Snapshot ---
+00:04:42 執行按鈕被按下 - 視窗: b1044202_4.py - 專題 - Visual Studio Code
+
+[Code Snapshot 20 - 00:04:43 - 執行 - 檔案: b1044202_4.py]
+score = 98
+rank = None
+
+if 0 <= score and score < 60:
+    rank = 'C'
+elif 60 <= score and score < 90:
+    rank = 'B'
+elif 90 <= score and score <= 100:
+    rank = 'A'
+
+if rank != None:
+    print('%d 属于等级 %s' % (score, rank))
+
+--- End of Code Snapshot ---
+00:04:44 編輯器區域被按下 - 視窗: b1044202_4.py - 專題 - Visual Studio Code
+00:04:45 編輯器區域被按下 - 視窗: ● b1044202_5.py - 專題 - Visual Studio Code
+
+[Code Snapshot 21 - 00:04:59 - 定時快照 - 檔案: b1044202_5.py]
+T1 = ('a', 'b', 'c')
+T2 = ('x', 'y', 'z')
+
+arr = []
+
+def comb(i, j, k):
+
+--- End of Code Snapshot ---
+00:05:05 執行按鈕被按下 - 視窗: b1044202_5.py - 專題 - Visual Studio Code
+
+[Code Snapshot 22 - 00:05:06 - 執行 - 檔案: b1044202_5.py]
+T1 = ('a', 'b', 'c')
+T2 = ('x', 'y', 'z')
+
+arr = []
+
+def comb(i, j, k):
+    c1 = T1[0] + '-' + T2[i]
+    c2 = T1[1] + '-' + T2[j]
+
+--- End of Code Snapshot ---
+
+[Code Snapshot 23 - 00:05:20 - 定時快照 - 檔案: b1044202_5.py]
+T1 = ('a', 'b', 'c')
+T2 = ('x', 'y', 'z')
+
+arr = []
+
+def comb(i, j, k):
+    c1 = T1[0] + '-' + T2[i]
+    c2 = T1[1] + '-' + T2[j]
+    c3 = T1[2] + '-' + T2[k]
+    return tuple([c1, c2, c3])
+
+for i in range(3):
+
+--- End of Code Snapshot ---
+00:05:29 執行按鈕被按下 - 視窗: b1044202_5.py - 專題 - Visual Studio Code
+
+[Code Snapshot 24 - 00:05:30 - 執行 - 檔案: b1044202_5.py]
+T1 = ('a', 'b', 'c')
+T2 = ('x', 'y', 'z')
+
+arr = []
+
+def comb(i, j, k):
+    c1 = T1[0] + '-' + T2[i]
+    c2 = T1[1] + '-' + T2[j]
+    c3 = T1[2] + '-' + T2[k]
+    return tuple([c1, c2, c3])
+
+for i in range(3):
+    for j in range(3):
+
+--- End of Code Snapshot ---
+00:05:38 執行按鈕被按下 - 視窗: b1044202_5.py - 專題 - Visual Studio Code
+
+[Code Snapshot 25 - 00:05:38 - 執行 - 檔案: b1044202_5.py]
+T1 = ('a', 'b', 'c')
+T2 = ('x', 'y', 'z')
+
+arr = []
+
+def comb(i, j, k):
+    c1 = T1[0] + '-' + T2[i]
+    c2 = T1[1] + '-' + T2[j]
+    c3 = T1[2] + '-' + T2[k]
+    return tuple([c1, c2, c3])
+
+for i in range(3):
+    for j in range(3):
+        for k in range(3):
+            if (i == j) or (i == k) or (j == k):
+                continue
+            arr.append(comb(i, j, k))
+
+
+--- End of Code Snapshot ---
+00:05:42 編輯器區域被按下 - 視窗: b1044202_5.py - 專題 - Visual Studio Code
+
+[Code Snapshot 26 - 00:05:42 - 定時快照 - 檔案: b1044202_5.py]
+獲取到的內容為空
+--- End of Code Snapshot ---
+00:05:43 編輯器區域被按下 - 視窗: ● b1044202_5.py - 專題 - Visual Studio Code
+
+[Code Snapshot 27 - 00:06:03 - 定時快照 - 檔案: b1044202_5.py]
+T1 = ('a', 'b', 'c')
+T2 = ('x', 'y', 'z')
+
+arr = []
+
+def comb(i, j, k):
+    c1 = T1[0] + '-' + T2[i]
+    c2 = T1[1] + '-' + T2[j]
+    c3 = T1[2] + '-' + T2[k]
+    return tuple([c1, c2, c3])
+
+for i in range(3):
+    for j in range(3):
+        for k in range(3):
+            if (i == j) or (i == k) or (j == k):
+                continue
+            arr.append(comb(i, j, k))
+
+for g in arr:
+    if ('a-x' in g) or ('c-z' in g) or ('c-x' in g):
+        continue
+    print(g)
+
+--- End of Code Snapshot ---
+00:06:05 編輯器區域被按下 - 視窗: b1044202_5.py - 專題 - Visual Studio Code
+
+[Code Snapshot 28 - 00:06:24 - 定時快照 - 檔案: b1044202_6.py]
+class Code:
+    content = ''  # 代碼
+    letters = 0  # 字母
+    space = 0  # 空格
+
+--- End of Code Snapshot ---
+
+[Code Snapshot 29 - 00:06:46 - 定時快照 - 檔案: b1044202_6.py]
+class Code:
+    content = ''  # 代碼
+    letters = 0  # 字母
+    space = 0  # 空格
+    digit = 0  # 數字
+    others = 0  # 字元
+
+    # 構造函數
+    def __init__(self, content):
+        self.content = content
+
+    # 分析代碼
+    def analysis(self):
+
+--- End of Code Snapshot ---
+00:06:47 執行按鈕被按下 - 視窗: b1044202_6.py - 專題 - Visual Studio Code
+
+[Code Snapshot 30 - 00:06:47 - 執行 - 檔案: b1044202_6.py]
+class Code:
+    content = ''  # 代碼
+    letters = 0  # 字母
+    space = 0  # 空格
+    digit = 0  # 數字
+    others = 0  # 字元
+
+    # 構造函數
+    def __init__(self, content):
+        self.content = content
+
+    # 分析代碼
+    def analysis(self):
+
+--- End of Code Snapshot ---
+00:06:54 執行按鈕被按下 - 視窗: b1044202_6.py - 專題 - Visual Studio Code
+
+[Code Snapshot 31 - 00:06:55 - 執行 - 檔案: b1044202_6.py]
+class Code:
+    content = ''  # 代碼
+    letters = 0  # 字母
+    space = 0  # 空格
+    digit = 0  # 數字
+    others = 0  # 字元
+
+    # 構造函數
+    def __init__(self, content):
+        self.content = content
+
+    # 分析代碼
+    def analysis(self):
+        for c in self.content:
+            if c.isalpha():
+                self.letters += 1
+            elif c.isspace():
+                self.space += 1
+            elif c.isdigit():
+                self.digit += 1
+
+--- End of Code Snapshot ---
+00:07:03 執行按鈕被按下 - 視窗: b1044202_6.py - 專題 - Visual Studio Code
+
+[Code Snapshot 32 - 00:07:04 - 執行 - 檔案: b1044202_6.py]
+class Code:
+    content = ''  # 代碼
+    letters = 0  # 字母
+    space = 0  # 空格
+    digit = 0  # 數字
+    others = 0  # 字元
+
+    # 構造函數
+    def __init__(self, content):
+        self.content = content
+
+    # 分析代碼
+    def analysis(self):
+        for c in self.content:
+            if c.isalpha():
+                self.letters += 1
+            elif c.isspace():
+                self.space += 1
+            elif c.isdigit():
+                self.digit += 1
+            else:
+                self.others += 1
+
+    # 展示結果
+    def showData(self):
+        form = '字母（%d） 空格（%d） 數字（%d） 其他字元（%d）'
+        data = (self.letters, self.space, self.digit, self.others)
+
+--- End of Code Snapshot ---
+
+[Code Snapshot 33 - 00:07:07 - 定時快照 - 檔案: b1044202_6.py]
+獲取到的內容為空
+--- End of Code Snapshot ---
+
+[Code Snapshot 34 - 00:07:28 - 定時快照 - 檔案: b1044202_6.py]
+class Code:
+    content = ''  # 代碼
+    letters = 0  # 字母
+    space = 0  # 空格
+    digit = 0  # 數字
+    others = 0  # 字元
+
+    # 構造函數
+    def __init__(self, content):
+        self.content = content
+
+    # 分析代碼
+    def analysis(self):
+        for c in self.content:
+            if c.isalpha():
+                self.letters += 1
+            elif c.isspace():
+                self.space += 1
+            elif c.isdigit():
+                self.digit += 1
+            else:
+                self.others += 1
+
+    # 展示結果
+    def showData(self):
+        form = '字母（%d） 空格（%d） 數字（%d） 其他字元（%d）'
+        data = (self.letters, self.space, self.digit, self.others)
+        print(form % data)
+
+
+content = input('請輸入一段代碼：\n')
+
+code = Code(content)
+code.analysis()  # 分析
+code.showData()  # 展示
+--- End of Code Snapshot ---
+00:07:32 編輯器區域被按下 - 視窗: b1044202_6.py - 專題 - Visual Studio Code
+00:07:33 編輯器區域被按下 - 視窗: b1044202_6.py - 專題 - Visual Studio Code
+00:07:34 編輯器區域被按下 - 視窗: ● b1044202_7.py - 專題 - Visual Studio Code
+
+[Code Snapshot 35 - 00:07:50 - 定時快照 - 檔案: b1044202_7.py]
+import datetime
+
+# 日期格式
+form = '%Y-%m-%d'
+
+--- End of Code Snapshot ---
+
+[Code Snapshot 36 - 00:08:11 - 定時快照 - 檔案: b1044202_7.py]
+import datetime
+
+# 日期格式
+form = '%Y-%m-%d'
+
+# 當前日期
+date0 = datetime.date.today()
+print('當前日期：', date0.strftime(form))
+
+cal = date0.strft
+--- End of Code Snapshot ---
+
+[Code Snapshot 37 - 00:08:32 - 定時快照 - 檔案: b1044202_7.py]
+import datetime
+
+# 日期格式
+form = '%Y-%m-%d'
+
+# 當前日期
+date0 = datetime.date.today()
+print('當前日期：', date0.strftime(form))
+
+cal = date0.strftime(form)
+
+date = cal.split('-') 
+
+year = int(dat
+--- End of Code Snapshot ---
+
+[Code Snapshot 38 - 00:08:54 - 定時快照 - 檔案: b1044202_7.py]
+import datetime
+
+# 日期格式
+form = '%Y-%m-%d'
+
+# 當前日期
+date0 = datetime.date.today()
+print('當前日期：', date0.strftime(form))
+
+cal = date0.strftime(form)
+
+date = cal.split('-') 
+
+year = int(date[0])
+month = int(date[1])
+day = int(date[2])
+
+arr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 
+--- End of Code Snapshot ---
+
+[Code Snapshot 39 - 00:09:15 - 定時快照 - 檔案: b1044202_7.py]
+import datetime
+
+# 日期格式
+form = '%Y-%m-%d'
+
+# 當前日期
+date0 = datetime.date.today()
+print('當前日期：', date0.strftime(form))
+
+cal = date0.strftime(form)
+
+date = cal.split('-') 
+
+year = int(date[0])
+month = int(date[1])
+day = int(date[2])
+
+arr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+num = 0
+
+if ((year % 4 == 0) and (year % 100 != 0)) or (year %
+--- End of Code Snapshot ---
+00:09:26 執行按鈕被按下 - 視窗: b1044202_7.py - 專題 - Visual Studio Code
+
+[Code Snapshot 40 - 00:09:27 - 執行 - 檔案: b1044202_7.py]
+import datetime
+
+# 日期格式
+form = '%Y-%m-%d'
+
+# 當前日期
+date0 = datetime.date.today()
+print('當前日期：', date0.strftime(form))
+
+cal = date0.strftime(form)
+
+date = cal.split('-') 
+
+year = int(date[0])
+month = int(date[1])
+day = int(date[2])
+
+arr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+num = 0
+
+if ((year % 4 == 0) and (year % 100 != 0)) or (year % 400 == 0):
+    arr[2] = 29
+
+for i in range(1, len(arr)):
+    if month > i:
+        num += arr[i]
+    else:
+        num += day
+        break
+
+
+--- End of Code Snapshot ---
+00:09:31 執行按鈕被按下 - 視窗: b1044202_7.py - 專題 - Visual Studio Code
+
+[Code Snapshot 41 - 00:09:32 - 執行 - 檔案: b1044202_7.py]
+import datetime
+
+# 日期格式
+form = '%Y-%m-%d'
+
+# 當前日期
+date0 = datetime.date.today()
+print('當前日期：', date0.strftime(form))
+
+cal = date0.strftime(form)
+
+date = cal.split('-') 
+
+year = int(date[0])
+month = int(date[1])
+day = int(date[2])
+
+arr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+num = 0
+
+if ((year % 4 == 0) and (year % 100 != 0)) or (year % 400 == 0):
+    arr[2] = 29
+
+for i in range(1, len(arr)):
+    if month > i:
+        num += arr[i]
+    else:
+        num += day
+        break
+
+print('天數：', num)
+
+--- End of Code Snapshot ---
+00:09:33 編輯器區域被按下 - 視窗: b1044202_7.py - 專題 - Visual Studio Code
+
+[Code Snapshot 42 - 00:09:36 - 定時快照 - 檔案: b1044202_7.py]
+import datetime
+
+# 日期格式
+form = '%Y-%m-%d'
+
+# 當前日期
+date0 = datetime.date.today()
+print('當前日期：', date0.strftime(form))
+
+cal = date0.strftime(form)
+
+date = cal.split('-') 
+
+year = int(date[0])
+month = int(date[1])
+day = int(date[2])
+
+arr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+num = 0
+
+if ((year % 4 == 0) and (year % 100 != 0)) or (year % 400 == 0):
+    arr[2] = 29
+
+for i in range(1, len(arr)):
+    if month > i:
+        num += arr[i]
+    else:
+        num += day
+        break
+
+print('天數：', num)
+
+--- End of Code Snapshot ---
+00:09:42 編輯器區域被按下 - 視窗: 象象牌螢幕錄影程式
+00:09:42 錄製結束 - 視窗: 主程式
+
+[Code Snapshot 43 - 00:09:43 - 結束錄製 - 檔案: b1044202_7.py]
+import datetime
+
+# 日期格式
+form = '%Y-%m-%d'
+
+# 當前日期
+date0 = datetime.date.today()
+print('當前日期：', date0.strftime(form))
+
+cal = date0.strftime(form)
+
+date = cal.split('-') 
+
+year = int(date[0])
+month = int(date[1])
+day = int(date[2])
+
+arr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+num = 0
+
+if ((year % 4 == 0) and (year % 100 != 0)) or (year % 400 == 0):
+    arr[2] = 29
+
+for i in range(1, len(arr)):
+    if month > i:
+        num += arr[i]
+    else:
+        num += day
+        break
+
+print('天數：', num)
+
+--- End of Code Snapshot ---

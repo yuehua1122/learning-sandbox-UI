@@ -1,0 +1,95 @@
+/* 全局樣式 */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #6dd5fa, #ffffff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+.container {
+    width: 60%;
+    max-width: 500px;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: absolute;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.5s ease;
+}
+
+/* 按鈕樣式 */
+.step-button {
+    padding: 15px 30px;
+    margin: 20px 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.step-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+input[type="text"] {
+    padding: 15px;
+    width: 80%;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #007BFF;
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.2);
+}
+
+/* 顯示與隱藏動畫 */
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hidden {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+}
+
+/* 額外描述 */
+.description {
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+}
+
+/* 頁面切換動畫 */
+.fade-out {
+    animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}

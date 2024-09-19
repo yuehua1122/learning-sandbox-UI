@@ -59,7 +59,7 @@ class TeacherMenuPage(Screen):
         threading.Thread(target=self.start_eel).start()
         
     def start_eel(self):
-        eel.start('index.html', size=(800, 600)) 
+        eel.start('index.html') 
 
     def go_to_home(self, instance):
         self.manager.transition = SlideTransition(direction='right')

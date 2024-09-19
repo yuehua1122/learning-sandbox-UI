@@ -13,7 +13,6 @@ import subprocess
 import time
 import datetime
 import mysql.connector
-import win32com.client as comclt
 
 # 註冊粉圓體字體
 LabelBase.register(name="BiauKai", fn_regular="font/粉圓體.ttf")
@@ -226,23 +225,9 @@ class RecordingInProgressPage(Screen):
 
         # 切換到錄製結束頁面
         self.manager.current = 'recording_end'
-        
-        # 使用 subprocess 打開 VS Code
+
+        # 執行 analyze.py 檔案
         try:
-            subprocess.Popen([r"C:\Users\user\AppData\Local\Programs\Microsoft VS Code\Code.exe", "--new-window", "."])
-        except FileNotFoundError as e:
-            print(f"Error: {e}")
-
-        # 等待 VS Code 完全打開
-        time.sleep(2)
-
-        # 初始化 WScript.Shell
-        wsh = comclt.Dispatch("WScript.Shell")
-
-        # 模擬按下 Ctrl+Shift+P 打開命令面板
-        wsh.SendKeys('^+p')  # ^ 代表 Ctrl，+ 代表 Shift
-        time.sleep(0.5)  # 等待命令面板打開
-
-        # 輸入命令 'stopMonitoring'
-        wsh.SendKeys('stopMonitoring')  # 輸入停止監控命令
-        wsh.SendKeys('~')  # ~ 代表 Enter 鍵
+            subprocess.run(['python', 'function/analyze.py'], check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"執行 analyze.py 時發生錯誤: {e}")
