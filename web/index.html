@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>考試分析</title>
+    <link rel="icon" href="img/icon.jpg" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -12,7 +13,7 @@
         <h1>歡迎來到分析結果頁面</h1>
         <p>請輸入考試代碼</p>
         <input type="text" id="examCode" placeholder="輸入考試代碼">
-        <div class="error-message" id="examCodeError" style="color: red; display: none;">請輸入考試代碼！</div>
+        <div class="error-message" id="examCodeError">請輸入考試代碼！</div>
         <button class="step-button" onclick="goToStep2()">確認</button>
     </div>
 
@@ -35,7 +36,10 @@
         <button class="step-button" onclick="goBack('step2')">返回</button>
     </div>
 
+    <!-- 引入 Eel 的 JavaScript 文件 -->
+    <script type="text/javascript" src="/eel.js"></script>
+    
     <!-- 引入 JavaScript -->
-    <script src="js/scipts.js"></script>
+    <script src="js/scripts.js"></script>
 </body>
 </html>

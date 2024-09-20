@@ -1,3 +1,4 @@
+import socket
 import eel
 import threading
 from kivy.uix.screenmanager import Screen, SlideTransition
@@ -5,6 +6,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.anchorlayout import AnchorLayout
+import database
 
 # Initialize eel with the web folder that contains the HTML, CSS, and JS files
 eel.init('web')
@@ -57,9 +59,19 @@ class TeacherMenuPage(Screen):
     def go_to_analyze(self, instance):
         # 在單獨的執行緒中啟動 Eel
         threading.Thread(target=self.start_eel).start()
-        
+
+    def find_available_port(self, start_port=8080):
+        """ 找到一個可用的端口 """
+        port = start_port
+        while True:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+                if sock.connect_ex(('localhost', port)) != 0:  # 如果端口沒被佔用
+                    return port
+                port += 1  # 增加端口號
+
     def start_eel(self):
-        eel.start('index.html') 
+        port = self.find_available_port(8080)  # 從8080開始找可用端口
+        eel.start('index.html', port=port)  # 在可用的端口啟動 Eel
 
     def go_to_home(self, instance):
         self.manager.transition = SlideTransition(direction='right')

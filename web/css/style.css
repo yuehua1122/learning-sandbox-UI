@@ -79,6 +79,14 @@ input[type="text"]:focus {
     margin-top: 10px;
 }
 
+/* 錯誤訊息的樣式 */
+.error-message {
+    color: red;
+    display: none; /* 預設為隱藏 */
+    font-size: 16px;
+    margin-top: 15px;
+}
+
 /* 頁面切換動畫 */
 .fade-out {
     animation: fadeOut 0.5s forwards;
@@ -93,3 +101,4 @@ input[type="text"]:focus {
         transform: scale(0.9);
     }
 }
+

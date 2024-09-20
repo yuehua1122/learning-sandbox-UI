@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>考試時間軸</title>
+    <link rel="icon" href="img/icon.jpg" type="image/x-icon">
     <link href="https://unpkg.com/vis-timeline/dist/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="css/analyze.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -32,7 +33,11 @@
     <!-- 下方時間軸區域 -->
     <div class="bottom-section">
         <div id="timeline-container" class="timeline-container"></div>
+        <button id="exit-button" class="exit-button">返回</button>
     </div>
+
+    <!-- 引入 Eel 的 JavaScript 文件 -->
+    <script type="text/javascript" src="/eel.js"></script>
 
     <!-- 引入vis-timeline的JS和自訂的JavaScript -->
     <script src="https://unpkg.com/vis-timeline/standalone/umd/vis-timeline-graph2d.min.js"></script>
