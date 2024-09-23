@@ -2,6 +2,10 @@ let selectedItem = null;
 let showCode = false;
 let completionChecked = false;
 let showWebsite = false;
+let timeline = null;
+let items = null;
+let initialScreenData = null; // 儲存初始的 screenData
+let examStartTime, examEndTime, studentStartTime, studentEndTime; // 儲存時間
 
 // 獲取 Cookie 的值
 function getCookie(name) {
@@ -15,32 +19,37 @@ const examCode = getCookie('examCode');
 const studentId = getCookie('studentId');
 
 // 檢查是否成功獲取值並顯示到頁面上
-window.onload = function() {
+window.onload = function () {
     if (examCode && studentId) {
-        console.log('Exam Code:', examCode, 'Student ID:', studentId);
+        console.log('考試代碼:', examCode, '學號:', studentId);
 
         // 調用 Python 後端函數，查詢考試時間和按鈕數據
-        eel.get_exam_time_and_buttons(examCode, studentId)(function(response) {
+        eel.get_exam_time_and_buttons(examCode, studentId)(function (response) {
             if (response.error) {
                 console.error(response.error);
                 document.getElementById('display-area').textContent += ' 無法獲取考試時間。';
             } else {
-                console.log('Exam Time and Screen Data:', response);
-                setupTimeline(response.exam_start_time, response.exam_end_time, response.student_start_time, response.screen_data);
+                console.log('考試時間和螢幕數據:', response);
+                examStartTime = response.exam_start_time;
+                examEndTime = response.exam_end_time;
+                studentStartTime = response.student_start_time;
+                studentEndTime = response.student_end_time;
+                initialScreenData = response.screen_data; // 儲存最初的 screen_data
+                setupTimeline(examStartTime, examEndTime, studentStartTime, initialScreenData); // 使用最初的 screen_data
             }
         });
     } else {
-        console.error('未能獲取 exam_code 或 student_id');
+        console.error('未能獲取考試代碼或學號');
         document.getElementById('display-area').textContent = '未能獲取考試代碼或學號！';
     }
 };
 
 // 設置時間軸
 function setupTimeline(examStartTime, examEndTime, studentStartTime, screenData) {
-    const items = new vis.DataSet();
+    items = new vis.DataSet(); // 重新定義 items
 
     // 檢查 screenData 並打印其內容
-    console.log("Screen Data:", screenData);
+    console.log("螢幕數據:", screenData);
 
     screenData.forEach((entry, index) => {
         const endTime = entry.end_time ? timeStringToSeconds(entry.end_time) : null;
@@ -56,29 +65,39 @@ function setupTimeline(examStartTime, examEndTime, studentStartTime, screenData)
         }
     });
 
+    createTimeline(examStartTime, examEndTime);
+}
+
+// 創建時間軸
+function createTimeline(startTime, endTime) {
     const container = document.getElementById('timeline-container');
     const options = {
-        start: new Date(examStartTime),  // 確保是日期格式
-        end: new Date(examEndTime),
-        min: new Date(examStartTime),
-        max: new Date(examEndTime),
+        start: new Date(startTime),
+        end: new Date(endTime),
+        min: new Date(startTime),
+        max: new Date(endTime),
         zoomMin: 1000 * 60,
         zoomMax: 1000 * 60 * 60,
         stack: false
     };
-    const timeline = new vis.Timeline(container, items, options);
 
-    timeline.on('select', function(properties) {
+    // 清除現有的 timeline（如果有）
+    if (timeline !== null) {
+        timeline.destroy();
+    }
+
+    timeline = new vis.Timeline(container, items, options);
+
+    timeline.on('select', function (properties) {
         selectedItem = properties.items.length > 0 ? properties.items[0] : null;
         if (selectedItem) {
-            // 根據已選擇的功能顯示對應的內容
             if (showCode) {
-                updateDisplayArea(screenData[selectedItem - 1].content); // 顯示程式碼
+                updateDisplayArea(initialScreenData[selectedItem - 1].content); // 使用初始數據顯示內容
             } else if (completionChecked) {
                 const selectedItemData = items.get(selectedItem);
                 const progress = Math.floor(Math.random() * 100);
                 updateDisplayArea(`第 ${selectedItemData.id} 分鐘的完成度：${progress}%`);
-                pieChart.data.datasets[0].data = [progress, 100 - progress]; // 更新圓餅圖
+                pieChart.data.datasets[0].data = [progress, 100 - progress];
                 pieChart.update();
             } else if (showWebsite) {
                 displayWebsite();
@@ -96,22 +115,21 @@ function timeStringToSeconds(timeString) {
     return hours * 3600 + minutes * 60 + seconds;
 }
 
-// 初始化圓餅圖
-const ctx = document.getElementById('myPieChart').getContext('2d');
-const pieChart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-        labels: ['完成', '未完成'],
-        datasets: [{
-            data: [50, 50],
-            backgroundColor: ['#4caf50', '#f44336'],
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false
+// 根據 30 秒間隔重新生成時間軸按鈕，按 `studentStartTime` 到 `studentEndTime` 生成
+function regenerateTimeline() {
+    items.clear(); // 清除之前的按鈕
+    const startTime = new Date(studentStartTime).getTime() + 30 * 1000; // 從 studentStartTime + 30 秒開始
+    const endTime = new Date(studentEndTime).getTime();
+    
+    let buttonId = 1;
+    for (let time = startTime; time <= endTime; time += 30 * 1000) {
+        items.add({
+            id: buttonId++,
+            content: `查看`,
+            start: new Date(time)
+        });
     }
-});
+}
 
 // 點擊「程式碼」按鈕
 document.getElementById('code-button').onclick = () => {
@@ -128,13 +146,12 @@ document.getElementById('completion-button').onclick = () => {
     showWebsite = false;
     updateDisplayArea('');
 
-    // 將 bottom-section 的上邊界拉伸至 .top-section 的頂部，並隱藏 top-section
     document.querySelector('.bottom-section').classList.add('expand-up');
     document.querySelector('.top-section').classList.add('top-section-hidden');
-
-    // 將 timeline-container 的 bottom 設置為 -600px，並顯示退出按鈕
+    document.getElementById('exit-button').classList.add('show');
     document.querySelector('.timeline-container').style.bottom = '-600px';
-    document.getElementById('exit-button').classList.add('show'); // 顯示退出按鈕
+
+    regenerateTimeline(); // 重新生成時間軸按鈕
 };
 
 // 點擊「退出」按鈕，恢復原狀
@@ -142,15 +159,16 @@ document.getElementById('exit-button').onclick = () => {
     document.querySelector('.bottom-section').classList.remove('expand-up');
     document.querySelector('.top-section').classList.remove('top-section-hidden');
     document.querySelector('.timeline-container').style.bottom = '0';
-    document.getElementById('exit-button').classList.remove('show'); // 隱藏退出按鈕
+    document.getElementById('exit-button').classList.remove('show');
+
+    // 恢復初始按鈕（使用 setupTimeline 和初始 screen_data）
+    setupTimeline(examStartTime, examEndTime, studentStartTime, initialScreenData);
+    updateDisplayArea('');
 };
 
-// 點擊「提示」按鈕
+// 點擊「提示」按鈕（目前無功能）
 document.getElementById('hint-button').onclick = () => {
-    completionChecked = true;
-    showCode = false;
-    showWebsite = false;
-    updateDisplayArea('請選擇時間軸以查看提示');
+    // 無操作
 };
 
 // 點擊「顯示查詢網站」按鈕
@@ -184,7 +202,24 @@ function updateDisplayArea(content) {
 
 // 顯示查詢網站
 function displayWebsite() {
-    const url = "https://www.google.com"; // 假設的網站網址
+    const url = "https://www.google.com";
     updateDisplayArea(url);
-    window.open(url, '_blank', 'width=800,height=600'); // 開啟新視窗
+    window.open(url, '_blank', 'width=800,height=600');
 }
+
+// 初始化圓餅圖
+const ctx = document.getElementById('myPieChart').getContext('2d');
+const pieChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['完成', '未完成'],
+        datasets: [{
+            data: [50, 50],
+            backgroundColor: ['#4caf50', '#f44336'],
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});

@@ -50,9 +50,8 @@ def check_student_exam(student_id, exam_code):
     else:
         return 'invalid'
 
-# 獲取考試時間和學生按鈕資料
 @eel.expose
-def get_exam_time_and_buttons(exam_code='UHK316', student_id='B1044127'):
+def get_exam_time_and_buttons(exam_code , student_id):
     conn = connect_db()
     cursor = conn.cursor()
 
@@ -62,11 +61,11 @@ def get_exam_time_and_buttons(exam_code='UHK316', student_id='B1044127'):
     exam_result = cursor.fetchone()
     exam_start_time, exam_end_time = exam_result if exam_result else (None, None)
 
-    # 查詢 student_exams 表格中的 start_time
-    student_query = "SELECT start_time FROM student_exams WHERE exam_code = %s AND student_id = %s"
+    # 查詢 student_exams 表格中的 start_time 和 end_time
+    student_query = "SELECT start_time, end_time FROM student_exams WHERE exam_code = %s AND student_id = %s"
     cursor.execute(student_query, (exam_code, student_id))
     student_result = cursor.fetchone()
-    student_start_time = student_result[0] if student_result else None
+    student_start_time, student_end_time = student_result if student_result else (None, None)
 
     # 查詢 student_screen_image 表格中的 end_time 和 content
     screen_query = """
@@ -80,12 +79,37 @@ def get_exam_time_and_buttons(exam_code='UHK316', student_id='B1044127'):
     conn.close()
 
     # 構造返回給前端的數據
-    if exam_start_time and exam_end_time and student_start_time:
+    if exam_start_time and exam_end_time and student_start_time and student_end_time:
         return {
             'exam_start_time': str(exam_start_time),  # 確保轉換為字符串
             'exam_end_time': str(exam_end_time),
             'student_start_time': str(student_start_time),
+            'student_end_time': str(student_end_time),
             'screen_data': [{'end_time': str(row[0]), 'content': row[1]} for row in screen_data]
         }
     else:
         return {'error': '無法獲取考試或學生數據'}
+
+@eel.expose
+def get_student_performance(exam_code, student_id, timestamp):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    # 查詢 student_program_attainment 中對應的 sub-question 和成績
+    query = """
+    SELECT sub_question, {timestamp_column} 
+    FROM student_program_attainment
+    WHERE exam_code = %s AND student_id = %s
+    """
+    # 將 timestamp_column 動態替換成實際的時間欄位名稱
+    query = query.replace("{timestamp_column}", timestamp)
+    
+    cursor.execute(query, (exam_code, student_id))
+    results = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    # 返回成績數據給前端
+    performance_data = [{'sub_question': row[0], 'score': row[1]} for row in results]
+    return performance_data
