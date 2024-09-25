@@ -60,7 +60,7 @@ class TeacherMenuPage(Screen):
         # 在單獨的執行緒中啟動 Eel
         threading.Thread(target=self.start_eel).start()
 
-    def find_available_port(self, start_port=8080):
+    def find_available_port(self, start_port=5000):
         """ 找到一個可用的端口 """
         port = start_port
         while True:
@@ -70,7 +70,7 @@ class TeacherMenuPage(Screen):
                 port += 1  # 增加端口號
 
     def start_eel(self):
-        port = self.find_available_port(8080)  # 從8080開始找可用端口
+        port = self.find_available_port(5000)  # 從8080開始找可用端口
         eel.start('index.html', port=port)  # 在可用的端口啟動 Eel
 
     def go_to_home(self, instance):

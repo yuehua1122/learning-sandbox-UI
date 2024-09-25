@@ -33,7 +33,7 @@ body {
   background-color: #ffffff;
   box-sizing: border-box;
   transition: height 1s ease, padding-top 1s ease, margin-top 1s ease;
-  overflow: hidden;
+  overflow: auto;
   margin: 20px;
 }
 
@@ -50,7 +50,7 @@ body {
 
 /* 退出按鈕初始化隱藏 */
 .exit-button {
-  display: none; /* 初始隱藏 */
+  display: none; 
   position: absolute;
   top: 20px;
   right: 30px;
@@ -66,7 +66,7 @@ body {
 }
 
 .exit-button.show {
-  display: block; /* 顯示按鈕 */
+  display: block; 
 }
 
 .exit-button:hover {
@@ -85,7 +85,7 @@ body {
 
 /* 左半邊按鈕和內容 */
 .left-section {
-  width: 50%;
+  width: 55%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -140,6 +140,8 @@ body {
 /* 顯示區域 */
 .display-area {
   width: 90%;
+  max-height: 85%;             
+  overflow: auto;          
   background-color: #2e3440;
   color: #d8dee9;
   padding: 20px;
@@ -151,6 +153,7 @@ body {
   opacity: 0;
   transform: scale(0.95);
   transition: opacity 0.5s ease, transform 0.5s ease;
+  box-sizing: border-box;  
 }
 
 .display-area.show {
@@ -167,7 +170,7 @@ body {
   background-color: #ffffff;
   border-radius: 20px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  padding: 70px;
+  padding: 25px;
 }
 
 /* 動畫效果 */
@@ -179,6 +182,10 @@ body {
     opacity: 0;
     transform: scale(0.9);
   }
+}
+
+.fade-out {
+  animation: fadeOut 0.5s forwards;
 }
 
 @keyframes fadeIn {

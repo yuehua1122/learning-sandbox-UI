@@ -1,3 +1,4 @@
+import datetime
 import eel
 import mysql.connector
 
@@ -50,6 +51,7 @@ def check_student_exam(student_id, exam_code):
     else:
         return 'invalid'
 
+# 取得考試時間及相關按鈕資訊
 @eel.expose
 def get_exam_time_and_buttons(exam_code , student_id):
     conn = connect_db()
@@ -70,7 +72,7 @@ def get_exam_time_and_buttons(exam_code , student_id):
     # 查詢 student_screen_image 表格中的 end_time 和 content
     screen_query = """
     SELECT end_time, content FROM student_screen_image 
-    WHERE exam_code = %s AND student_id = %s AND content IS NOT NULL AND content != ''
+    WHERE exam_code = %s AND student_id = %s AND content != '獲取到的內容為空' AND content != ''
     """
     cursor.execute(screen_query, (exam_code, student_id))
     screen_data = cursor.fetchall()
@@ -81,7 +83,7 @@ def get_exam_time_and_buttons(exam_code , student_id):
     # 構造返回給前端的數據
     if exam_start_time and exam_end_time and student_start_time and student_end_time:
         return {
-            'exam_start_time': str(exam_start_time),  # 確保轉換為字符串
+            'exam_start_time': str(exam_start_time),  # 確保轉換為字串
             'exam_end_time': str(exam_end_time),
             'student_start_time': str(student_start_time),
             'student_end_time': str(student_end_time),
@@ -90,6 +92,7 @@ def get_exam_time_and_buttons(exam_code , student_id):
     else:
         return {'error': '無法獲取考試或學生數據'}
 
+# 取得學生的成績數據
 @eel.expose
 def get_student_performance(exam_code, student_id, timestamp):
     conn = connect_db()
@@ -113,3 +116,37 @@ def get_student_performance(exam_code, student_id, timestamp):
     # 返回成績數據給前端
     performance_data = [{'sub_question': row[0], 'score': row[1]} for row in results]
     return performance_data
+
+# 取得考試數據
+@eel.expose
+def get_exam_data(exam_code, student_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    # 查詢特定的 exam_code 和 student_id 的數據
+    query = '''
+        SELECT sub_question, total_time
+        FROM student_program_attainment
+        WHERE exam_code = %s AND student_id = %s
+    '''
+    cursor.execute(query, (exam_code, student_id))
+
+    data = cursor.fetchall()
+    conn.close()
+
+    # 將數據轉換為字典列表，並將 total_time 轉換為字串
+    result = []
+    for row in data:
+        sub_question = row[0]
+        total_time = row[1]
+
+        # 檢查 total_time 是否為 datetime.time 對象
+        if isinstance(total_time, datetime.time):
+            # 將 datetime.time 對象轉換為字串
+            total_time_str = total_time.strftime('%H:%M:%S')
+        else:
+            total_time_str = str(total_time)  # 如果不是 datetime.time 對象，直接轉換為字串
+
+        result.append({'sub_question': sub_question, 'total_time': total_time_str})
+
+    return result

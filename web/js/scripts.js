@@ -1,34 +1,52 @@
 // 設定視窗大小
 window.resizeTo(1500, 900);
 
-// 從 Cookie 中取得值
+// 從 Cookie 中取得值的函數
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
 }
 
+// 通用的顯示與隱藏切換函數
+function toggleVisibility(hideId, showId) {
+    document.getElementById(hideId).classList.remove('show');
+    document.getElementById(hideId).classList.add('hidden');
+
+    const showElement = document.getElementById(showId);
+    showElement.classList.remove('hidden');
+
+    // 使用 setTimeout 以觸發過渡效果
+    setTimeout(() => {
+        showElement.classList.add('show');
+    }, 100);
+}
+
+// 導覽功能函數
 function goToStep2() {
-    const examCode = document.getElementById('examCode').value;
-    if (examCode.trim() === "") {
-        document.getElementById('examCodeError').style.display = 'block';
-        document.getElementById('examCodeError').textContent = '請輸入考試代碼！';
+    const examCode = document.getElementById('examCode').value.trim();
+    const errorElement = document.getElementById('examCodeError');
+
+    if (examCode === "") {
+        errorElement.style.display = 'block';
+        errorElement.textContent = '請輸入考試代碼！';
         return;
     }
 
     // 呼叫 Python 函數檢查考試代碼
-    eel.check_exam_code(examCode)(function(response) {
+    eel.check_exam_code(examCode)((response) => {
         if (response === 'valid') {
             // 隱藏錯誤訊息
-            document.getElementById('examCodeError').style.display = 'none';
+            errorElement.style.display = 'none';
             // 儲存考試代碼到 Cookie
             document.cookie = `examCode=${examCode}; path=/`;
             // 切換到下一步
             toggleVisibility('step1', 'step2');
         } else {
             // 顯示錯誤訊息
-            document.getElementById('examCodeError').style.display = 'block';
-            document.getElementById('examCodeError').textContent = '無效的考試代碼！';
+            errorElement.style.display = 'block';
+            errorElement.textContent = '無效的考試代碼！';
         }
     });
 }
@@ -48,20 +66,21 @@ function goToGroup() {
 }
 
 function goToIndividualAnalysis() {
-    const studentId = document.getElementById('studentId').value;
+    const studentId = document.getElementById('studentId').value.trim();
     const examCode = getCookie('examCode'); // 從 Cookie 中取得考試代碼
+    const errorElement = document.getElementById('studentIdError');
 
-    if (studentId.trim() === "") {
-        document.getElementById('studentIdError').style.display = 'block';
-        document.getElementById('studentIdError').textContent = '請輸入學號！';
+    if (studentId === "") {
+        errorElement.style.display = 'block';
+        errorElement.textContent = '請輸入學號！';
         return;
     }
 
     // 呼叫 Python 函數檢查學生是否參加該考試
-    eel.check_student_exam(studentId, examCode)(function(response) {
+    eel.check_student_exam(studentId, examCode)((response) => {
         if (response === 'valid') {
             // 隱藏錯誤訊息
-            document.getElementById('studentIdError').style.display = 'none';
+            errorElement.style.display = 'none';
             // 儲存學號到 Cookie
             document.cookie = `studentId=${studentId}; path=/`;
 
@@ -74,8 +93,8 @@ function goToIndividualAnalysis() {
             }, 500); // 0.5秒後跳轉
         } else {
             // 顯示錯誤訊息
-            document.getElementById('studentIdError').style.display = 'block';
-            document.getElementById('studentIdError').textContent = '該學生未參加此考試！';
+            errorElement.style.display = 'block';
+            errorElement.textContent = '該學生未參加此考試！';
         }
     });
 }
@@ -85,16 +104,25 @@ function goBack(previousStep) {
     toggleVisibility(currentStep, previousStep);
 }
 
-// 通用的顯示與隱藏切換
-function toggleVisibility(hideId, showId) {
-    document.getElementById(hideId).classList.remove('show');
-    document.getElementById(hideId).classList.add('hidden');
+// 事件監聽器的設定
+document.addEventListener('DOMContentLoaded', () => {
+    // 考試代碼輸入欄位的 Enter 鍵事件
+    const examCodeInput = document.getElementById('examCode');
+    examCodeInput.addEventListener('keyup', (event) => {
+        if (event.code === 'Enter') {
+            event.preventDefault();
+            goToStep2();
+        }
+    });
 
-    const showElement = document.getElementById(showId);
-    showElement.classList.remove('hidden');
-    
-    // 使用 setTimeout 以觸發過渡效果
-    setTimeout(() => {
-        showElement.classList.add('show');
-    }, 100);
-}
+    // 學生學號輸入欄位的 Enter 鍵事件
+    const studentIdInput = document.getElementById('studentId');
+    if (studentIdInput) {
+        studentIdInput.addEventListener('keyup', (event) => {
+            if (event.code === 'Enter') {
+                event.preventDefault();
+                goToIndividualAnalysis();
+            }
+        });
+    }
+});
