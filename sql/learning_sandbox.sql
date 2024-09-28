@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2024-09-25 18:17:53
+-- 產生時間： 2024-09-28 11:53:29
 -- 伺服器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.0.30
 
@@ -142,15 +142,14 @@ INSERT INTO `student_program_attainment` (`id`, `student_id`, `exam_code`, `sub_
 (3, 'B1044127', 'UHK316', '1c', 0, 0, 50, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, '00:00:30'),
 (4, 'B1044127', 'UHK316', '2a', 0, 0, 0, 0, 50, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, '00:01:48'),
 (5, 'B1044127', 'UHK316', '2b', 0, 0, 0, 0, 50, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, '00:00:42'),
-(6, 'B1044127', 'UHK316', '2c.1', 0, 0, 0, 0, 0, 50, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, '00:00:36'),
-(7, 'B1044127', 'UHK316', '2c.2', 0, 0, 0, 0, 0, 0, 0, 0, 50, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, '00:01:36'),
-(8, 'B1044127', 'UHK316', '3', 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 30, 60, 100, 100, 100, 100, 100, 100, 100, 100, '00:00:42'),
-(9, 'B1044127', 'UHK316', '4a', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 100, 100, 100, 100, 100, 100, 100, 100, '00:01:00'),
-(10, 'B1044127', 'UHK316', '4b', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 100, 100, 100, 100, 100, 100, 100, 100, '00:00:48'),
-(11, 'B1044127', 'UHK316', '5', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 50, 75, 100, 100, 100, 100, 100, 100, 100, '00:00:24'),
-(12, 'B1044127', 'UHK316', '6', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 100, 100, 100, 100, 100, 100, '00:00:24'),
-(13, 'B1044127', 'UHK316', '7a', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 100, 100, '00:00:30'),
-(14, 'B1044127', 'UHK316', '7b', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 100, 100, '00:00:24');
+(6, 'B1044127', 'UHK316', '2c', 0, 0, 0, 0, 0, 0, 0, 0, 50, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, '00:02:12'),
+(7, 'B1044127', 'UHK316', '3', 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 30, 60, 100, 100, 100, 100, 100, 100, 100, 100, '00:00:42'),
+(8, 'B1044127', 'UHK316', '4a', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 100, 100, 100, 100, 100, 100, 100, 100, '00:01:00'),
+(9, 'B1044127', 'UHK316', '4b', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 100, 100, 100, 100, 100, 100, 100, 100, '00:00:48'),
+(10, 'B1044127', 'UHK316', '5', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 50, 75, 100, 100, 100, 100, 100, 100, 100, '00:00:24'),
+(11, 'B1044127', 'UHK316', '6', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 100, 100, 100, 100, 100, 100, '00:00:24'),
+(12, 'B1044127', 'UHK316', '7a', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 100, 100, '00:00:30'),
+(13, 'B1044127', 'UHK316', '7b', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 100, 100, '00:00:24');
 
 -- --------------------------------------------------------
 
@@ -165,103 +164,126 @@ CREATE TABLE `student_screen_image` (
   `start_time` time NOT NULL,
   `end_time` time NOT NULL,
   `window` text NOT NULL,
-  `content` text NOT NULL
+  `content` text NOT NULL,
+  `website` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `student_screen_image`
 --
 
-INSERT INTO `student_screen_image` (`id`, `student_id`, `exam_code`, `start_time`, `end_time`, `window`, `content`) VALUES
-(1, 'B1044127', 'UHK316', '00:00:00', '00:00:00', '主程式', ''),
-(2, 'B1044127', 'UHK316', '00:00:01', '00:00:01', '象象牌螢幕錄影程式', ''),
-(3, 'B1044127', 'UHK316', '00:00:02', '00:00:03', 'b1044202_1.py', ''),
-(4, 'B1044127', 'UHK316', '00:00:04', '00:00:21', 'b1044202_1.py', 'original_num = 56762\nnum = original_num\n\narr = []'),
-(5, 'B1044127', 'UHK316', '00:00:22', '00:00:43', 'b1044202_1.py', 'original_num = 56762\nnum = original_num\n\narr = []\n\nwhile num != 0:\narr.insert(0, str(num % 10))\nnum = num // 10'),
-(6, 'B1044127', 'UHK316', '00:00:44', '00:01:04', 'b1044202_1.py', 'original_num = 56762\nnum = original_num\n\narr = []\n\nwhile num != 0:\narr.insert(0, str(num % 10))\nnum = num // 10\n\nprint(\'%s 為 %d 位數\' % (\'\'.join(arr), len(arr)))\n\narr.reverse()\n\nprint(\'倒序输出\', \'\'.join(arr))'),
-(7, 'B1044127', 'UHK316', '00:01:05', '00:01:09', 'b1044202_1.py', ''),
-(8, 'B1044127', 'UHK316', '00:01:10', '00:01:25', 'b1044202_1.py', 'original_num = 56762\nnum = original_num\n\narr = []\n\nwhile num != 0:\narr.insert(0, str(num % 10))\nnum = num // 10\n\nprint(\'%s 為 %d 位數\' % (\'\'.join(arr), len(arr)))\n\narr.reverse()\n\nprint(\'倒序输出\', \'\'.join(arr))\n\ndef palindrome(s):\nfor i in range(len(s) // 2):\nif s[i] != s[-i - 1]:'),
-(9, 'B1044127', 'UHK316', '00:01:26', '00:01:28', 'b1044202_1.py', ''),
-(10, 'B1044127', 'UHK316', '00:01:29', '00:01:47', 'b1044202_1.py', 'original_num = 56762\nnum = original_num\n\narr = []\n\nwhile num != 0:\narr.insert(0, str(num % 10))\nnum = num // 10\n\nprint(\'%s 為 %d 位數\' % (\'\'.join(arr), len(arr)))\n\narr.reverse()\n\nprint(\'倒序输出\', \'\'.join(arr))\n\ndef palindrome(s):\nfor i in range(len(s) // 2):\nif s[i] != s[-i - 1]:\nreturn False\nreturn True\n\nprint(\'是否為回文數：\', palindrome(str(original_num)))'),
-(11, 'B1044127', 'UHK316', '00:01:48', '00:01:50', 'b1044202_1.py', ''),
-(12, 'B1044127', 'UHK316', '00:01:51', '00:01:51', 'b1044202_1.py', 'original_num = 56762\nnum = original_num\n\narr = []\n\nwhile num != 0:\narr.insert(0, str(num % 10))\nnum = num // 10\n\nprint(\'%s 為 %d 位數\' % (\'\'.join(arr), len(arr)))\n\narr.reverse()\n\nprint(\'倒序输出\', \'\'.join(arr))\n\ndef palindrome(s):\nfor i in range(len(s) // 2):\nif s[i] != s[-i - 1]:\nreturn False\nreturn True\n\nprint(\'是否為回文數：\', palindrome(str(original_num)))'),
-(13, 'B1044127', 'UHK316', '00:01:52', '00:01:55', 'b1044202_1.py', ''),
-(14, 'B1044127', 'UHK316', '00:01:56', '00:01:56', 'b1044202_2.py', ''),
-(15, 'B1044127', 'UHK316', '00:01:57', '00:02:03', 'b1044202_2.py', ''),
-(16, 'B1044127', 'UHK316', '00:02:04', '00:02:04', 'b1044202_2.py', 'from math import sqrt\n\nmin = 101\nmax = 230'),
-(17, 'B1044127', 'UHK316', '00:02:05', '00:02:05', 'b1044202_2.py', ''),
-(18, 'B1044127', 'UHK316', '00:02:06', '00:02:06', 'b1044202_2.py', ''),
-(19, 'B1044127', 'UHK316', '00:02:07', '00:02:07', 'b1044202_2.py', ''),
-(20, 'B1044127', 'UHK316', '00:02:08', '00:02:08', 'b1044202_2.py', 'from math import sqrt\n\nmin = 101\nmax = 230\n\nprime = list()\n\nfor i in range(min, max + 1):'),
-(21, 'B1044127', 'UHK316', '00:02:09', '00:02:10', 'b1044202_2.py', ''),
-(22, 'B1044127', 'UHK316', '00:02:11', '00:02:11', 'b1044202_2.py', 'from math import sqrt\n\nmin = 101\nmax = 230\n\nprime = list()\n\nfor i in range(min, max + 1):'),
-(23, 'B1044127', 'UHK316', '00:02:12', '00:02:30', 'b1044202_2.py', 'from math import sqrt\n\nmin = 101\nmax = 230\n\nprime = list()\n\nfor i in range(min, max + 1):\ntemp = int(sqrt(i))\nflag = True\nfor j in range(2, temp + 1):\nif (i % j) == 0:\nflag = False\nbreak\nif flag == True:'),
-(24, 'B1044127', 'UHK316', '00:02:31', '00:02:45', 'b1044202_2.py', ''),
-(25, 'B1044127', 'UHK316', '00:02:45', '00:02:45', 'b1044202_2.py', 'from math import sqrt\n\nmin = 101\nmax = 230\n\nprime = list()\n\nfor i in range(min, max + 1):\ntemp = int(sqrt(i))\nflag = True\nfor j in range(2, temp + 1):\nif (i % j) == 0:\nflag = False\nbreak\nif flag == True:\nprime.append(i)\n\nprint(\'%d-%d 之間共有 %d 個質數\' % (min, max, len(prime)))\n\nSIZE = 4\nHIDE = \'    \'\nd=0\n\nfor y in range(SIZE - 1, -SIZE, -1):'),
-(26, 'B1044127', 'UHK316', '00:02:46', '00:02:51', 'b1044202_2.py', 'from math import sqrt\n\nmin = 101\nmax = 230\n\nprime = list()\n\nfor i in range(min, max + 1):\ntemp = int(sqrt(i))\nflag = True\nfor j in range(2, temp + 1):\nif (i % j) == 0:\nflag = False\nbreak\nif flag == True:\nprime.append(i)\n\nprint(\'%d-%d 之間共有 %d 個質數\' % (min, max, len(prime)))\n\nSIZE = 4\nHIDE = \'    \'\nd=0\n\nfor y in range(SIZE - 1, -SIZE, -1):\nfor x in range(-SIZE + 1, SIZE, 1):\nif (y > x - SIZE) and (y < x + SIZE) and \\\n(y > -x - SIZE) and (y < -x + SIZE):'),
-(27, 'B1044127', 'UHK316', '00:02:52', '00:02:58', 'b1044202_2.py', ''),
-(28, 'B1044127', 'UHK316', '00:02:58', '00:02:58', 'b1044202_2.py', ''),
-(29, 'B1044127', 'UHK316', '00:02:59', '00:02:59', 'b1044202_2.py', ''),
-(30, 'B1044127', 'UHK316', '00:03:00', '00:03:12', 'b1044202_2.py', 'from math import sqrt\n\nmin = 101\nmax = 230\n\nprime = list()\n\nfor i in range(min, max + 1):\ntemp = int(sqrt(i))\nflag = True\nfor j in range(2, temp + 1):\nif (i % j) == 0:\nflag = False\nbreak\nif flag == True:\nprime.append(i)\n\nprint(\'%d-%d 之間共有 %d 個質數\' % (min, max, len(prime)))\n\nSIZE = 4\nHIDE = \'    \'\nd=0\n\nfor y in range(SIZE - 1, -SIZE, -1):\nfor x in range(-SIZE + 1, SIZE, 1):\nif (y > x - SIZE) and (y < x + SIZE) and \\\n(y > -x - SIZE) and (y < -x + SIZE):\nprint(prime[d], end=\' \')\nd=d+1\nelse:'),
-(31, 'B1044127', 'UHK316', '00:03:13', '00:03:21', 'b1044202_2.py', ''),
-(32, 'B1044127', 'UHK316', '00:03:21', '00:03:21', 'b1044202_2.py', 'from math import sqrt\n\nmin = 101\nmax = 230\n\nprime = list()\n\nfor i in range(min, max + 1):\ntemp = int(sqrt(i))\nflag = True\nfor j in range(2, temp + 1):\nif (i % j) == 0:\nflag = False\nbreak\nif flag == True:\nprime.append(i)\n\nprint(\'%d-%d 之間共有 %d 個質數\' % (min, max, len(prime)))\n\nSIZE = 4\nHIDE = \'    \'\nd=0\n\nfor y in range(SIZE - 1, -SIZE, -1):\nfor x in range(-SIZE + 1, SIZE, 1):\nif (y > x - SIZE) and (y < x + SIZE) and \\\n(y > -x - SIZE) and (y < -x + SIZE):\nprint(prime[d], end=\' \')\nd=d+1\nelse:\nprint(HIDE, end=\'\')\nprint()'),
-(33, 'B1044127', 'UHK316', '00:03:22', '00:03:25', 'b1044202_2.py', ''),
-(34, 'B1044127', 'UHK316', '00:03:26', '00:03:26', 'b1044202_3.py', ''),
-(35, 'B1044127', 'UHK316', '00:03:27', '00:03:34', 'b1044202_3.py', 'def age(n):\nif n == 1:\nreturn 10'),
-(36, 'B1044127', 'UHK316', '00:03:35', '00:03:36', 'b1044202_3.py', ''),
-(37, 'B1044127', 'UHK316', '00:03:37', '00:03:54', 'b1044202_3.py', ''),
-(38, 'B1044127', 'UHK316', '00:03:55', '00:03:55', 'b1044202_3.py', 'def age(n):\nif n == 1:\nreturn 10\nreturn age(n - 1) + 2\n\nfor i in range(1,6):\nprint(\'第\',i,\'個人\', age(i), \'歲\')'),
-(39, 'B1044127', 'UHK316', '00:03:55', '00:03:55', 'b1044202_3.py', 'def age(n):\nif n == 1:\nreturn 10\nreturn age(n - 1) + 2\n\nfor i in range(1,6):\nprint(\'第\',i,\'個人\', age(i), \'歲\')'),
-(40, 'B1044127', 'UHK316', '00:03:56', '00:03:59', 'b1044202_3.py', ''),
-(41, 'B1044127', 'UHK316', '00:03:59', '00:03:59', 'b1044202_4.py', ''),
-(42, 'B1044127', 'UHK316', '00:04:00', '00:04:08', 'b1044202_4.py', ''),
-(43, 'B1044127', 'UHK316', '00:04:09', '00:04:16', 'b1044202_4.py', 'score = 98\nrank = None\n\nif 0 <= score and score < 60:\nrank = \'C\''),
-(44, 'B1044127', 'UHK316', '00:04:17', '00:04:22', 'b1044202_4.py', ''),
-(45, 'B1044127', 'UHK316', '00:04:23', '00:04:38', 'b1044202_4.py', 'score = 98\nrank = None\n\nif 0 <= score and score < 60:\nrank = \'C\'\nelif 60 <= score and score < 90:\nrank = \'B\'\nelif 90 <= score and score <= 100:\nrank = \'A\'\n\nif rank != None:\nprint(\'%d 属于等级 %s\' % (score, rank))'),
-(46, 'B1044127', 'UHK316', '00:04:39', '00:04:42', 'b1044202_4.py', ''),
-(47, 'B1044127', 'UHK316', '00:04:43', '00:04:43', 'b1044202_4.py', 'score = 98\nrank = None\n\nif 0 <= score and score < 60:\nrank = \'C\'\nelif 60 <= score and score < 90:\nrank = \'B\'\nelif 90 <= score and score <= 100:\nrank = \'A\'\n\nif rank != None:\nprint(\'%d 属于等级 %s\' % (score, rank))'),
-(48, 'B1044127', 'UHK316', '00:04:44', '00:04:44', 'b1044202_4.py', ''),
-(49, 'B1044127', 'UHK316', '00:04:45', '00:04:45', 'b1044202_5.py', ''),
-(50, 'B1044127', 'UHK316', '00:04:46', '00:04:59', 'b1044202_5.py', 'T1 = (\'a\', \'b\', \'c\')\nT2 = (\'x\', \'y\', \'z\')\n\narr = []\n\ndef comb(i, j, k):'),
-(51, 'B1044127', 'UHK316', '00:05:00', '00:05:05', 'b1044202_5.py', ''),
-(52, 'B1044127', 'UHK316', '00:05:06', '00:05:06', 'b1044202_5.py', 'T1 = (\'a\', \'b\', \'c\')\nT2 = (\'x\', \'y\', \'z\')\n\narr = []\n\ndef comb(i, j, k):\nc1 = T1[0] + \'-\' + T2[i]\nc2 = T1[1] + \'-\' + T2[j]'),
-(53, 'B1044127', 'UHK316', '00:05:07', '00:05:20', 'b1044202_5.py', 'T1 = (\'a\', \'b\', \'c\')\nT2 = (\'x\', \'y\', \'z\')\n\narr = []\n\ndef comb(i, j, k):\nc1 = T1[0] + \'-\' + T2[i]\nc2 = T1[1] + \'-\' + T2[j]\nc3 = T1[2] + \'-\' + T2[k]\nreturn tuple([c1, c2, c3])\n\nfor i in range(3):'),
-(54, 'B1044127', 'UHK316', '00:05:21', '00:05:29', 'b1044202_5.py', ''),
-(55, 'B1044127', 'UHK316', '00:05:30', '00:05:30', 'b1044202_5.py', 'T1 = (\'a\', \'b\', \'c\')\nT2 = (\'x\', \'y\', \'z\')\n\narr = []\n\ndef comb(i, j, k):\nc1 = T1[0] + \'-\' + T2[i]\nc2 = T1[1] + \'-\' + T2[j]\nc3 = T1[2] + \'-\' + T2[k]\nreturn tuple([c1, c2, c3])\n\nfor i in range(3):\nfor j in range(3):'),
-(56, 'B1044127', 'UHK316', '00:05:31', '00:05:38', 'b1044202_5.py', ''),
-(57, 'B1044127', 'UHK316', '00:05:38', '00:05:38', 'b1044202_5.py', 'T1 = (\'a\', \'b\', \'c\')\nT2 = (\'x\', \'y\', \'z\')\n\narr = []\n\ndef comb(i, j, k):\nc1 = T1[0] + \'-\' + T2[i]\nc2 = T1[1] + \'-\' + T2[j]\nc3 = T1[2] + \'-\' + T2[k]\nreturn tuple([c1, c2, c3])\n\nfor i in range(3):\nfor j in range(3):\nfor k in range(3):\nif (i == j) or (i == k) or (j == k):\ncontinue\narr.append(comb(i, j, k))'),
-(58, 'B1044127', 'UHK316', '00:05:39', '00:05:42', 'b1044202_5.py', ''),
-(59, 'B1044127', 'UHK316', '00:05:42', '00:05:42', 'b1044202_5.py', '獲取到的內容為空'),
-(60, 'B1044127', 'UHK316', '00:05:43', '00:05:43', 'b1044202_5.py', ''),
-(61, 'B1044127', 'UHK316', '00:05:44', '00:06:03', 'b1044202_5.py', 'T1 = (\'a\', \'b\', \'c\')\nT2 = (\'x\', \'y\', \'z\')\n\narr = []\n\ndef comb(i, j, k):\nc1 = T1[0] + \'-\' + T2[i]\nc2 = T1[1] + \'-\' + T2[j]\nc3 = T1[2] + \'-\' + T2[k]\nreturn tuple([c1, c2, c3])\n\nfor i in range(3):\nfor j in range(3):\nfor k in range(3):\nif (i == j) or (i == k) or (j == k):\ncontinue\narr.append(comb(i, j, k))\n\nfor g in arr:\nif (\'a-x\' in g) or (\'c-z\' in g) or (\'c-x\' in g):\ncontinue\nprint(g)'),
-(62, 'B1044127', 'UHK316', '00:06:04', '00:06:05', 'b1044202_5.py', ''),
-(63, 'B1044127', 'UHK316', '00:06:06', '00:06:24', 'b1044202_6.py', 'class Code:\ncontent = \'\'  # 代碼\nletters = 0  # 字母\nspace = 0  # 空格'),
-(64, 'B1044127', 'UHK316', '00:06:25', '00:06:46', 'b1044202_6.py', 'class Code:\ncontent = \'\'  # 代碼\nletters = 0  # 字母\nspace = 0  # 空格\ndigit = 0  # 數字\nothers = 0  # 字元\n\n# 構造函數\ndef __init__(self, content):\nself.content = content\n\n# 分析代碼\ndef analysis(self):'),
-(65, 'B1044127', 'UHK316', '00:06:47', '00:06:47', 'b1044202_6.py', ''),
-(66, 'B1044127', 'UHK316', '00:06:47', '00:06:47', 'b1044202_6.py', 'class Code:\ncontent = \'\'  # 代碼\nletters = 0  # 字母\nspace = 0  # 空格\ndigit = 0  # 數字\nothers = 0  # 字元\n\n# 構造函數\ndef __init__(self, content):\nself.content = content\n\n# 分析代碼\ndef analysis(self):'),
-(67, 'B1044127', 'UHK316', '00:06:48', '00:06:54', 'b1044202_6.py', ''),
-(68, 'B1044127', 'UHK316', '00:06:55', '00:06:55', 'b1044202_6.py', 'class Code:\ncontent = \'\'  # 代碼\nletters = 0  # 字母\nspace = 0  # 空格\ndigit = 0  # 數字\nothers = 0  # 字元\n\n# 構造函數\ndef __init__(self, content):\nself.content = content\n\n# 分析代碼\ndef analysis(self):\nfor c in self.content:\nif c.isalpha():\nself.letters += 1\nelif c.isspace():\nself.space += 1\nelif c.isdigit():\nself.digit += 1'),
-(69, 'B1044127', 'UHK316', '00:06:56', '00:07:03', 'b1044202_6.py', ''),
-(70, 'B1044127', 'UHK316', '00:07:04', '00:07:04', 'b1044202_6.py', 'class Code:\ncontent = \'\'  # 代碼\nletters = 0  # 字母\nspace = 0  # 空格\ndigit = 0  # 數字\nothers = 0  # 字元\n\n# 構造函數\ndef __init__(self, content):\nself.content = content\n\n# 分析代碼\ndef analysis(self):\nfor c in self.content:\nif c.isalpha():\nself.letters += 1\nelif c.isspace():\nself.space += 1\nelif c.isdigit():\nself.digit += 1\nelse:\nself.others += 1\n\n# 展示結果\ndef showData(self):\nform = \'字母（%d） 空格（%d） 數字（%d） 其他字元（%d）\'\ndata = (self.letters, self.space, self.digit, self.others)'),
-(71, 'B1044127', 'UHK316', '00:07:05', '00:07:07', 'b1044202_6.py', '獲取到的內容為空'),
-(72, 'B1044127', 'UHK316', '00:07:08', '00:07:28', 'b1044202_6.py', 'class Code:\ncontent = \'\'  # 代碼\nletters = 0  # 字母\nspace = 0  # 空格\ndigit = 0  # 數字\nothers = 0  # 字元\n\n# 構造函數\ndef __init__(self, content):\nself.content = content\n\n# 分析代碼\ndef analysis(self):\nfor c in self.content:\nif c.isalpha():\nself.letters += 1\nelif c.isspace():\nself.space += 1\nelif c.isdigit():\nself.digit += 1\nelse:\nself.others += 1\n\n# 展示結果\ndef showData(self):\nform = \'字母（%d） 空格（%d） 數字（%d） 其他字元（%d）\'\ndata = (self.letters, self.space, self.digit, self.others)\nprint(form % data)\n\n\ncontent = input(\'請輸入一段代碼：\\n\')\n\ncode = Code(content)\ncode.analysis()  # 分析\ncode.showData()  # 展示'),
-(73, 'B1044127', 'UHK316', '00:07:29', '00:07:32', 'b1044202_6.py', ''),
-(74, 'B1044127', 'UHK316', '00:07:33', '00:07:33', 'b1044202_6.py', ''),
-(75, 'B1044127', 'UHK316', '00:07:34', '00:07:34', 'b1044202_7.py', ''),
-(76, 'B1044127', 'UHK316', '00:07:35', '00:07:50', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\''),
-(77, 'B1044127', 'UHK316', '00:07:51', '00:08:11', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'\n\n# 當前日期\ndate0 = datetime.date.today()\nprint(\'當前日期：\', date0.strftime(form))\n\ncal = date0.strft'),
-(78, 'B1044127', 'UHK316', '00:08:12', '00:08:32', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'\n\n# 當前日期\ndate0 = datetime.date.today()\nprint(\'當前日期：\', date0.strftime(form))\n\ncal = date0.strftime(form)\n\ndate = cal.split(\'-\')\n\nyear = int(dat'),
-(79, 'B1044127', 'UHK316', '00:08:33', '00:08:54', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'\n\n# 當前日期\ndate0 = datetime.date.today()\nprint(\'當前日期：\', date0.strftime(form))\n\ncal = date0.strftime(form)\n\ndate = cal.split(\'-\')\n\nyear = int(date[0])\nmonth = int(date[1])\nday = int(date[2])\n\narr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30,'),
-(80, 'B1044127', 'UHK316', '00:08:55', '00:09:15', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'\n\n# 當前日期\ndate0 = datetime.date.today()\nprint(\'當前日期：\', date0.strftime(form))\n\ncal = date0.strftime(form)\n\ndate = cal.split(\'-\')\n\nyear = int(date[0])\nmonth = int(date[1])\nday = int(date[2])\n\narr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]\n\nnum = 0\n\nif ((year % 4 == 0) and (year % 100 != 0)) or (year %'),
-(81, 'B1044127', 'UHK316', '00:09:16', '00:09:26', 'b1044202_7.py', ''),
-(82, 'B1044127', 'UHK316', '00:09:27', '00:09:27', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'\n\n# 當前日期\ndate0 = datetime.date.today()\nprint(\'當前日期：\', date0.strftime(form))\n\ncal = date0.strftime(form)\n\ndate = cal.split(\'-\')\n\nyear = int(date[0])\nmonth = int(date[1])\nday = int(date[2])\n\narr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]\n\nnum = 0\n\nif ((year % 4 == 0) and (year % 100 != 0)) or (year % 400 == 0):\narr[2] = 29\n\nfor i in range(1, len(arr)):\nif month > i:\nnum += arr[i]\nelse:\nnum += day\nbreak'),
-(83, 'B1044127', 'UHK316', '00:09:28', '00:09:31', 'b1044202_7.py', ''),
-(84, 'B1044127', 'UHK316', '00:09:32', '00:09:32', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'\n\n# 當前日期\ndate0 = datetime.date.today()\nprint(\'當前日期：\', date0.strftime(form))\n\ncal = date0.strftime(form)\n\ndate = cal.split(\'-\')\n\nyear = int(date[0])\nmonth = int(date[1])\nday = int(date[2])\n\narr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]\n\nnum = 0\n\nif ((year % 4 == 0) and (year % 100 != 0)) or (year % 400 == 0):\narr[2] = 29\n\nfor i in range(1, len(arr)):\nif month > i:\nnum += arr[i]\nelse:\nnum += day\nbreak\n\nprint(\'天數：\', num)'),
-(85, 'B1044127', 'UHK316', '00:09:33', '00:09:33', 'b1044202_7.py', ''),
-(86, 'B1044127', 'UHK316', '00:09:34', '00:09:36', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'\n\n# 當前日期\ndate0 = datetime.date.today()\nprint(\'當前日期：\', date0.strftime(form))\n\ncal = date0.strftime(form)\n\ndate = cal.split(\'-\')\n\nyear = int(date[0])\nmonth = int(date[1])\nday = int(date[2])\n\narr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]\n\nnum = 0\n\nif ((year % 4 == 0) and (year % 100 != 0)) or (year % 400 == 0):\narr[2] = 29\n\nfor i in range(1, len(arr)):\nif month > i:\nnum += arr[i]\nelse:\nnum += day\nbreak\n\nprint(\'天數：\', num)'),
-(87, 'B1044127', 'UHK316', '00:09:37', '00:09:42', '象象牌螢幕錄影程式', ''),
-(88, 'B1044127', 'UHK316', '00:09:42', '00:09:42', '主程式', ''),
-(89, 'B1044127', 'UHK316', '00:09:43', '00:09:43', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'\n\n# 當前日期\ndate0 = datetime.date.today()\nprint(\'當前日期：\', date0.strftime(form))\n\ncal = date0.strftime(form)\n\ndate = cal.split(\'-\')\n\nyear = int(date[0])\nmonth = int(date[1])\nday = int(date[2])\n\narr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]\n\nnum = 0\n\nif ((year % 4 == 0) and (year % 100 != 0)) or (year % 400 == 0):\narr[2] = 29\n\nfor i in range(1, len(arr)):\nif month > i:\nnum += arr[i]\nelse:\nnum += day\nbreak\n\nprint(\'天數：\', num)');
+INSERT INTO `student_screen_image` (`id`, `student_id`, `exam_code`, `start_time`, `end_time`, `window`, `content`, `website`) VALUES
+(1, 'B1044127', 'UHK316', '00:00:00', '00:00:00', '主程式', '', 'https://www.google.com'),
+(2, 'B1044127', 'UHK316', '00:00:01', '00:00:01', '象象牌螢幕錄影程式', '', 'https://www.youtube.com'),
+(3, 'B1044127', 'UHK316', '00:00:02', '00:00:03', 'b1044202_1.py', '', 'https://www.facebook.com'),
+(4, 'B1044127', 'UHK316', '00:00:04', '00:00:21', 'b1044202_1.py', 'original_num = 56762\nnum = original_num\n\narr = []', 'https://www.amazon.com'),
+(5, 'B1044127', 'UHK316', '00:00:22', '00:00:43', 'b1044202_1.py', 'original_num = 56762\nnum = original_num\n\narr = []\n\nwhile num != 0:\narr.insert(0, str(num % 10))\nnum = num // 10', 'https://www.wikipedia.org'),
+(6, 'B1044127', 'UHK316', '00:00:44', '00:01:04', 'b1044202_1.py', 'original_num = 56762\nnum = original_num\n\narr = []\n\nwhile num != 0:\narr.insert(0, str(num % 10))\nnum = num // 10\n\nprint(\'%s 為 %d 位數\' % (\'\'.join(arr), len(arr)))\n\narr.reverse()\n\nprint(\'倒序输出\', \'\'.join(arr))', 'https://www.twitter.com'),
+(7, 'B1044127', 'UHK316', '00:01:05', '00:01:09', 'b1044202_1.py', '', 'https://www.instagram.com'),
+(8, 'B1044127', 'UHK316', '00:01:10', '00:01:25', 'b1044202_1.py', 'original_num = 56762\nnum = original_num\n\narr = []\n\nwhile num != 0:\narr.insert(0, str(num % 10))\nnum = num // 10\n\nprint(\'%s 為 %d 位數\' % (\'\'.join(arr), len(arr)))\n\narr.reverse()\n\nprint(\'倒序输出\', \'\'.join(arr))\n\ndef palindrome(s):\nfor i in range(len(s) // 2):\nif s[i] != s[-i - 1]:', 'https://www.linkedin.com'),
+(9, 'B1044127', 'UHK316', '00:01:26', '00:01:28', 'b1044202_1.py', '', 'https://www.netflix.com'),
+(10, 'B1044127', 'UHK316', '00:01:29', '00:01:47', 'b1044202_1.py', 'original_num = 56762\nnum = original_num\n\narr = []\n\nwhile num != 0:\narr.insert(0, str(num % 10))\nnum = num // 10\n\nprint(\'%s 為 %d 位數\' % (\'\'.join(arr), len(arr)))\n\narr.reverse()\n\nprint(\'倒序输出\', \'\'.join(arr))\n\ndef palindrome(s):\nfor i in range(len(s) // 2):\nif s[i] != s[-i - 1]:\nreturn False\nreturn True\n\nprint(\'是否為回文數：\', palindrome(str(original_num)))', 'https://www.microsoft.com'),
+(11, 'B1044127', 'UHK316', '00:01:48', '00:01:50', 'b1044202_1.py', '', 'https://www.apple.com'),
+(12, 'B1044127', 'UHK316', '00:01:51', '00:01:51', 'b1044202_1.py', 'original_num = 56762\nnum = original_num\n\narr = []\n\nwhile num != 0:\narr.insert(0, str(num % 10))\nnum = num // 10\n\nprint(\'%s 為 %d 位數\' % (\'\'.join(arr), len(arr)))\n\narr.reverse()\n\nprint(\'倒序输出\', \'\'.join(arr))\n\ndef palindrome(s):\nfor i in range(len(s) // 2):\nif s[i] != s[-i - 1]:\nreturn False\nreturn True\n\nprint(\'是否為回文數：\', palindrome(str(original_num)))', 'https://www.adobe.com'),
+(13, 'B1044127', 'UHK316', '00:01:52', '00:01:55', 'b1044202_1.py', '', 'https://www.github.com'),
+(14, 'B1044127', 'UHK316', '00:01:56', '00:01:56', 'b1044202_2.py', '', 'https://www.stackoverflow.com'),
+(15, 'B1044127', 'UHK316', '00:01:57', '00:02:03', 'b1044202_2.py', '', 'https://www.reddit.com'),
+(16, 'B1044127', 'UHK316', '00:02:04', '00:02:04', 'b1044202_2.py', 'from math import sqrt\n\nmin = 101\nmax = 230', 'https://www.pinterest.com'),
+(17, 'B1044127', 'UHK316', '00:02:05', '00:02:05', 'b1044202_2.py', '', 'https://www.wordpress.com'),
+(18, 'B1044127', 'UHK316', '00:02:06', '00:02:06', 'b1044202_2.py', '', 'https://www.blogger.com'),
+(19, 'B1044127', 'UHK316', '00:02:07', '00:02:07', 'b1044202_2.py', '', 'https://www.ebay.com'),
+(20, 'B1044127', 'UHK316', '00:02:08', '00:02:08', 'b1044202_2.py', 'from math import sqrt\n\nmin = 101\nmax = 230\n\nprime = list()\n\nfor i in range(min, max + 1):', 'https://www.paypal.com'),
+(21, 'B1044127', 'UHK316', '00:02:09', '00:02:10', 'b1044202_2.py', '', 'https://www.tumblr.com'),
+(22, 'B1044127', 'UHK316', '00:02:11', '00:02:11', 'b1044202_2.py', 'from math import sqrt\n\nmin = 101\nmax = 230\n\nprime = list()\n\nfor i in range(min, max + 1):', 'https://www.dropbox.com'),
+(23, 'B1044127', 'UHK316', '00:02:12', '00:02:30', 'b1044202_2.py', 'from math import sqrt\n\nmin = 101\nmax = 230\n\nprime = list()\n\nfor i in range(min, max + 1):\ntemp = int(sqrt(i))\nflag = True\nfor j in range(2, temp + 1):\nif (i % j) == 0:\nflag = False\nbreak\nif flag == True:', 'https://www.salesforce.com'),
+(24, 'B1044127', 'UHK316', '00:02:31', '00:02:45', 'b1044202_2.py', '', 'https://www.spotify.com'),
+(25, 'B1044127', 'UHK316', '00:02:45', '00:02:45', 'b1044202_2.py', 'from math import sqrt\n\nmin = 101\nmax = 230\n\nprime = list()\n\nfor i in range(min, max + 1):\ntemp = int(sqrt(i))\nflag = True\nfor j in range(2, temp + 1):\nif (i % j) == 0:\nflag = False\nbreak\nif flag == True:\nprime.append(i)\n\nprint(\'%d-%d 之間共有 %d 個質數\' % (min, max, len(prime)))\n\nSIZE = 4\nHIDE = \'    \'\nd=0\n\nfor y in range(SIZE - 1, -SIZE, -1):', 'https://www.coursera.org'),
+(26, 'B1044127', 'UHK316', '00:02:46', '00:02:51', 'b1044202_2.py', 'from math import sqrt\n\nmin = 101\nmax = 230\n\nprime = list()\n\nfor i in range(min, max + 1):\ntemp = int(sqrt(i))\nflag = True\nfor j in range(2, temp + 1):\nif (i % j) == 0:\nflag = False\nbreak\nif flag == True:\nprime.append(i)\n\nprint(\'%d-%d 之間共有 %d 個質數\' % (min, max, len(prime)))\n\nSIZE = 4\nHIDE = \'    \'\nd=0\n\nfor y in range(SIZE - 1, -SIZE, -1):\nfor x in range(-SIZE + 1, SIZE, 1):\nif (y > x - SIZE) and (y < x + SIZE) and \\\n(y > -x - SIZE) and (y < -x + SIZE):', ''),
+(27, 'B1044127', 'UHK316', '00:02:52', '00:02:58', 'b1044202_2.py', '', ''),
+(28, 'B1044127', 'UHK316', '00:02:58', '00:02:58', 'b1044202_2.py', '', ''),
+(29, 'B1044127', 'UHK316', '00:02:59', '00:02:59', 'b1044202_2.py', '', ''),
+(30, 'B1044127', 'UHK316', '00:03:00', '00:03:12', 'b1044202_2.py', 'from math import sqrt\n\nmin = 101\nmax = 230\n\nprime = list()\n\nfor i in range(min, max + 1):\ntemp = int(sqrt(i))\nflag = True\nfor j in range(2, temp + 1):\nif (i % j) == 0:\nflag = False\nbreak\nif flag == True:\nprime.append(i)\n\nprint(\'%d-%d 之間共有 %d 個質數\' % (min, max, len(prime)))\n\nSIZE = 4\nHIDE = \'    \'\nd=0\n\nfor y in range(SIZE - 1, -SIZE, -1):\nfor x in range(-SIZE + 1, SIZE, 1):\nif (y > x - SIZE) and (y < x + SIZE) and \\\n(y > -x - SIZE) and (y < -x + SIZE):\nprint(prime[d], end=\' \')\nd=d+1\nelse:', ''),
+(31, 'B1044127', 'UHK316', '00:03:13', '00:03:21', 'b1044202_2.py', '', ''),
+(32, 'B1044127', 'UHK316', '00:03:21', '00:03:21', 'b1044202_2.py', 'from math import sqrt\n\nmin = 101\nmax = 230\n\nprime = list()\n\nfor i in range(min, max + 1):\ntemp = int(sqrt(i))\nflag = True\nfor j in range(2, temp + 1):\nif (i % j) == 0:\nflag = False\nbreak\nif flag == True:\nprime.append(i)\n\nprint(\'%d-%d 之間共有 %d 個質數\' % (min, max, len(prime)))\n\nSIZE = 4\nHIDE = \'    \'\nd=0\n\nfor y in range(SIZE - 1, -SIZE, -1):\nfor x in range(-SIZE + 1, SIZE, 1):\nif (y > x - SIZE) and (y < x + SIZE) and \\\n(y > -x - SIZE) and (y < -x + SIZE):\nprint(prime[d], end=\' \')\nd=d+1\nelse:\nprint(HIDE, end=\'\')\nprint()', ''),
+(33, 'B1044127', 'UHK316', '00:03:22', '00:03:25', 'b1044202_2.py', '', ''),
+(34, 'B1044127', 'UHK316', '00:03:26', '00:03:26', 'b1044202_3.py', '', ''),
+(35, 'B1044127', 'UHK316', '00:03:27', '00:03:34', 'b1044202_3.py', 'def age(n):\nif n == 1:\nreturn 10', ''),
+(36, 'B1044127', 'UHK316', '00:03:35', '00:03:36', 'b1044202_3.py', '', ''),
+(37, 'B1044127', 'UHK316', '00:03:37', '00:03:54', 'b1044202_3.py', '', ''),
+(38, 'B1044127', 'UHK316', '00:03:55', '00:03:55', 'b1044202_3.py', 'def age(n):\nif n == 1:\nreturn 10\nreturn age(n - 1) + 2\n\nfor i in range(1,6):\nprint(\'第\',i,\'個人\', age(i), \'歲\')', ''),
+(39, 'B1044127', 'UHK316', '00:03:55', '00:03:55', 'b1044202_3.py', 'def age(n):\nif n == 1:\nreturn 10\nreturn age(n - 1) + 2\n\nfor i in range(1,6):\nprint(\'第\',i,\'個人\', age(i), \'歲\')', ''),
+(40, 'B1044127', 'UHK316', '00:03:56', '00:03:59', 'b1044202_3.py', '', ''),
+(41, 'B1044127', 'UHK316', '00:03:59', '00:03:59', 'b1044202_4.py', '', ''),
+(42, 'B1044127', 'UHK316', '00:04:00', '00:04:08', 'b1044202_4.py', '', ''),
+(43, 'B1044127', 'UHK316', '00:04:09', '00:04:16', 'b1044202_4.py', 'score = 98\nrank = None\n\nif 0 <= score and score < 60:\nrank = \'C\'', ''),
+(44, 'B1044127', 'UHK316', '00:04:17', '00:04:22', 'b1044202_4.py', '', ''),
+(45, 'B1044127', 'UHK316', '00:04:23', '00:04:38', 'b1044202_4.py', 'score = 98\nrank = None\n\nif 0 <= score and score < 60:\nrank = \'C\'\nelif 60 <= score and score < 90:\nrank = \'B\'\nelif 90 <= score and score <= 100:\nrank = \'A\'\n\nif rank != None:\nprint(\'%d 属于等级 %s\' % (score, rank))', ''),
+(46, 'B1044127', 'UHK316', '00:04:39', '00:04:42', 'b1044202_4.py', '', ''),
+(47, 'B1044127', 'UHK316', '00:04:43', '00:04:43', 'b1044202_4.py', 'score = 98\nrank = None\n\nif 0 <= score and score < 60:\nrank = \'C\'\nelif 60 <= score and score < 90:\nrank = \'B\'\nelif 90 <= score and score <= 100:\nrank = \'A\'\n\nif rank != None:\nprint(\'%d 属于等级 %s\' % (score, rank))', ''),
+(48, 'B1044127', 'UHK316', '00:04:44', '00:04:44', 'b1044202_4.py', '', ''),
+(49, 'B1044127', 'UHK316', '00:04:45', '00:04:45', 'b1044202_5.py', '', ''),
+(50, 'B1044127', 'UHK316', '00:04:46', '00:04:59', 'b1044202_5.py', 'T1 = (\'a\', \'b\', \'c\')\nT2 = (\'x\', \'y\', \'z\')\n\narr = []\n\ndef comb(i, j, k):', ''),
+(51, 'B1044127', 'UHK316', '00:05:00', '00:05:05', 'b1044202_5.py', '', ''),
+(52, 'B1044127', 'UHK316', '00:05:06', '00:05:06', 'b1044202_5.py', 'T1 = (\'a\', \'b\', \'c\')\nT2 = (\'x\', \'y\', \'z\')\n\narr = []\n\ndef comb(i, j, k):\nc1 = T1[0] + \'-\' + T2[i]\nc2 = T1[1] + \'-\' + T2[j]', ''),
+(53, 'B1044127', 'UHK316', '00:05:07', '00:05:20', 'b1044202_5.py', 'T1 = (\'a\', \'b\', \'c\')\nT2 = (\'x\', \'y\', \'z\')\n\narr = []\n\ndef comb(i, j, k):\nc1 = T1[0] + \'-\' + T2[i]\nc2 = T1[1] + \'-\' + T2[j]\nc3 = T1[2] + \'-\' + T2[k]\nreturn tuple([c1, c2, c3])\n\nfor i in range(3):', ''),
+(54, 'B1044127', 'UHK316', '00:05:21', '00:05:29', 'b1044202_5.py', '', ''),
+(55, 'B1044127', 'UHK316', '00:05:30', '00:05:30', 'b1044202_5.py', 'T1 = (\'a\', \'b\', \'c\')\nT2 = (\'x\', \'y\', \'z\')\n\narr = []\n\ndef comb(i, j, k):\nc1 = T1[0] + \'-\' + T2[i]\nc2 = T1[1] + \'-\' + T2[j]\nc3 = T1[2] + \'-\' + T2[k]\nreturn tuple([c1, c2, c3])\n\nfor i in range(3):\nfor j in range(3):', ''),
+(56, 'B1044127', 'UHK316', '00:05:31', '00:05:38', 'b1044202_5.py', '', ''),
+(57, 'B1044127', 'UHK316', '00:05:38', '00:05:38', 'b1044202_5.py', 'T1 = (\'a\', \'b\', \'c\')\nT2 = (\'x\', \'y\', \'z\')\n\narr = []\n\ndef comb(i, j, k):\nc1 = T1[0] + \'-\' + T2[i]\nc2 = T1[1] + \'-\' + T2[j]\nc3 = T1[2] + \'-\' + T2[k]\nreturn tuple([c1, c2, c3])\n\nfor i in range(3):\nfor j in range(3):\nfor k in range(3):\nif (i == j) or (i == k) or (j == k):\ncontinue\narr.append(comb(i, j, k))', ''),
+(58, 'B1044127', 'UHK316', '00:05:39', '00:05:42', 'b1044202_5.py', '', ''),
+(59, 'B1044127', 'UHK316', '00:05:42', '00:05:42', 'b1044202_5.py', '獲取到的內容為空', ''),
+(60, 'B1044127', 'UHK316', '00:05:43', '00:05:43', 'b1044202_5.py', '', ''),
+(61, 'B1044127', 'UHK316', '00:05:44', '00:06:03', 'b1044202_5.py', 'T1 = (\'a\', \'b\', \'c\')\nT2 = (\'x\', \'y\', \'z\')\n\narr = []\n\ndef comb(i, j, k):\nc1 = T1[0] + \'-\' + T2[i]\nc2 = T1[1] + \'-\' + T2[j]\nc3 = T1[2] + \'-\' + T2[k]\nreturn tuple([c1, c2, c3])\n\nfor i in range(3):\nfor j in range(3):\nfor k in range(3):\nif (i == j) or (i == k) or (j == k):\ncontinue\narr.append(comb(i, j, k))\n\nfor g in arr:\nif (\'a-x\' in g) or (\'c-z\' in g) or (\'c-x\' in g):\ncontinue\nprint(g)', ''),
+(62, 'B1044127', 'UHK316', '00:06:04', '00:06:05', 'b1044202_5.py', '', ''),
+(63, 'B1044127', 'UHK316', '00:06:06', '00:06:24', 'b1044202_6.py', 'class Code:\ncontent = \'\'  # 代碼\nletters = 0  # 字母\nspace = 0  # 空格', ''),
+(64, 'B1044127', 'UHK316', '00:06:25', '00:06:46', 'b1044202_6.py', 'class Code:\ncontent = \'\'  # 代碼\nletters = 0  # 字母\nspace = 0  # 空格\ndigit = 0  # 數字\nothers = 0  # 字元\n\n# 構造函數\ndef __init__(self, content):\nself.content = content\n\n# 分析代碼\ndef analysis(self):', ''),
+(65, 'B1044127', 'UHK316', '00:06:47', '00:06:47', 'b1044202_6.py', '', ''),
+(66, 'B1044127', 'UHK316', '00:06:47', '00:06:47', 'b1044202_6.py', 'class Code:\ncontent = \'\'  # 代碼\nletters = 0  # 字母\nspace = 0  # 空格\ndigit = 0  # 數字\nothers = 0  # 字元\n\n# 構造函數\ndef __init__(self, content):\nself.content = content\n\n# 分析代碼\ndef analysis(self):', ''),
+(67, 'B1044127', 'UHK316', '00:06:48', '00:06:54', 'b1044202_6.py', '', ''),
+(68, 'B1044127', 'UHK316', '00:06:55', '00:06:55', 'b1044202_6.py', 'class Code:\ncontent = \'\'  # 代碼\nletters = 0  # 字母\nspace = 0  # 空格\ndigit = 0  # 數字\nothers = 0  # 字元\n\n# 構造函數\ndef __init__(self, content):\nself.content = content\n\n# 分析代碼\ndef analysis(self):\nfor c in self.content:\nif c.isalpha():\nself.letters += 1\nelif c.isspace():\nself.space += 1\nelif c.isdigit():\nself.digit += 1', ''),
+(69, 'B1044127', 'UHK316', '00:06:56', '00:07:03', 'b1044202_6.py', '', ''),
+(70, 'B1044127', 'UHK316', '00:07:04', '00:07:04', 'b1044202_6.py', 'class Code:\ncontent = \'\'  # 代碼\nletters = 0  # 字母\nspace = 0  # 空格\ndigit = 0  # 數字\nothers = 0  # 字元\n\n# 構造函數\ndef __init__(self, content):\nself.content = content\n\n# 分析代碼\ndef analysis(self):\nfor c in self.content:\nif c.isalpha():\nself.letters += 1\nelif c.isspace():\nself.space += 1\nelif c.isdigit():\nself.digit += 1\nelse:\nself.others += 1\n\n# 展示結果\ndef showData(self):\nform = \'字母（%d） 空格（%d） 數字（%d） 其他字元（%d）\'\ndata = (self.letters, self.space, self.digit, self.others)', ''),
+(71, 'B1044127', 'UHK316', '00:07:05', '00:07:07', 'b1044202_6.py', '獲取到的內容為空', ''),
+(72, 'B1044127', 'UHK316', '00:07:08', '00:07:28', 'b1044202_6.py', 'class Code:\ncontent = \'\'  # 代碼\nletters = 0  # 字母\nspace = 0  # 空格\ndigit = 0  # 數字\nothers = 0  # 字元\n\n# 構造函數\ndef __init__(self, content):\nself.content = content\n\n# 分析代碼\ndef analysis(self):\nfor c in self.content:\nif c.isalpha():\nself.letters += 1\nelif c.isspace():\nself.space += 1\nelif c.isdigit():\nself.digit += 1\nelse:\nself.others += 1\n\n# 展示結果\ndef showData(self):\nform = \'字母（%d） 空格（%d） 數字（%d） 其他字元（%d）\'\ndata = (self.letters, self.space, self.digit, self.others)\nprint(form % data)\n\n\ncontent = input(\'請輸入一段代碼：\\n\')\n\ncode = Code(content)\ncode.analysis()  # 分析\ncode.showData()  # 展示', ''),
+(73, 'B1044127', 'UHK316', '00:07:29', '00:07:32', 'b1044202_6.py', '', ''),
+(74, 'B1044127', 'UHK316', '00:07:33', '00:07:33', 'b1044202_6.py', '', ''),
+(75, 'B1044127', 'UHK316', '00:07:34', '00:07:34', 'b1044202_7.py', '', ''),
+(76, 'B1044127', 'UHK316', '00:07:35', '00:07:50', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'', ''),
+(77, 'B1044127', 'UHK316', '00:07:51', '00:08:11', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'\n\n# 當前日期\ndate0 = datetime.date.today()\nprint(\'當前日期：\', date0.strftime(form))\n\ncal = date0.strft', ''),
+(78, 'B1044127', 'UHK316', '00:08:12', '00:08:32', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'\n\n# 當前日期\ndate0 = datetime.date.today()\nprint(\'當前日期：\', date0.strftime(form))\n\ncal = date0.strftime(form)\n\ndate = cal.split(\'-\')\n\nyear = int(dat', ''),
+(79, 'B1044127', 'UHK316', '00:08:33', '00:08:54', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'\n\n# 當前日期\ndate0 = datetime.date.today()\nprint(\'當前日期：\', date0.strftime(form))\n\ncal = date0.strftime(form)\n\ndate = cal.split(\'-\')\n\nyear = int(date[0])\nmonth = int(date[1])\nday = int(date[2])\n\narr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30,', ''),
+(80, 'B1044127', 'UHK316', '00:08:55', '00:09:15', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'\n\n# 當前日期\ndate0 = datetime.date.today()\nprint(\'當前日期：\', date0.strftime(form))\n\ncal = date0.strftime(form)\n\ndate = cal.split(\'-\')\n\nyear = int(date[0])\nmonth = int(date[1])\nday = int(date[2])\n\narr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]\n\nnum = 0\n\nif ((year % 4 == 0) and (year % 100 != 0)) or (year %', ''),
+(81, 'B1044127', 'UHK316', '00:09:16', '00:09:26', 'b1044202_7.py', '', ''),
+(82, 'B1044127', 'UHK316', '00:09:27', '00:09:27', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'\n\n# 當前日期\ndate0 = datetime.date.today()\nprint(\'當前日期：\', date0.strftime(form))\n\ncal = date0.strftime(form)\n\ndate = cal.split(\'-\')\n\nyear = int(date[0])\nmonth = int(date[1])\nday = int(date[2])\n\narr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]\n\nnum = 0\n\nif ((year % 4 == 0) and (year % 100 != 0)) or (year % 400 == 0):\narr[2] = 29\n\nfor i in range(1, len(arr)):\nif month > i:\nnum += arr[i]\nelse:\nnum += day\nbreak', ''),
+(83, 'B1044127', 'UHK316', '00:09:28', '00:09:31', 'b1044202_7.py', '', ''),
+(84, 'B1044127', 'UHK316', '00:09:32', '00:09:32', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'\n\n# 當前日期\ndate0 = datetime.date.today()\nprint(\'當前日期：\', date0.strftime(form))\n\ncal = date0.strftime(form)\n\ndate = cal.split(\'-\')\n\nyear = int(date[0])\nmonth = int(date[1])\nday = int(date[2])\n\narr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]\n\nnum = 0\n\nif ((year % 4 == 0) and (year % 100 != 0)) or (year % 400 == 0):\narr[2] = 29\n\nfor i in range(1, len(arr)):\nif month > i:\nnum += arr[i]\nelse:\nnum += day\nbreak\n\nprint(\'天數：\', num)', ''),
+(85, 'B1044127', 'UHK316', '00:09:33', '00:09:33', 'b1044202_7.py', '', ''),
+(86, 'B1044127', 'UHK316', '00:09:34', '00:09:36', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'\n\n# 當前日期\ndate0 = datetime.date.today()\nprint(\'當前日期：\', date0.strftime(form))\n\ncal = date0.strftime(form)\n\ndate = cal.split(\'-\')\n\nyear = int(date[0])\nmonth = int(date[1])\nday = int(date[2])\n\narr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]\n\nnum = 0\n\nif ((year % 4 == 0) and (year % 100 != 0)) or (year % 400 == 0):\narr[2] = 29\n\nfor i in range(1, len(arr)):\nif month > i:\nnum += arr[i]\nelse:\nnum += day\nbreak\n\nprint(\'天數：\', num)', ''),
+(87, 'B1044127', 'UHK316', '00:09:37', '00:09:42', '象象牌螢幕錄影程式', '', ''),
+(88, 'B1044127', 'UHK316', '00:09:42', '00:09:42', '主程式', '', ''),
+(89, 'B1044127', 'UHK316', '00:09:43', '00:09:43', 'b1044202_7.py', 'import datetime\n\n# 日期格式\nform = \'%Y-%m-%d\'\n\n# 當前日期\ndate0 = datetime.date.today()\nprint(\'當前日期：\', date0.strftime(form))\n\ncal = date0.strftime(form)\n\ndate = cal.split(\'-\')\n\nyear = int(date[0])\nmonth = int(date[1])\nday = int(date[2])\n\narr = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]\n\nnum = 0\n\nif ((year % 4 == 0) and (year % 100 != 0)) or (year % 400 == 0):\narr[2] = 29\n\nfor i in range(1, len(arr)):\nif month > i:\nnum += arr[i]\nelse:\nnum += day\nbreak\n\nprint(\'天數：\', num)', '');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `student_thinking`
+--
+
+CREATE TABLE `student_thinking` (
+  `id` int(11) NOT NULL,
+  `student_id` varchar(10) NOT NULL,
+  `exam_code` varchar(6) NOT NULL,
+  `score` float NOT NULL,
+  `thinking_process` text NOT NULL,
+  `violation_count` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 傾印資料表的資料 `student_thinking`
+--
+
+INSERT INTO `student_thinking` (`id`, `student_id`, `exam_code`, `score`, `thinking_process`, `violation_count`) VALUES
+(1, 'B1044127', 'UHK316', 90, '### 學生程式撰寫行為分析：\n\n#### 問題1: 用「*」生成一個星號倒三角形\n\n1. **[00:00:00 - 00:00:00] 調整編輯內容**:\n    - 學生啟動錄影並開始編輯 Python 程式。\n\n2. **[00:00:00 - 00:00:35] 撰寫初步代碼**:\n    - 學生在 `B1044101_1.py` 中開始撰寫程式，但初步代碼不全。\n\n3. **[00:00:51 - 00:01:57] 網頁搜索資訊**:\n    - 學生搜尋相關例子來解決問題，找到了倒三角形相關資料。\n\n4. **[00:02:00 - 00:02:02] 最終代碼完成**:\n    - 學生回到 VSCode 並完成倒三角形程式碼，成功產出所需輸出。\n\n```python\nrows = int(input(\"請輸入邊長: \"))\nspace = 0\nfor i in range(rows, 0, -1):\n    for j in range(space):\n        print(end=\" \")\n    space += 1\n    for j in range(i):\n        print(\"*\", end=\" \")\n    print(\"\")\n```\n\n#### 問題2: 用插入排序法將整數列表排序\n\n1. **[00:02:27 - 00:02:43] 撰寫初步代碼**:\n    - 學生在 `B1044101_2.py` 中開始撰寫插入排序。\n\n2. **[00:02:57 - 00:03:53] 網頁搜索資訊**:\n    - 學生搜尋插入排序相關例子來解決問題，進一步了解排序的實現。\n\n3. **[00:03:58 - 00:04:00] 完成插入排序程式碼**:\n    - 學生回到 VSCode 並完成插入排序的程式碼，成功產出所需輸出。\n\n```python\nuser_input = input(\"請輸入一組以逗號分隔的整數: \")\narr = list(map(int, user_input.split(\',\')))\nfor i in range(1, len(arr)):\n    key = arr[i]\n    j = i - 1\n    while j >= 0 and arr[j] > key:\n        arr[j + 1] = arr[j]\n        j -= 1\n    arr[j + 1] = key\nprint(\"排序後的列表:\", arr)\n```\n\n#### 問題3: 构建二元搜尋樹\n\n1. **[00:04:15 - 00:04:29] 撰寫初步代碼**:\n    - 學生在 `B1044101_3.py` 中開始撰寫二元搜尋樹的插入部分。\n\n2. **[00:05:03 - 00:05:33] 網頁搜索資訊**:\n    - 學生搜索關於二元搜尋樹的例子來解決問題，找到相關實現資料。\n\n3. **[00:05:53 - 00:06:17] 最終完成樹的構建與中序遍歷功能**:\n    - 學生回到 VSCode 並完成二元搜尋樹的程式碼，成功實現樹的構建及中序遍歷。\n\n```python\ndef insert(root, value):\n    if root is None:\n        return [value, None, None]\n    if value < root[0]:\n        root[1] = insert(root[1], value)\n    elif value > root[0]:\n        root[2] = insert(root[2], value)\n    return root\n\ndef inorder_traversal(root):\n    if root is None:\n        return []\n    return inorder_traversal(root[1]) + [root[0]] + inorder_traversal(root[2])\n\nroot = None\nuser_input = input(\"請輸入一組以逗號分隔的整數: \")\nvalues = list(map(int, user_input.split(\',\')))\nfor v in values:\n    root = insert(root, v)\nprint(\"中序遍歷結果:\", inorder_traversal(root))\n```\n\n### 總結\n\n學生的整個解題過程展示了以下思考與行動流程：\n\n1. **初步嘗試解題**:\n    - 學生首先直接試圖撰寫代碼，開始處理解決問題。\n\n2. **查找外部資源**：\n    - 當遇到困難時，學生轉向 Google 搜索尋求相關資訊幫助，充分利用網絡資源。\n\n3. **整合及驗證**：\n    - 在獲得必要的參考資料後，學生返回編輯器，整合所獲得的知識完成代碼。\n\n4. **測試與優化**:\n    - 在完成代碼撰寫後進行測試，確保程式能夠正常執行並產出預期結果。', 0);
 
 -- --------------------------------------------------------
 
@@ -318,13 +340,25 @@ ALTER TABLE `student_exams`
 -- 資料表索引 `student_program_attainment`
 --
 ALTER TABLE `student_program_attainment`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_program_attainment_fk_student` (`student_id`),
+  ADD KEY `student_program_attainment_fk_exam` (`exam_code`);
 
 --
 -- 資料表索引 `student_screen_image`
 --
 ALTER TABLE `student_screen_image`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_screen_image_fk_student` (`student_id`),
+  ADD KEY `student_screen_image_fk_exam` (`exam_code`);
+
+--
+-- 資料表索引 `student_thinking`
+--
+ALTER TABLE `student_thinking`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_thinking_fk_student` (`student_id`),
+  ADD KEY `student_thinking_fk_exam` (`exam_code`);
 
 --
 -- 資料表索引 `teachers`
@@ -369,6 +403,12 @@ ALTER TABLE `student_screen_image`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
+-- 使用資料表自動遞增(AUTO_INCREMENT) `student_thinking`
+--
+ALTER TABLE `student_thinking`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- 使用資料表自動遞增(AUTO_INCREMENT) `teachers`
 --
 ALTER TABLE `teachers`
@@ -384,6 +424,31 @@ ALTER TABLE `teachers`
 ALTER TABLE `student_exams`
   ADD CONSTRAINT `student_exams_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`),
   ADD CONSTRAINT `student_exams_ibfk_2` FOREIGN KEY (`exam_code`) REFERENCES `exams` (`exam_code`);
+
+--
+-- 資料表的限制式 `student_program_attainment`
+--
+ALTER TABLE `student_program_attainment`
+  ADD CONSTRAINT `student_program_attainment_fk_exam` FOREIGN KEY (`exam_code`) REFERENCES `exams` (`exam_code`),
+  ADD CONSTRAINT `student_program_attainment_fk_student` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`),
+  ADD CONSTRAINT `student_program_attainment_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`),
+  ADD CONSTRAINT `student_program_attainment_ibfk_2` FOREIGN KEY (`exam_code`) REFERENCES `exams` (`exam_code`);
+
+--
+-- 資料表的限制式 `student_screen_image`
+--
+ALTER TABLE `student_screen_image`
+  ADD CONSTRAINT `student_screen_image_fk_exam` FOREIGN KEY (`exam_code`) REFERENCES `exams` (`exam_code`),
+  ADD CONSTRAINT `student_screen_image_fk_student` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`),
+  ADD CONSTRAINT `student_screen_image_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`),
+  ADD CONSTRAINT `student_screen_image_ibfk_2` FOREIGN KEY (`exam_code`) REFERENCES `exams` (`exam_code`);
+
+--
+-- 資料表的限制式 `student_thinking`
+--
+ALTER TABLE `student_thinking`
+  ADD CONSTRAINT `student_thinking_fk_exam` FOREIGN KEY (`exam_code`) REFERENCES `exams` (`exam_code`),
+  ADD CONSTRAINT `student_thinking_fk_student` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
