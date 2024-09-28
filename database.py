@@ -69,9 +69,9 @@ def get_exam_time_and_buttons(exam_code , student_id):
     student_result = cursor.fetchone()
     student_start_time, student_end_time = student_result if student_result else (None, None)
 
-    # 查詢 student_screen_image 表格中的 end_time 和 content
+    # 查詢 student_screen_image 表格中的 end_time 、 content 和 website
     screen_query = """
-    SELECT end_time, content FROM student_screen_image 
+    SELECT end_time, content, website FROM student_screen_image 
     WHERE exam_code = %s AND student_id = %s AND content != '獲取到的內容為空' AND content != ''
     """
     cursor.execute(screen_query, (exam_code, student_id))
@@ -87,7 +87,7 @@ def get_exam_time_and_buttons(exam_code , student_id):
             'exam_end_time': str(exam_end_time),
             'student_start_time': str(student_start_time),
             'student_end_time': str(student_end_time),
-            'screen_data': [{'end_time': str(row[0]), 'content': row[1]} for row in screen_data]
+            'screen_data': [{'end_time': str(row[0]), 'content': row[1], 'website':row[2]} for row in screen_data]
         }
     else:
         return {'error': '無法獲取考試或學生數據'}
@@ -150,3 +150,80 @@ def get_exam_data(exam_code, student_id):
         result.append({'sub_question': sub_question, 'total_time': total_time_str})
 
     return result
+
+# **添加的 get_attainment_data 函數**
+@eel.expose
+def get_attainment_data(exam_code, student_id):
+    conn = connect_db()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+        # 取得資料表的所有欄位名稱
+        cursor.execute("SHOW COLUMNS FROM student_program_attainment")
+        columns_info = cursor.fetchall()
+        column_names = [col['Field'] for col in columns_info]
+
+        # 排除非時間欄位，包括 'id'
+        exclude_columns = ('id', 'exam_code', 'student_id', 'sub_question', 'total_time')
+        time_columns = [col for col in column_names if col not in exclude_columns]
+
+        # 為每個時間欄位名稱添加反引號
+        time_columns_escaped = [f'`{col}`' for col in time_columns]
+
+        # 構建 SQL 查詢
+        sql = f"""
+            SELECT sub_question, {', '.join(time_columns_escaped)}
+            FROM student_program_attainment
+            WHERE exam_code = %s AND student_id = %s
+        """
+
+        # 執行查詢
+        cursor.execute(sql, (exam_code, student_id))
+        rows = cursor.fetchall()
+
+        # 構建結果列表
+        attainment_data = []
+        for row in rows:
+            data_dict = {'sub_question': row['sub_question']}
+            for col_name in time_columns:
+                # 確保從 row 中取得正確的值
+                data_dict[col_name] = row.get(col_name, 0)
+            attainment_data.append(data_dict)
+
+        return attainment_data
+    except Exception as e:
+        print(f"Error in get_attainment_data: {e}")
+        return None
+    finally:
+        cursor.close()
+        conn.close()
+
+@eel.expose
+def get_design_specifications(exam_code, student_id):
+    conn = connect_db()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+        # 查詢 student_thinking 表格
+        query = """
+        SELECT score, thinking_process, violation_count
+        FROM student_thinking
+        WHERE exam_code = %s AND student_id = %s
+        """
+        cursor.execute(query, (exam_code, student_id))
+        result = cursor.fetchone()
+
+        if result:
+            return {
+                'score': result['score'],
+                'thinking_process': result['thinking_process'],
+                'violation_count': result['violation_count']
+            }
+        else:
+            return {'error': '沒有找到相關的設計規格資料'}
+    except Exception as e:
+        print(f"Error in get_design_specifications: {e}")
+        return {'error': '資料庫查詢錯誤'}
+    finally:
+        cursor.close()
+        conn.close()

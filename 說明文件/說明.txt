@@ -8,11 +8,16 @@
 2.▲時間選擇器的按鈕會出現無法點選的問題(點選超過一定次數才會出現這個問題)
 3.▲顯示考試頁面的標題還需要做調整
 eel 網頁
-1.圓餅圖版面有點空虛，需要再做調整
-2.長條圖尚未實作
-3.顯示設計規格按鈕的資料
-4.時間軸時間改為從00:00開始
+1.時間軸時間改為從00:00開始
+yfiles
+1.https://www.youtube.com/watch?v=_1VGRYsslNo
+2.https://my.yworks.com/
+SonarCube
+1.https://www.sonarsource.com/knowledge/languages/
+2.https://medium.com/@mizuno0927/%E5%AE%89%E8%A3%9D-sonarqube-%E5%8F%8A%E9%85%8D%E7%BD%AE-sql-server-00b11241bd0b
+3.https://ithelp.ithome.com.tw/articles/10282651
 
+首先我會先透過eel.expose從資料庫取得我要的資料，首先先從student_program_attainment資料表塞選exam_code和student_id，塞選出來有幾行資料就生成多少條橫向長條圖，用chrt.js，然後後面比較難，我會講解比較細一點，你不懂就問我一下，原本的那條時間軸，長度為exam資料表中的start_time和end_time，然後事件生成的範圍為student_exams資料表的start_time到end_time，我之前有在原先的時間軸上有生成按鈕，生成規則是student_exams資料表的start_time後每30秒生成一個，直到end_time為止，現在假設我按下第一個按鈕(開始時間30秒後)，要從我一開始塞選出的那幾行調取出數值，至於欄位叫甚麼，如果我是按下開始後30秒的按鈕，我的欄位名稱就是00:00:30，假設我是按下第一個按鈕後30秒的按鈕，我的欄位名稱就是00:01:00，以此類推，我現在舉例讓你比較好理解，假設我今天按下第5個按鈕，就要從資料庫調取00:02:30這個欄位的值，要連同sub_question一起調取，如果我一開始塞選後資料有3行，就會有3條新的長條圖，然後用sub_question分別為每一條長條圖命名，假設第一條叫1a、第二條叫1b、第三條叫2a，然後從00:02:30這個欄位調取出來的值依序為100、100、50，1a長條圖就是100%，1b長條圖也是100%，2b長條圖是50%，這樣有理解嗎
 
 
 完成程式註解

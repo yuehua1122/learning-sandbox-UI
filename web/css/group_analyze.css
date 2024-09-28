@@ -1,0 +1,135 @@
+/* 全局樣式 */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    color: #333;
+}
+
+/* 上方區域樣式 */
+.top-section {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    overflow-y: auto;
+    margin: 20px;
+    transition: transform 1s ease, opacity 1s ease;
+}
+
+/* 按鈕區域樣式 */
+.info-buttons {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    animation: buttonFadeIn 1.5s ease-in-out;
+}
+
+.info-buttons button {
+    padding: 12px 25px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.4s ease;
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.info-buttons button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s ease;
+    border-radius: 30px;
+}
+
+.info-buttons button:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.info-buttons button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+}
+
+/* 顯示區域樣式 */
+.display-area {
+    width: 95%;
+    max-height: 90%;  
+    overflow: auto;
+    background-color: #2e3440;
+    color: #d8dee9;
+    padding: 20px;
+    border-radius: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    text-align: left;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    box-sizing: border-box;  
+}
+
+.display-area.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* 圓餅圖區域樣式 */
+.chart-container {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    padding: 25px;
+}
+
+/* 按鈕動畫效果 */
+@keyframes buttonFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 動畫效果 */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
+.fade-out {
+    animation: fadeOut 0.5s forwards;
+}
