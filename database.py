@@ -53,7 +53,7 @@ def check_student_exam(student_id, exam_code):
 
 # 取得考試時間及相關按鈕資訊
 @eel.expose
-def get_exam_time_and_buttons(exam_code , student_id):
+def get_exam_time_and_buttons(exam_code , student_id, is_for_website=False):
     conn = connect_db()
     cursor = conn.cursor()
 
@@ -69,11 +69,17 @@ def get_exam_time_and_buttons(exam_code , student_id):
     student_result = cursor.fetchone()
     student_start_time, student_end_time = student_result if student_result else (None, None)
 
-    # 查詢 student_screen_image 表格中的 end_time 、 content 和 website
-    screen_query = """
-    SELECT end_time, content, website FROM student_screen_image 
-    WHERE exam_code = %s AND student_id = %s AND content != '獲取到的內容為空' AND content != ''
-    """
+    # 根據是否查詢網站內容，修改 SQL 查詢邏輯
+    if is_for_website:
+        screen_query = """
+        SELECT end_time, website FROM student_screen_image 
+        WHERE exam_code = %s AND student_id = %s AND content = ''
+        """
+    else:
+        screen_query = """
+        SELECT end_time, content FROM student_screen_image 
+        WHERE exam_code = %s AND student_id = %s AND content != '獲取到的內容為空' AND content != ''
+        """
     cursor.execute(screen_query, (exam_code, student_id))
     screen_data = cursor.fetchall()
 
@@ -82,13 +88,22 @@ def get_exam_time_and_buttons(exam_code , student_id):
 
     # 構造返回給前端的數據
     if exam_start_time and exam_end_time and student_start_time and student_end_time:
-        return {
-            'exam_start_time': str(exam_start_time),  # 確保轉換為字串
-            'exam_end_time': str(exam_end_time),
-            'student_start_time': str(student_start_time),
-            'student_end_time': str(student_end_time),
-            'screen_data': [{'end_time': str(row[0]), 'content': row[1], 'website':row[2]} for row in screen_data]
-        }
+        if is_for_website:
+            return {
+                'exam_start_time': str(exam_start_time),
+                'exam_end_time': str(exam_end_time),
+                'student_start_time': str(student_start_time),
+                'student_end_time': str(student_end_time),
+                'screen_data': [{'end_time': str(row[0]), 'website': row[1]} for row in screen_data]
+            }
+        else:
+            return {
+                'exam_start_time': str(exam_start_time),
+                'exam_end_time': str(exam_end_time),
+                'student_start_time': str(student_start_time),
+                'student_end_time': str(student_end_time),
+                'screen_data': [{'end_time': str(row[0]), 'content': row[1]} for row in screen_data]
+            }
     else:
         return {'error': '無法獲取考試或學生數據'}
 

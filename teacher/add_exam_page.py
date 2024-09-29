@@ -437,20 +437,21 @@ class AddExamPage(Screen):
             grading_file_name = None
             
             if exam_file:
-                with open(exam_file, 'rb') as file:
+                with open(exam_file, 'rb') as file:  # 使用二進制模式讀取
                     exam_file_blob = file.read()
-                exam_file_name = os.path.basename(exam_file)  # 獲取檔案名稱
-            
+                exam_file_name = os.path.basename(exam_file)  # 保存檔案名稱
+
             if grading_file:
-                with open(grading_file, 'rb') as file:
+                with open(grading_file, 'rb') as file:  # 使用二進制模式讀取
                     grading_file_blob = file.read()
-                grading_file_name = os.path.basename(grading_file)  # 獲取檔案名稱
+                grading_file_name = os.path.basename(grading_file)
 
             conn = mysql.connector.connect(
                 host="localhost",
                 user="root",
                 password="",
-                database="learning sandbox"
+                database="learning sandbox",
+                charset="utf8mb4"  # 設定連線為 UTF-8 編碼
             )
             cursor = conn.cursor()
 

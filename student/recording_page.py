@@ -1,5 +1,4 @@
 import os
-import subprocess
 import time
 import mysql.connector
 from kivy.uix.screenmanager import Screen, SlideTransition
@@ -9,7 +8,6 @@ from kivy.uix.label import Label
 from kivy.core.text import LabelBase
 from kivy.uix.anchorlayout import AnchorLayout
 import webbrowser
-import win32com.client as comclt
 from student.recording_in_progress_page import RecordingInProgressPage
 
 # 註冊粉圓體字體
@@ -79,19 +77,19 @@ class RecordingPage(Screen):
         
         # 連接到資料庫並獲取 exam_file 和 exam_file_name
         conn = None
+        cursor = None
         try:
             conn = mysql.connector.connect(
                     host="localhost",            # 資料庫主機地址
                     user="root",                 # 資料庫用戶名
                     password="",                 # 資料庫密碼
-                    database="learning sandbox"  # 資料庫名稱
+                    database="learning sandbox", # 資料庫名稱
+                    use_unicode=True     
             )
             cursor = conn.cursor()
 
             # 查詢考試文件
-            cursor.execute("""
-                SELECT exam_file, exam_file_name FROM exams WHERE exam_code = %s
-            """, (self.exam_code,))
+            cursor.execute("""SELECT exam_file, exam_file_name FROM exams WHERE exam_code = %s""", (self.exam_code,))
             result = cursor.fetchone()
 
             if result:
@@ -106,6 +104,8 @@ class RecordingPage(Screen):
             print(f"資料庫錯誤: {err}")
 
         finally:
+            if cursor:
+                cursor.close()
             if conn:
                 conn.close()
 
@@ -121,6 +121,7 @@ class RecordingPage(Screen):
 
     def go_to_recording_in_progress(self, instance):
         conn = None  # 初始化資料庫連接變量
+        cursor = None
         try:
             conn = mysql.connector.connect(
                 host="localhost",            # 資料庫主機地址
@@ -131,9 +132,7 @@ class RecordingPage(Screen):
             cursor = conn.cursor()
 
             # 查詢目前表中的最大ID
-            cursor.execute("""
-                SELECT MAX(id) FROM student_exams
-            """)
+            cursor.execute("""SELECT MAX(id) FROM student_exams""")
             result = cursor.fetchone()
             max_id = result[0] if result[0] is not None else 0  # 如果表為空，設置max_id為0
 
@@ -153,6 +152,8 @@ class RecordingPage(Screen):
             print(f"資料庫錯誤: {err}")
 
         finally:
+            if cursor:
+                cursor.close()
             if conn:
                 conn.close()
 
@@ -173,5 +174,3 @@ class RecordingPage(Screen):
         # 切換到錄製進行中頁面
         self.manager.transition = SlideTransition(direction='left')
         self.manager.current = 'recording_in_progress'
-        
-        

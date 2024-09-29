@@ -4,11 +4,11 @@
 學生
 1.▲倒計時視窗啟動時視窗沒有置頂
 老師
-1.學生考試時間與分數圖表化
-2.▲時間選擇器的按鈕會出現無法點選的問題(點選超過一定次數才會出現這個問題)
-3.▲顯示考試頁面的標題還需要做調整
+1.▲時間選擇器的按鈕會出現無法點選的問題(點選超過一定次數才會出現這個問題)
+2.▲顯示考試頁面的標題還需要做調整
 eel 網頁
 1.時間軸時間改為從00:00開始
+2.
 yfiles
 1.https://www.youtube.com/watch?v=_1VGRYsslNo
 2.https://my.yworks.com/
@@ -16,6 +16,25 @@ SonarCube
 1.https://www.sonarsource.com/knowledge/languages/
 2.https://medium.com/@mizuno0927/%E5%AE%89%E8%A3%9D-sonarqube-%E5%8F%8A%E9%85%8D%E7%BD%AE-sql-server-00b11241bd0b
 3.https://ithelp.ithome.com.tw/articles/10282651
+
+評分
+直方圖
+1.x軸顯示分數(10分一個級距)，y軸顯示人數
+
+完成度
+4個直方圖(全長分四段)
+1.x軸題號，y軸人數，以百分比用顏色做區分(0%-33%低完成率、34%-66%中完成率、67%-100%高完成率)
+
+設計規格花費時長
+直方圖
+1.待討論
+
+查詢網站按鈕
+直方圖
+1.x軸顯示查詢網站次數，y軸顯示分別有幾個人，以分數用顏色做區分(0-40、40-100)
+
+
+
 
 首先我會先透過eel.expose從資料庫取得我要的資料，首先先從student_program_attainment資料表塞選exam_code和student_id，塞選出來有幾行資料就生成多少條橫向長條圖，用chrt.js，然後後面比較難，我會講解比較細一點，你不懂就問我一下，原本的那條時間軸，長度為exam資料表中的start_time和end_time，然後事件生成的範圍為student_exams資料表的start_time到end_time，我之前有在原先的時間軸上有生成按鈕，生成規則是student_exams資料表的start_time後每30秒生成一個，直到end_time為止，現在假設我按下第一個按鈕(開始時間30秒後)，要從我一開始塞選出的那幾行調取出數值，至於欄位叫甚麼，如果我是按下開始後30秒的按鈕，我的欄位名稱就是00:00:30，假設我是按下第一個按鈕後30秒的按鈕，我的欄位名稱就是00:01:00，以此類推，我現在舉例讓你比較好理解，假設我今天按下第5個按鈕，就要從資料庫調取00:02:30這個欄位的值，要連同sub_question一起調取，如果我一開始塞選後資料有3行，就會有3條新的長條圖，然後用sub_question分別為每一條長條圖命名，假設第一條叫1a、第二條叫1b、第三條叫2a，然後從00:02:30這個欄位調取出來的值依序為100、100、50，1a長條圖就是100%，1b長條圖也是100%，2b長條圖是50%，這樣有理解嗎
 
@@ -66,5 +85,8 @@ FileChooserListView：
 RoundedRectangle：
 
 你在畫布上使用的一種圖形，用來為 BoxLayout 等元件設置圓角背景。
+
+
+我希望在按下顯示查詢網站的按鈕時，時間軸上的按鈕採取另一種規則生成，我之前按下程式碼按鈕後再時間軸上生成的按鈕是先從student_screen_image資料表用exam_code、student_id和content != ''塞選出end_time和content，然後利用end_time在時間軸上生成按鈕，按下對應的按鈕會顯示對應的content，現在顯示查詢網站的按鈕我需要稍微改變一下規則，變成從student_screen_image資料表用exam_code、student_id和content = ''塞選出end_time和website，後面就都一樣，利用end_time在時間軸上生成按鈕，按下對應的按鈕會顯示對應的website，你先理解一下，我等一下會給你資料庫的程式碼和js，再請你修改
 
 

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>團體考試分析結果</title>
     <link rel="icon" href="https://s10.aconvert.com/convert/p3r68-cdx67/askke-18k57-001.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/group_analyze.css">
@@ -11,28 +10,24 @@
 <body>
     <!-- 上方內容區域 -->
     <div class="top-section">
-        <!-- 左半邊：按鈕和內容 -->
-        <div class="left-section">
-            <div class="info-buttons">
-                <button id="code-button">程式碼</button>
-                <button id="completion-button">完成度</button>
-                <button id="design-specifications">設計規格花費時長</button>
-                <button id="show-website-button">顯示查詢網站</button>
-                <button id="home-button">回到首頁</button>
-            </div>
-            <div id="display-area" class="display-area">請選擇一個操作</div>
+        <!-- 按鈕區域 -->
+        <div class="info-buttons">
+            <button id="code-button">評分</button>
+            <button id="completion-button">完成度</button>
+            <button id="design-specifications">設計規格花費時長</button>
+            <button id="show-website-button">查詢網站</button>
+            <button id="home-button">回到首頁</button>
         </div>
-
-        <!-- 右半邊：圓餅圖 -->
-        <div class="chart-container">
-            <canvas id="myPieChart"></canvas>
+        <!-- 顯示區域 -->
+        <div id="display-area" class="display-area">
+            <canvas id="myChart"></canvas>
         </div>
     </div>
 
     <!-- 引入 Eel 的 JavaScript 文件 -->
     <script type="text/javascript" src="/eel.js"></script>
 
-    <!-- 引入自訂的JavaScript -->
+    <!-- 引入自訂的 JavaScript -->
     <script src="js/group_analyze.js"></script>
 </body>
 </html>
