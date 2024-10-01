@@ -128,7 +128,7 @@ document.getElementById('code-button').addEventListener('click', function() {
 });
 
 document.getElementById('completion-button').addEventListener('click', function() {
-    showTitle('各設計規格完成度人數比較圖');
+    showTitle('各解題規格完成度人數比較圖');
     // 定义完成度数据，每个时间点的数据包含低、中、高完成度的人数
     let completionData = [
         {   // 0分钟
