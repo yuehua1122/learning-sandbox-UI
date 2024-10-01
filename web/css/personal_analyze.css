@@ -1,4 +1,5 @@
 /* 全局樣式 */
+/* 設置全局樣式，包含背景的線性漸變、彈性佈局及高度和溢出控制 */
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
@@ -11,6 +12,7 @@ body {
 }
 
 /* 頁面過渡效果 */
+/* 定義上半區域的樣式，設置彈性佈局、陰影、邊框圓角及過渡動畫 */
 .top-section {
   flex: 15;
   background-color: #ffffff;
@@ -25,6 +27,7 @@ body {
   will-change: transform, opacity;
 }
 
+/* 定義底部區域的樣式，並加入過渡效果和展開動畫 */
 .bottom-section {
   position: relative;
   height: 20%;
@@ -39,18 +42,20 @@ body {
   will-change: transform;
 }
 
+/* 展開時改變高度與邊距 */
 .expand-up {
   height: calc(100vh - 50px);
   margin-top: -80px;
   padding-top: 50px;
 }
 
+/* 隱藏上半區域的動畫效果 */
 .top-section-hidden {
   transform: translateY(-100%) translateZ(0);
   opacity: 0;
 }
 
-/* 退出按鈕初始化隱藏 */
+/* 退出按鈕初始化設為隱藏，並在需要時顯示 */
 .exit-button {
   display: none; 
   position: absolute;
@@ -67,25 +72,26 @@ body {
   transition: background-color 0.3s ease;
 }
 
+/* 退出按鈕顯示時 */
 .exit-button.show {
   display: block; 
 }
 
+/* 退出按鈕懸停時的顏色變化 */
 .exit-button:hover {
   background-color: #ff1e2b;
 }
 
-/* 時間軸區域 */
+/* 時間軸區域樣式，固定在頁面底部 */
 .timeline-container {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 15%;
   background-color: inherit;
-  /* 如無必要，可移除過渡效果 */
 }
 
-/* 左半邊按鈕和內容 */
+/* 左側按鈕與內容的佈局 */
 .left-section {
   width: 55%;
   display: flex;
@@ -93,6 +99,7 @@ body {
   align-items: flex-start;
 }
 
+/* 設置按鈕區域的彈性佈局與動畫效果 */
 .info-buttons {
   display: flex;
   gap: 20px;
@@ -100,6 +107,7 @@ body {
   animation: buttonFadeIn 0.8s ease-out;
 }
 
+/* 按鈕的基本樣式，包括背景、圓角和陰影 */
 .info-buttons button {
   padding: 12px 25px;
   background-color: #007BFF;
@@ -115,6 +123,7 @@ body {
   will-change: transform, background-color;
 }
 
+/* 按鈕滑過的背景動畫效果 */
 .info-buttons button::before {
   content: '';
   position: absolute;
@@ -129,6 +138,7 @@ body {
   border-radius: 30px;
 }
 
+/* 滑過時背景變化與按鈕的縮放效果 */
 .info-buttons button:hover::before {
   transform: scaleX(1);
   transform-origin: left;
@@ -140,11 +150,11 @@ body {
   box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
 }
 
-/* 顯示區域 */
+/* 顯示區域樣式，包含字體和背景色等設置 */
 .display-area {
   width: 95%;
-  max-height: 90%;             
-  overflow: auto;          
+  max-height: 90%;
+  overflow: auto;
   background-color: #2e3440;
   color: #d8dee9;
   padding: 20px;
@@ -160,12 +170,13 @@ body {
   will-change: opacity, transform;
 }
 
+/* 顯示區域動畫效果 */
 .display-area.show {
   opacity: 1;
   transform: scale(1);
 }
 
-/* 右半邊圓餅圖區域 */
+/* 右側圓餅圖區域的樣式，設置背景、圓角及內邊距 */
 .chart-container {
   width: 40%;
   display: flex;
@@ -177,6 +188,7 @@ body {
   padding: 25px;
 }
 
+/* 圖表容器的樣式，控制圖表的寬高及定位 */
 #bar-chart-container {
   width: 100%;
   height: 85%;
@@ -188,7 +200,7 @@ body {
   height: 100%;
 }
 
-/* 動畫效果 */
+/* 元素淡出動畫 */
 @keyframes fadeOut {
   from {
     opacity: 1;
@@ -203,6 +215,7 @@ body {
   animation: fadeOut 0.5s forwards;
 }
 
+/* 元素淡入動畫 */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -214,6 +227,7 @@ body {
   }
 }
 
+/* 按鈕的淡入動畫效果 */
 @keyframes buttonFadeIn {
   from {
     opacity: 0;

@@ -1,4 +1,5 @@
-/* 全局样式 */
+/* 全局樣式 */
+/* 設置頁面的全局樣式，包括背景的漸變效果、字體樣式、彈性佈局以及頁面高度和溢出處理 */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -10,7 +11,8 @@ body {
     color: #333;
 }
 
-/* 上方区域样式 */
+/* 上方區域樣式 */
+/* 為上方區域設置白色背景、陰影、邊框圓角、內邊距等，並控制其滾動與動畫效果 */
 .top-section {
     flex: 1;
     background-color: #ffffff;
@@ -24,7 +26,8 @@ body {
     transition: transform 1s ease, opacity 1s ease;
 }
 
-/* 按钮区域样式 */
+/* 按鈕區域樣式 */
+/* 設置按鈕區域的佈局方式，並增加動畫效果讓按鈕出現時帶有淡入的動畫 */
 .info-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -35,15 +38,18 @@ body {
     justify-content: center;
 }
 
-/* 显示容器样式 */
+/* 顯示容器樣式 */
+/* 設置顯示容器的佈局方式，讓內容垂直和水平居中 */
 .display-container {
     display: flex;
     flex-direction: row;
-    justify-content: center; /* 水平居中 */
-    align-items: center;     /* 垂直居中 */
+    justify-content: center;
+    align-items: center;
     flex: 1;
 }
 
+/* 隱藏的垂直標題樣式 */
+/* 預設隱藏，並設置垂直書寫模式 */
 .title-vertical {
     display: none;
     writing-mode: vertical-rl;
@@ -53,23 +59,22 @@ body {
     width: 50px;
     position: relative;
     left: -80px;
-    top: -50px;
+    top: -40px;
 }
 
+/* 隱藏的通用樣式 */
 .hidden {
     display: none;
 }
 
-/* 显示区域样式 */
+/* 顯示區域樣式 */
+/* 設置顯示區域的樣式，讓內容在固定寬度下居中顯示，並帶有圓角和陰影 */
 .display-area {
-    /* 移除 flex: 1; 避免占满剩余空间 */
-    /* flex: 1; */
-    /* 设置固定宽度，居中显示 */
-    width: 80%; /* 根据需要调整 */
-    max-width: 800px; /* 限制最大宽度 */
+    width: 80%;
+    max-width: 800px;
     display: flex;
-    justify-content: center; /* 水平居中 */
-    align-items: center;     /* 垂直居中 */
+    justify-content: center;
+    align-items: center;
     overflow: auto;
     background-color: #ffffff;
     color: #333;
@@ -82,13 +87,15 @@ body {
     box-sizing: border-box;
 }
 
-/* 显示区域显示状态 */
+/* 顯示區域顯示狀態 */
+/* 當顯示區域處於顯示狀態時，讓其完全可見並恢復原來的比例 */
 .display-area.show {
     opacity: 1;
     transform: scale(1);
 }
 
-/* 按钮样式 */
+/* 按鈕樣式 */
+/* 設置按鈕的基本樣式，包括背景顏色、圓角、陰影、過渡效果等 */
 .info-buttons button {
     padding: 12px 25px;
     background-color: #007BFF;
@@ -103,6 +110,8 @@ body {
     overflow: hidden;
 }
 
+/* 按鈕滑過時的效果 */
+/* 在按鈕上滑過時，顯示從右至左的背景動畫效果 */
 .info-buttons button::before {
     content: '';
     position: absolute;
@@ -122,13 +131,15 @@ body {
     transform-origin: left;
 }
 
+/* 按鈕滑過時的顏色和陰影變化 */
 .info-buttons button:hover {
     background-color: #0056b3;
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
 }
 
-/* 状态样式 */
+/* 顯示區域不同模式的樣式 */
+/* 設置不同模式下顯示區域的尺寸與佈局，例如完成模式、設計模式等 */
 #display-area.completion-mode canvas {
     width: 90%;
     height: 90%;
@@ -154,6 +165,7 @@ body {
     align-items: center;
 }
 
+#display-area.design-mode, 
 #display-area.show-website-mode {
     width: 750px;
     height: 80%;
@@ -161,7 +173,7 @@ body {
     max-height: 100%;
 }
 
-/* 按钮动画效果 */
+/* 按鈕出現時的淡入動畫效果 */
 @keyframes buttonFadeIn {
     from {
         opacity: 0;
@@ -173,7 +185,7 @@ body {
     }
 }
 
-/* 动画效果 */
+/* 元素消失的淡出動畫 */
 @keyframes fadeOut {
     from {
         opacity: 1;
@@ -184,6 +196,7 @@ body {
     }
 }
 
+/* 為元素添加淡出效果的類 */
 .fade-out {
     animation: fadeOut 0.5s forwards;
 }

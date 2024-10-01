@@ -41,6 +41,9 @@ window.onload = function () {
     if (examCode && studentId) {
         console.log('考試代碼:', examCode, '學號:', studentId);
 
+        const h2Element = document.getElementById('exam-info');
+        h2Element.innerHTML = `學號: ${studentId.toUpperCase()}  考試代碼: ${examCode.toUpperCase()}`;
+
         // 預設不選擇任何功能
         showCode = false;
         completionChecked = false;

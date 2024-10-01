@@ -1,4 +1,5 @@
 /* 全局樣式 */
+/* 設置整體頁面背景的線性漸變效果，彈性佈局方式確保內容在頁面中央居中顯示，並且處理溢出 */
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(to bottom, #6dd5fa, #ffffff);
@@ -10,6 +11,8 @@ body {
     overflow: hidden;
 }
 
+/* 容器樣式 */
+/* 為主要內容容器設置寬度、背景顏色、內邊距和圓角，並添加陰影與透明度過渡動畫 */
 .container {
     width: 60%;
     max-width: 500px;
@@ -25,6 +28,7 @@ body {
 }
 
 /* 按鈕樣式 */
+/* 定義按鈕的樣式，包括邊距、背景顏色、字體大小、圓角、陰影和過渡效果 */
 .step-button {
     padding: 15px 30px;
     margin: 20px 10px;
@@ -38,11 +42,15 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* 按鈕懸停時的動畫效果 */
+/* 鼠標懸停時改變背景顏色並使按鈕放大一點 */
 .step-button:hover {
     background-color: #0056b3;
     transform: scale(1.05);
 }
 
+/* 輸入框樣式 */
+/* 設置文本輸入框的內邊距、寬度、邊框、圓角和陰影，並設置聚焦時的樣式變化 */
 input[type="text"] {
     padding: 15px;
     width: 80%;
@@ -55,12 +63,15 @@ input[type="text"] {
     transition: all 0.3s ease;
 }
 
+/* 輸入框聚焦時的樣式變化 */
+/* 聚焦時改變邊框顏色並增強陰影 */
 input[type="text"]:focus {
     border-color: #007BFF;
     box-shadow: 0 6px 12px rgba(0, 123, 255, 0.2);
 }
 
 /* 顯示與隱藏動畫 */
+/* 設置顯示和隱藏時的透明度和垂直位移動畫效果 */
 .show {
     opacity: 1;
     transform: translateY(0);
@@ -72,22 +83,25 @@ input[type="text"]:focus {
     pointer-events: none;
 }
 
-/* 額外描述 */
+/* 額外描述樣式 */
+/* 定義描述文字的字體大小與顏色 */
 .description {
     font-size: 14px;
     color: #666;
     margin-top: 10px;
 }
 
-/* 錯誤訊息的樣式 */
+/* 錯誤訊息樣式 */
+/* 設置錯誤訊息的顯示方式，預設為隱藏狀態 */
 .error-message {
     color: red;
-    display: none; /* 預設為隱藏 */
+    display: none;
     font-size: 16px;
     margin-top: 15px;
 }
 
-/* 頁面切換動畫 */
+/* 頁面切換動畫效果 */
+/* 設置淡出動畫效果，讓頁面元素逐漸消失並縮小 */
 .fade-out {
     animation: fadeOut 0.5s forwards;
 }
@@ -101,4 +115,3 @@ input[type="text"]:focus {
         transform: scale(0.9);
     }
 }
-

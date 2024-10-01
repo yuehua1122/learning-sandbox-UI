@@ -158,7 +158,7 @@ class ModifyExamPage(Screen):
         form_layout.add_widget(Label(text="禁用的網站:", font_size=22, font_name="BiauKai"))
 
         # 為每個網站生成一個垂直的CheckBox和網站名稱
-        website_layout = BoxLayout(orientation='vertical', size_hint=(1.2, None), height=200)
+        website_layout = BoxLayout(orientation='vertical', size_hint=(1.2, None), height=280)
         for name, site in websites_dict.items():
             site_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height=40, size_hint_x=None, width=250, spacing=150)
             checkbox = CheckBox()

@@ -8,7 +8,6 @@
 2.▲顯示考試頁面的標題還需要做調整
 eel 網頁
 1.時間軸時間改為從00:00開始
-2.
 yfiles
 1.https://www.youtube.com/watch?v=_1VGRYsslNo
 2.https://my.yworks.com/
@@ -16,22 +15,6 @@ SonarCube
 1.https://www.sonarsource.com/knowledge/languages/
 2.https://medium.com/@mizuno0927/%E5%AE%89%E8%A3%9D-sonarqube-%E5%8F%8A%E9%85%8D%E7%BD%AE-sql-server-00b11241bd0b
 3.https://ithelp.ithome.com.tw/articles/10282651
-
-評分
-直方圖
-1.x軸顯示分數(10分一個級距)，y軸顯示人數
-
-完成度
-4個直方圖(全長分四段)
-1.x軸題號，y軸人數，以百分比用顏色做區分(0%-33%低完成率、34%-66%中完成率、67%-100%高完成率)
-
-設計規格花費時長
-直方圖
-1.待討論
-
-查詢網站按鈕
-直方圖
-1.x軸顯示查詢網站次數，y軸顯示分別有幾個人，以分數用顏色做區分(0-40、40-100)
 
 
 
