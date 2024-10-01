@@ -15,7 +15,7 @@ from kivy.uix.floatlayout import FloatLayout
 class MyApp(App):
     def build(self):
         layout = FloatLayout()      
-        bg_image = Image(source='img/background.jpg', allow_stretch=True, keep_ratio=False, size_hint=(1, 1))
+        bg_image = Image(source='img/background3.jpg', allow_stretch=True, keep_ratio=False, size_hint=(1, 1))
         layout.add_widget(bg_image)        
         self.title = "學習沙盒"
         Window.size = (1250, 750)        

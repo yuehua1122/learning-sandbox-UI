@@ -145,11 +145,13 @@ class AddExamPage(Screen):
         
         # 禁用的網站 (顯示CheckBox和網站名稱)
         websites_dict = {
-            "ChatGPT"  : "https://openai.com/blog/openai-codex",
-            "Copilot"  : "https://github.com/features/copilot",
-            "Tabnine"  : "https://www.tabnine.com",
-            "Claude"   : "https://claude.ai/new",
-            "Snyk Code": "https://snyk.io/product/snyk-code"
+                "ChatGPT": "chatgpt.com", 
+                "Claude": "claude.ai",
+                "Codeium": "codeium.com", 
+                "AI21 Labs": "studio.ai21.com",
+                "Copilot": "copilot.cloud.microsoft", 
+                "Messenger": "www.messenger.com",
+                "LINE": "uts-front.line-apps.com" ,
         }
 
         self.checkbox_dict = {}  # 用來存放每個網站的CheckBox
@@ -157,7 +159,7 @@ class AddExamPage(Screen):
         form_layout.add_widget(Label(text="禁用的網站:", font_size=22, font_name="BiauKai"))
 
         # 為每個網站生成一個垂直的CheckBox和網站名稱
-        website_layout = BoxLayout(orientation='vertical', size_hint=(1.2, None), height=200)
+        website_layout = BoxLayout(orientation='vertical', size_hint=(1.2, None), height=280)
         for name, site in websites_dict.items():
             site_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height=40, size_hint_x=None, width=250, spacing=150)
             checkbox = CheckBox()

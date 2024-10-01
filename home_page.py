@@ -13,7 +13,7 @@ class HomePage(Screen):
         layout = BoxLayout(orientation='vertical', padding=50, spacing=20)
         
         # 使用粉圓體顯示中文文字
-        label = Label(text="請選擇身分", font_size=32, font_name="BiauKai")
+        label = Label(text="歡迎來到AI抓碼\n\n請選擇身分", font_size=50, font_name="BiauKai", halign="center")
         layout.add_widget(label)
         
         student_btn = Button(text="學生", font_size=24, size_hint=(0.6, 0.2), pos_hint={'center_x': 0.5}, font_name="BiauKai")

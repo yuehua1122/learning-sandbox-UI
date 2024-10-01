@@ -1,3 +1,12 @@
+// 获取标题元素
+const titleElement = document.querySelector('.title-vertical');
+
+// 定义一个函数，用于显示标题并更新内容
+function showTitle(content) {
+    titleElement.style.display = 'block'; // 显示标题
+    titleElement.textContent = content;   // 更新标题内容
+}
+
 document.getElementById('home-button').onclick = () => {
     document.body.classList.add('fade-out');
     setTimeout(() => {
@@ -8,6 +17,7 @@ document.getElementById('home-button').onclick = () => {
 document.getElementById('code-button').addEventListener('click', function() {
     // 清空 display-area
     document.getElementById('display-area').innerHTML = '<canvas id="myChart"></canvas>';
+    showTitle('評分結果');
     
     // 切換到評分模式
     document.getElementById('display-area').classList.remove('completion-mode');
@@ -118,15 +128,32 @@ document.getElementById('code-button').addEventListener('click', function() {
 });
 
 document.getElementById('completion-button').addEventListener('click', function() {
-    // 定義完成度數據
+    showTitle('各設計規格完成度人數比較圖');
+    // 定义完成度数据，每个时间点的数据包含低、中、高完成度的人数
     let completionData = [
-        [5, 10, 5, 7, 6, 5, 8, 4, 3, 2],  // 0分鐘
-        [8, 12, 10, 12, 11, 10, 9, 7, 6, 5],  // 10分鐘
-        [12, 14, 13, 15, 12, 13, 11, 8, 7, 6],  // 20分鐘
-        [15, 16, 18, 20, 16, 15, 13, 12, 10, 8]  // 30分鐘
+        {   // 0分钟
+            low: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30],
+            medium: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            high: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        },
+        {   // 10分钟
+            low: [3, 7, 7, 14, 15, 20, 24, 28, 29, 30],
+            medium: [5, 9, 11, 8, 10, 7, 5, 2, 1, 0],
+            high: [22, 14, 12, 8, 5, 3, 1, 0, 0, 0]
+        },
+        {   // 20分钟
+            low: [0, 1, 0, 0, 5, 3, 7, 5, 5, 7],
+            medium: [1, 3, 2, 10, 8, 14, 15, 19, 18, 16],
+            high: [29, 26, 28, 20, 17, 13, 8, 6, 7, 7]
+        },
+        {   // 30分钟
+            low: [0, 0, 0, 0, 0, 1, 2, 3, 3, 5],
+            medium: [0, 0, 1, 4, 3, 4, 4, 3, 2, 2],
+            high: [30, 30, 29, 26, 27, 25, 24, 24, 25, 23]
+        }
     ];
 
-    // 清空 display-area 並添加四個 canvas，形成 2x2 的圖表
+    // 清空 display-area 并添加四个 canvas，形成 2x2 的图表
     document.getElementById('display-area').innerHTML = `
         <canvas id="chart0"></canvas>
         <canvas id="chart10"></canvas>
@@ -134,58 +161,50 @@ document.getElementById('completion-button').addEventListener('click', function(
         <canvas id="chart30"></canvas>
     `;
 
-    // 切換到完成度模式，啟用 2x2 的佈局
+    // 切换到完成度模式，启用 2x2 的布局
     document.getElementById('display-area').classList.remove('score-mode');
     document.getElementById('display-area').classList.remove('show-website-mode');
     document.getElementById('display-area').classList.add('completion-mode');
 
-    // 確保 canvas 元素已經正確加入到 DOM 中
+    // 确保 canvas 元素已经正确加入到 DOM 中
     const chart0 = document.getElementById('chart0');
     const chart10 = document.getElementById('chart10');
     const chart20 = document.getElementById('chart20');
     const chart30 = document.getElementById('chart30');
 
-    // 檢查 canvas 是否已經存在，確保可以進行繪製
+    // 检查 canvas 是否已经存在，确保可以进行绘制
     if (chart0 && chart10 && chart20 && chart30) {
-        drawCompletionChart(completionData[0], 'chart0');
-        drawCompletionChart(completionData[1], 'chart10');
-        drawCompletionChart(completionData[2], 'chart20');
-        drawCompletionChart(completionData[3], 'chart30');
+        drawCompletionChart(completionData[0], 'chart0', '第0分鐘');
+        drawCompletionChart(completionData[1], 'chart10', '第10分鐘');
+        drawCompletionChart(completionData[2], 'chart20', '第20分鐘');
+        drawCompletionChart(completionData[3], 'chart30', '第30分鐘');
     } else {
         console.error('Canvas elements not found in the DOM!');
     }
 
-    // 顯示 display-area
+    // 显示 display-area
     document.getElementById('display-area').classList.add('show');
 });
 
-function drawCompletionChart(data, chartId) {
+function drawCompletionChart(data, chartId, title) {
     let ctx = document.getElementById(chartId).getContext('2d');
-
-    // 設置每個題目固定人數，例如總人數為30
-    let totalPeople = 30;
-
-    // 假設數據分為低、中、高完成度
-    let lowCompletion = [5, 10, 5, 7, 6, 5, 8, 4, 3, 2];
-    let mediumCompletion = [10, 10, 10, 10, 12, 10, 12, 14, 10, 8];
-    let highCompletion = [15, 10, 15, 13, 12, 15, 10, 12, 17, 20];
 
     let chartData = {
         labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
         datasets: [
             {
                 label: '低完成度',
-                data: lowCompletion,
+                data: data.low,
                 backgroundColor: '#ff4c4c'
             },
             {
                 label: '中完成度',
-                data: mediumCompletion,
+                data: data.medium,
                 backgroundColor: '#ffd700'
             },
             {
                 label: '高完成度',
-                data: highCompletion,
+                data: data.high,
                 backgroundColor: '#4caf50'
             }
         ]
@@ -195,15 +214,46 @@ function drawCompletionChart(data, chartId) {
         type: 'bar',
         data: chartData,
         options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: title
+                }
+            },
             scales: {
-                x: { stacked: true },
-                y: { beginAtZero: true, stacked: true, max: totalPeople }
+                x: {
+                    stacked: true,
+                    title: {
+                        display: true,
+                        text: '解題規格', // 设置 X 轴标题
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        },
+                        color: '#333' // 可根据需要调整颜色
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    stacked: true,
+                    max: 30,
+                    title: {
+                        display: true,
+                        text: '人數', // 设置 Y 轴标题
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        },
+                        color: '#333' // 可根据需要调整颜色
+                    }
+                }
             }
         }
     });
 }
 
 document.getElementById('show-website-button').addEventListener('click', function() {
+    showTitle('查詢網站次數分析');
     // 清空 display-area 並添加一個 canvas
     document.getElementById('display-area').innerHTML = '<canvas id="websiteChart"></canvas>';
 
@@ -214,20 +264,26 @@ document.getElementById('show-website-button').addEventListener('click', functio
 
     // 假設的查詢網站次數數據
     let searchCounts = ['1次', '2次', '3次', '4次', '5次']; // X軸顯示查詢次數
-    let lowRange = [5, 6, 7, 8, 10];  // 每次查詢對應的0-40分數區間的人數
-    let highRange = [25, 24, 23, 22, 20]; // 每次查詢對應的40-100分數區間的人數
+    let lowRange = [3, 2, 7, 1, 10];  // 每次查詢對應的0-59分數區間的人數
+    let midRange = [7, 4, 8, 5, 5];  // 每次查詢對應的60-79分數區間的人數
+    let highRange = [10, 8, 15, 9, 3]; // 每次查詢對應的80-100分數區間的人數
 
     // 準備圖表數據
     let data = {
         labels: searchCounts,  // X軸：查詢次數
         datasets: [
             {
-                label: '0-40分數',
+                label: '0-59分數',
                 data: lowRange,  // 低分數區間的人數
                 backgroundColor: '#ff4c4c',  // 紅色代表低分數
             },
             {
-                label: '40-100分數',
+                label: '60-79分數',
+                data: midRange,  // 中分數區間的人數
+                backgroundColor: '#ffd700',  // 黃色代表高分數
+            },
+            {
+                label: '80-100分數',
                 data: highRange,  // 高分數區間的人數
                 backgroundColor: '#4caf50',  // 綠色代表高分數
             }
@@ -288,7 +344,7 @@ document.getElementById('show-website-button').addEventListener('click', functio
                         size: 14
                     },
                     stepSize: 1,
-                    max: 30  // 固定人數為 30
+                    suggestedMax: 30  // 固定人數為 30
                 },
                 grid: {
                     color: '#e0e0e0'

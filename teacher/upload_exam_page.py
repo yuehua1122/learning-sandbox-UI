@@ -92,11 +92,13 @@ class UploadExamPage(Screen):
 
         # 預定義的網站名稱與網址對應字典
         websites_dict = {
-            "ChatGPT"  : "https://openai.com/blog/openai-codex",
-            "Copilot"  : "https://github.com/features/copilot",
-            "Tabnine"  : "https://www.tabnine.com",
-            "Claude"   : "https://claude.ai/new",
-            "Snyk Code": "https://snyk.io/product/snyk-code"
+                "ChatGPT": "chatgpt.com", 
+                "Claude": "claude.ai",
+                "Codeium": "codeium.com", 
+                "AI21 Labs": "studio.ai21.com",
+                "Copilot": "copilot.cloud.microsoft", 
+                "Messenger": "www.messenger.com",
+                "LINE": "uts-front.line-apps.com" ,
         }
 
         # 設置標題
