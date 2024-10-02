@@ -286,17 +286,17 @@ function drawDesignChart() {
         labels: labels,
         datasets: [
             {
-                label: '60分以上',
+                label: '60分鐘以上',
                 data: lowRange,
                 backgroundColor: '#ff4c4c'
             },
             {
-                label: '30-60分',
+                label: '30-60分鐘',
                 data: midRange,
                 backgroundColor: '#ffd700'
             },
             {
-                label: '0-30分',
+                label: '0-30分鐘',
                 data: highRange,
                 backgroundColor: '#4caf50'
             }
