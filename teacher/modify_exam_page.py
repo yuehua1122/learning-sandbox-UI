@@ -84,9 +84,9 @@ class ModifyExamPage(Screen):
         form_layout.add_widget(Label(text="開放時間(結束):", font_size=22, font_name="BiauKai"))
         form_layout.add_widget(end_time_layout)
         
-        # 作答時間
+        # 作答時長
         self.duration_input = TextInput(font_size=22, size_hint=(1.2, None), height=40, font_name="BiauKai")
-        form_layout.add_widget(Label(text="作答時間:", font_size=22, font_name="BiauKai"))
+        form_layout.add_widget(Label(text="作答時長:", font_size=22, font_name="BiauKai"))
         form_layout.add_widget(self.duration_input)
 
         # 考試類型 (下拉式選單)
@@ -321,7 +321,7 @@ class ModifyExamPage(Screen):
 
         popup_layout.add_widget(buttons_layout)
 
-        popup = Popup(title="選擇時間", content=popup_layout, size_hint=(0.8, 0.5), title_font="BiauKai")
+        popup = Popup(title="選擇時間", content=popup_layout, size_hint=(0.6, 0.5), title_font="BiauKai")
         popup.open()
 
     def set_time(self, time_type, year, month, day, hour, minute, popup):

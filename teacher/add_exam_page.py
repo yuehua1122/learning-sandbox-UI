@@ -84,9 +84,9 @@ class AddExamPage(Screen):
         form_layout.add_widget(Label(text="開放時間(結束):", font_size=22, font_name="BiauKai"))
         form_layout.add_widget(end_time_layout)
 
-        # 作答時間
+        # 作答時長
         self.duration_input = TextInput(font_size=22, size_hint=(1.2, None), height=40, font_name="BiauKai")
-        form_layout.add_widget(Label(text="作答時間:", font_size=22, font_name="BiauKai"))
+        form_layout.add_widget(Label(text="作答時長:", font_size=22, font_name="BiauKai"))
         form_layout.add_widget(self.duration_input)
 
         # 考試類型 (下拉式選單)
@@ -332,7 +332,7 @@ class AddExamPage(Screen):
 
         popup_content.add_widget(buttons_layout)
 
-        popup = Popup(title="選擇時間", content=popup_content, size_hint=(0.8, 0.5), title_font="BiauKai")
+        popup = Popup(title="選擇時間", content=popup_content, size_hint=(0.6, 0.5), title_font="BiauKai")
         popup.open()
         
     def open_file_chooser(self, file_type):
@@ -412,7 +412,7 @@ class AddExamPage(Screen):
             self.show_error_popup("請選擇開放時間(結束)")
             return
         if not duration:
-            self.show_error_popup("請輸入作答時間")
+            self.show_error_popup("請輸入作答時長")
             return
         if not exam_type or exam_type == "選擇考試類型":
             self.show_error_popup("請選擇考試類型")

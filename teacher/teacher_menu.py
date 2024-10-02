@@ -6,6 +6,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.anchorlayout import AnchorLayout
+from kivy.uix.widget import Widget
 import database
 
 # Initialize eel with the web folder that contains the HTML, CSS, and JS files
@@ -23,21 +24,25 @@ class TeacherMenuPage(Screen):
         # 標題標籤
         title_label = Label(text="老師功能選單", font_size=32, font_name="BiauKai", size_hint=(1, 0.2))
         layout.add_widget(title_label)
+        
+        # 按鈕置中布局
+        def center_button(button_text, button_action):
+            button_layout = BoxLayout(orientation='horizontal', size_hint=(1, 0.1))
+            button = Button(text=button_text, font_size=24, size_hint=(0.6, 1), width=200, font_name="BiauKai")
+            button.bind(on_press=button_action)
+            button_layout.add_widget(Widget())  # 左側空白填充
+            button_layout.add_widget(button)  # 按鈕
+            button_layout.add_widget(Widget())  # 右側空白填充
+            return button_layout
 
         # 上傳題目按鈕
-        upload_button = Button(text="上傳題目", font_size=24, size_hint=(1, 0.2), font_name="BiauKai")
-        upload_button.bind(on_press=self.go_to_upload)
-        layout.add_widget(upload_button)
+        layout.add_widget(center_button("上傳題目", self.go_to_upload))
 
         # 分析結果按鈕
-        analyze_button = Button(text="分析結果", font_size=24, size_hint=(1, 0.2), font_name="BiauKai")
-        analyze_button.bind(on_press=self.go_to_analyze)
-        layout.add_widget(analyze_button)
+        layout.add_widget(center_button("分析結果", self.go_to_analyze))
 
         # 返回首頁按鈕
-        back_button = Button(text="返回首頁", font_size=24, size_hint=(1, 0.2), font_name="BiauKai")
-        back_button.bind(on_press=self.go_to_home)
-        layout.add_widget(back_button)
+        layout.add_widget(center_button("返回首頁", self.go_to_home))
 
         anchor_layout.add_widget(layout)
         self.add_widget(anchor_layout)

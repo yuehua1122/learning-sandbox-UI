@@ -8,6 +8,7 @@
 2.▲顯示考試頁面的標題還需要做調整
 eel 網頁
 1.時間軸時間改為從00:00開始
+2.團體分析頁面圖表資料連接資料庫
 yfiles
 1.https://www.youtube.com/watch?v=_1VGRYsslNo
 2.https://my.yworks.com/

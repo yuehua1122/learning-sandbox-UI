@@ -111,9 +111,9 @@ class ExamInterfacePage(Screen):
             self.add_content_row("考生學號  :  ", self.student_id)
             self.add_content_row("科目  :  ", subject)
             self.add_content_row("開放時間  :  ", f"{start_time} ~ {end_time}")
-            self.add_content_row("作答時間  :  ", duration)
+            self.add_content_row("作答時長  :  ", duration)
             self.add_content_row("提示功能  :  ", hint_status)
-            self.add_content_row("作答說明/師長叮嚀  :  ", "不能使用ChatGPT等AI工具或開書考\n如有特殊原因導致無法及時開始螢幕錄影，請告知監考人員")
+            self.add_content_row("作答說明/師長叮嚀  :  ", "不能使用ChatGPT等AI工具或開書考\n本次考試可以上網自行尋求解題素材，但是不可以與他人或智慧機器人交談取得答案")
 
     def add_content_row(self, title, content):
         # 動態添加考試資料每一行的標題和內容

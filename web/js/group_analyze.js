@@ -63,7 +63,7 @@ document.getElementById('design-specifications').addEventListener('click', funct
 
 // 網站查詢次數與人數分布圖按鈕事件監聽
 document.getElementById('show-website-button').addEventListener('click', function() {
-    showTitle('網站查詢次數與人數分布圖');
+    showTitle('查詢網站次數圖');
     setupDisplayArea('<canvas id="websiteChart"></canvas>');
     switchMode('show-website-mode');
     drawWebsiteChart();
