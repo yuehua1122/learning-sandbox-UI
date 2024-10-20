@@ -16,11 +16,11 @@ class HomePage(Screen):
         label = Label(text="歡迎來到AI抓碼\n\n請選擇身分", font_size=50, font_name="BiauKai", halign="center")
         layout.add_widget(label)
         
-        student_btn = Button(text="學生", font_size=24, size_hint=(0.6, 0.2), pos_hint={'center_x': 0.5}, font_name="BiauKai")
+        student_btn = Button(text="學生", font_size=24, size_hint=(0.3, 0.2), pos_hint={'center_x': 0.5}, font_name="BiauKai")
         student_btn.bind(on_press=self.go_student)
         layout.add_widget(student_btn)
 
-        teacher_btn = Button(text="老師", font_size=24, size_hint=(0.6, 0.2), pos_hint={'center_x': 0.5}, font_name="BiauKai")
+        teacher_btn = Button(text="老師", font_size=24, size_hint=(0.3, 0.2), pos_hint={'center_x': 0.5}, font_name="BiauKai")
         teacher_btn.bind(on_press=self.go_teacher)
         layout.add_widget(teacher_btn)  
         

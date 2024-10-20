@@ -1,15 +1,17 @@
-// 全域變數初始化
+// 全局變量初始化
 let selectedItem = null;
 let showCode = false;
 let completionChecked = false;
 let showWebsite = false;
+let showHint = false; // 新增，用於追蹤是否顯示提示功能
 let timeline = null;
 let items = null;
 let currentScreenData = null; // 當前使用的螢幕資料
 let examStartTime, examEndTime, studentStartTime, studentEndTime; // 儲存時間
-let chartData = []; // 保存圓餅圖資料
+let chartData = []; // 保存餅圖資料
 let attainmentData = []; // 保存 student_program_attainment 資料
-let barChart = null; // 水平長條圖
+let barChart = null; // 水平柱狀圖
+let extraPointsData = null; // 保存 extra_points 資料
 
 const colorPalette = [
     '#FF6384', // 紅色
@@ -24,7 +26,7 @@ const colorPalette = [
     '#7D4F6D'  // 棕色
 ];
 
-// 取得 Cookie 的值的函數
+// 獲取 Cookie 的值的函數
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -32,11 +34,11 @@ function getCookie(name) {
     return null;
 }
 
-// 從 Cookie 中取得 examCode 和 studentId
+// 從 Cookie 中獲取 examCode 和 studentId
 const examCode = getCookie('examCode');
 const studentId = getCookie('studentId');
 
-// 當頁面載入完成後執行
+// 當頁面加載完成後執行
 window.onload = function () {
     if (examCode && studentId) {
         console.log('考試代碼:', examCode, '學號:', studentId);
@@ -48,12 +50,13 @@ window.onload = function () {
         showCode = false;
         completionChecked = false;
         showWebsite = false;
+        showHint = false; // 初始化為 false
 
-        // 取得程式碼的螢幕資料，並顯示時間軸
+        // 獲取程式碼的螢幕資料，並顯示時間軸
         eel.get_exam_time_and_buttons(examCode, studentId)((response) => {
             if (response.error) {
                 console.error(response.error);
-                document.getElementById('display-area').textContent += ' 無法取得程式碼資料。';
+                document.getElementById('display-area').textContent += ' 無法獲取程式碼資料。';
             } else {
                 console.log('螢幕資料:', response);
                 examStartTime = response.exam_start_time;
@@ -61,34 +64,44 @@ window.onload = function () {
                 studentStartTime = response.student_start_time;
                 studentEndTime = response.student_end_time;
                 currentScreenData = response.screen_data; // 保存當前螢幕資料
-                setupTimeline(); // 設置時間軸
-                updateDisplayArea(''); // 清空顯示區域
+
+                // 獲取 extra_points 資料
+                eel.get_extra_points(examCode, studentId)((extraPointsResponse) => {
+                    if (extraPointsResponse) {
+                        console.log('加分:', extraPointsResponse);
+                        extraPointsData = extraPointsResponse; // 保存 extra_points 資料
+                        setupTimeline(); // 設置時間軸
+                        updateDisplayArea('');
+                    } else {
+                        console.error('無法獲取加分資料');
+                    }
+                });
             }
         });
 
-        // 取得考試資料並處理（圓餅圖）
+        // 獲取考試資料並處理（餅圖）
         eel.get_exam_data(examCode, studentId)((response) => {
             if (response) {
                 console.log('題號和每一題的考試時間:', response);
                 processExamData(response);
             } else {
-                console.error('無法取得考試資料');
+                console.error('無法獲取考試資料');
             }
         });
 
-        // 取得 student_program_attainment 資料
+        // 獲取 student_program_attainment 資料
         eel.get_attainment_data(examCode, studentId)((response) => {
             if (response) {
-                attainmentData = response; // 儲存資料
+                attainmentData = response; // 存儲資料
                 console.log('每一題在每個時間點的完成度:', attainmentData);
             } else {
-                console.error('無法取得達成度資料');
+                console.error('無法獲取達成度資料');
             }
         });
 
     } else {
-        console.error('未能取得考試代碼或學號');
-        document.getElementById('display-area').textContent = '未能取得考試代碼或學號！';
+        console.error('未能獲取考試代碼或學號');
+        document.getElementById('display-area').textContent = '未能獲取考試代碼或學號！';
     }
 };
 
@@ -123,11 +136,22 @@ function setupTimeline() {
         const endTime = timeStringToSeconds(entry.end_time);
         if (endTime) {
             const buttonTime = new Date(new Date(studentStartTime).getTime() + endTime * 1000);
+
+            // 檢查該時間點的 extra_points 狀態
+            let extraPoint = 0;
+            if (extraPointsData) {
+                const matchedData = extraPointsData.find(item => item.end_time === entry.end_time);
+                if (matchedData) {
+                    extraPoint = matchedData.extra_points;
+                }
+            }
+
             items.add({
                 id: index + 1,
                 content: '點擊',
                 start: buttonTime,
-                dataIndex: index // 保存索引以便後續使用
+                dataIndex: index, // 保存索引以便後續使用
+                extraPoint: extraPoint // 保存 extra_points 狀態
             });
         } else {
             console.log(`跳過無效資料: end_time = ${entry.end_time}`);
@@ -147,7 +171,7 @@ function createTimeline() {
         max: new Date(examEndTime),
         zoomMin: 60 * 1000, // 最小縮放為1分鐘
         zoomMax: 60 * 60 * 1000, // 最大縮放為1小時
-        stack: false
+        stack: false,
     };
 
     // 如果已存在時間軸，則銷毀
@@ -163,17 +187,17 @@ function createTimeline() {
         selectedItem = properties.items.length > 0 ? properties.items[0] : null;
         if (selectedItem) {
             const selectedItemData = items.get(selectedItem);
-            const dataIndex = selectedItemData.dataIndex; // 取得資料索引
+            const dataIndex = selectedItemData.dataIndex; // 獲取資料索引
             if (completionChecked) {
-                // 顯示達成度長條圖
+                // 顯示達成度柱狀圖
                 const selectedTime = getTimeFromItem(selectedItem);
                 updateBarChart(selectedTime);
             } else if (showCode) {
                 // 顯示程式碼內容
                 updateDisplayArea(currentScreenData[dataIndex].content);
             } else if (showWebsite) {
-                // 顯示查詢網站
-                displayWebsite(currentScreenData[dataIndex].website);
+                // 顯示查詢網站，並顯示加分按鈕
+                displayWebsite(currentScreenData[dataIndex].website, selectedItemData.extraPoint, currentScreenData[dataIndex].end_time);
             } else {
                 updateDisplayArea('請選擇功能以顯示內容');
             }
@@ -181,16 +205,16 @@ function createTimeline() {
     });
 }
 
-// 根據按鈕ID取得對應的時間（格式為 HH:MM:SS）
+// 根據按鈕ID獲取對應的時間（格式為 HH:MM:SS）
 function getTimeFromItem(itemId) {
     // 根據 itemId 計算時間
     const timeInSeconds = 30 * itemId; // 每個按鈕代表 30 秒
     return secondsToTimeString(timeInSeconds);
 }
 
-// 更新水平長條圖
+// 更新水平柱狀圖
 function updateBarChart(timeKey) {
-    // 從 attainmentData 中取得對應時間點的資料
+    // 從 attainmentData 中獲取對應時間點的資料
     const labels = [];
     const dataValues = [];
 
@@ -214,7 +238,7 @@ function updateBarChart(timeKey) {
                 }]
             },
             options: {
-                indexAxis: 'y', // 將 x 和 y 軸互換，顯示水平長條圖
+                indexAxis: 'y', // 將 x 和 y 軸互換，顯示水平柱狀圖
                 scales: {
                     x: {
                         beginAtZero: true,
@@ -257,13 +281,103 @@ function updateDisplayArea(content) {
     displayArea.classList.add('show');
 }
 
-// 顯示查詢網站
-function displayWebsite(url) {
+// 顯示查詢網站，並添加加分按鈕
+function displayWebsite(url, extraPoint, endTime) {
+    const displayArea = document.getElementById('display-area');
+    displayArea.innerHTML = ''; // 清空顯示區域
+
     if (url && url !== '') {
-        updateDisplayArea(url); // 在 display-area 顯示網址
-        window.open(url, '_blank', 'width=800,height=600'); // 開啟新視窗
+        // 顯示網址
+        const urlElement = document.createElement('p');
+        urlElement.textContent = url;
+        displayArea.appendChild(urlElement);
+
+        // 顯示狀態
+        const statusElement = document.createElement('p');
+        statusElement.className = 'display-area-status';
+        statusElement.textContent = extraPoint === 1 ? '狀態：已加分' : '狀態：未加分';
+        displayArea.appendChild(statusElement);
+
+        // 創建按鈕容器
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'bonus-buttons';
+        displayArea.appendChild(buttonContainer);
+
+        // 創建加分按鈕
+        const addButton = document.createElement('button');
+        addButton.textContent = '加分';
+        addButton.disabled = extraPoint === 1; // 已加分時禁用
+        buttonContainer.appendChild(addButton);
+
+        // 創建取消加分按鈕
+        const cancelButton = document.createElement('button');
+        cancelButton.textContent = '取消加分';
+        cancelButton.className = 'cancel-button';
+        cancelButton.disabled = extraPoint === 0; // 未加分時禁用
+        buttonContainer.appendChild(cancelButton);
+
+        // 加分按鈕點擊事件
+        addButton.onclick = function () {
+            const newExtraPoint = 1;
+            // 調用後端函數更新資料庫
+            eel.update_extra_points(examCode, studentId, endTime, newExtraPoint)((response) => {
+                if (response.success) {
+                    extraPoint = newExtraPoint; // 更新 extraPoint 變量
+
+                    // 更新狀態文字
+                    statusElement.textContent = '狀態：已加分';
+
+                    // 更新按鈕狀態
+                    addButton.disabled = true;
+                    cancelButton.disabled = false;
+
+                    // 更新時間軸按鈕（如果需要）
+                    const selectedItemData = items.get(selectedItem);
+                    selectedItemData.extraPoint = extraPoint;
+                    items.update(selectedItemData);
+                } else {
+                    console.error('更新加分狀態失敗:', response.error);
+                }
+            });
+        };
+
+        // 取消加分按鈕點擊事件
+        cancelButton.onclick = function () {
+            const newExtraPoint = 0;
+            // 調用後端函數更新資料庫
+            eel.update_extra_points(examCode, studentId, endTime, newExtraPoint)((response) => {
+                if (response.success) {
+                    extraPoint = newExtraPoint; // 更新 extraPoint 變量
+
+                    // 更新狀態文字
+                    statusElement.textContent = '狀態：未加分';
+
+                    // 更新按鈕狀態
+                    addButton.disabled = false;
+                    cancelButton.disabled = true;
+
+                    // 更新時間軸按鈕（如果需要）
+                    const selectedItemData = items.get(selectedItem);
+                    selectedItemData.extraPoint = extraPoint;
+                    items.update(selectedItemData);
+                } else {
+                    console.error('更新加分狀態失敗:', response.error);
+                }
+            });
+        };
+
+        // 創建「開啟網站」按鈕
+        const openButton = document.createElement('button');
+        openButton.textContent = '開啟網站';
+        buttonContainer.appendChild(openButton);
+
+        // 「開啟網站」按鈕點擊事件
+        openButton.onclick = function () {
+            window.open(url, '_blank', 'width=800,height=600');
+        };
+
     } else {
-        updateDisplayArea('沒有對應的網站資料');
+        updateDisplayArea('沒有對應的查詢網站資料');
     }
 }
 
@@ -278,7 +392,7 @@ function showDesignSpecifications() {
     });
 }
 
-// 初始化長條圖，所有題目的達成度為 0%
+// 初始化柱狀圖，所有題目的達成度為 0%
 function initBarChartWithZero() {
     const labels = attainmentData.map(item => item.sub_question);
     const dataValues = labels.map(() => 0); // 全部設為 0%
@@ -313,7 +427,7 @@ function initBarChartWithZero() {
     }
 }
 
-// 處理考試資料（用於圓餅圖）
+// 處理考試資料（用於餅圖）
 function processExamData(data) {
     // 將時間轉換為秒並計算總時間
     let totalExamTime = 0;
@@ -340,10 +454,10 @@ function processExamData(data) {
         value: ((item.timeInSeconds / totalExamTime) * 100).toFixed(2)
     }));
 
-    updatePieChart(); // 更新圓餅圖
+    updatePieChart(); // 更新餅圖
 }
 
-// 初始化圓餅圖
+// 初始化餅圖
 const pieCtx = document.getElementById('myPieChart').getContext('2d');
 let pieChart = new Chart(pieCtx, {
     type: 'pie',
@@ -364,7 +478,7 @@ let pieChart = new Chart(pieCtx, {
             },
             title: {
                 display: true,
-                text: '每題考試時間佔比',  // 添加標題
+                text: '依解題規格比較解答所用時間佔比',  // 添加標題
                 font: {
                     size: 18
                 }
@@ -382,7 +496,7 @@ let pieChart = new Chart(pieCtx, {
     }
 });
 
-// 更新圓餅圖的函數
+// 更新餅圖的函數
 function updatePieChart() {
     // 建立主題號與顏色的映射
     const mainQuestionColors = {};
@@ -416,6 +530,148 @@ function updatePieChart() {
     pieChart.update();
 }
 
+// 初始化樹狀圖的函數
+function initTreeDiagram() {
+    // 引入 Treant.js 所需的設置
+    const nodeTemplate = function (data) {
+        return `
+            <div class="node-content">${data.text.name}</div>
+        `;
+    };
+
+    const config = {
+        chart: {
+            container: "#tree-container",
+            connectors: {
+                type: 'bCurve',
+                style: {
+                    'stroke': '#00838f',
+                    'stroke-width': 2,
+                    'arrow-end': 'block-wide-long'
+                }
+            },
+            node: {
+                collapsable: true,
+                HTMLclass: 'node'
+            },
+            animation: {
+                nodeSpeed: 900,  // 將動畫速度調整為 1000ms
+                connectorsSpeed: 900
+            }
+        },
+        nodeStructure: {
+            text: { name: "假日要不要出門?" },
+            innerHTML: nodeTemplate({ text: { name: "假日要不要出門?" } }),
+            children: [
+                {
+                    text: { name: "No" },
+                    innerHTML: nodeTemplate({ text: { name: "No" } }),
+                    children: [
+                        {
+                            text: { name: "要不要念書?" },
+                            innerHTML: nodeTemplate({ text: { name: "要不要念書?" } }),
+                            children: [
+                                {
+                                    text: { name: "No - 追劇" },
+                                    innerHTML: nodeTemplate({ text: { name: "No - 追劇" } }),
+                                    children: [
+                                        {
+                                            text: { name: "加分" },
+                                            innerHTML: nodeTemplate({ text: { name: "加分" } })
+                                        },
+                                        {
+                                            text: { name: "取消加分" },
+                                            innerHTML: nodeTemplate({ text: { name: "取消加分" } })
+                                        }
+                                    ]
+                                },
+                                {
+                                    text: { name: "Yes - 看線上課程" },
+                                    innerHTML: nodeTemplate({ text: { name: "Yes - 看線上課程" } }),
+                                    children: [
+                                        {
+                                            text: { name: "加分" },
+                                            innerHTML: nodeTemplate({ text: { name: "加分" } })
+                                        },
+                                        {
+                                            text: { name: "取消加分" },
+                                            innerHTML: nodeTemplate({ text: { name: "取消加分" } })
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    text: { name: "Yes" },
+                    innerHTML: nodeTemplate({ text: { name: "Yes" } }),
+                    children: [
+                        {
+                            text: { name: "要不要去戶外?" },
+                            innerHTML: nodeTemplate({ text: { name: "要不要去戶外?" } }),
+                            children: [
+                                {
+                                    text: { name: "No - 看電影" },
+                                    innerHTML: nodeTemplate({ text: { name: "No - 看電影" } }),
+                                    children: [
+                                        {
+                                            text: { name: "加分" },
+                                            innerHTML: nodeTemplate({ text: { name: "加分" } })
+                                        },
+                                        {
+                                            text: { name: "取消加分" },
+                                            innerHTML: nodeTemplate({ text: { name: "取消加分" } })
+                                        }
+                                    ]
+                                },
+                                {
+                                    text: { name: "Yes - 爬山" },
+                                    innerHTML: nodeTemplate({ text: { name: "Yes - 爬山" } }),
+                                    children: [
+                                        {
+                                            text: { name: "加分" },
+                                            innerHTML: nodeTemplate({ text: { name: "加分" } })
+                                        },
+                                        {
+                                            text: { name: "取消加分" },
+                                            innerHTML: nodeTemplate({ text: { name: "取消加分" } })
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    };
+
+    // 檢查是否已經初始化過
+    if (window.myTreeChart) {
+        // 如果已經存在，則銷毀並重新創建
+        document.getElementById('tree-container').innerHTML = '';
+    }
+
+    // 創建樹狀圖
+    window.myTreeChart = new Treant(config);
+
+    // 添加節點點擊事件
+    setTimeout(() => { // 確保 DOM 已經生成
+        const nodes = document.querySelectorAll('.node');
+        nodes.forEach(node => {
+            node.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const nodeName = node.textContent.trim();
+                if (nodeName === '加分' || nodeName === '取消加分') {
+                    alert(`您為 "${nodeName}" 節點點擊了按鈕！`);
+                }
+                // 其他節點不進行提示
+            });
+        });
+    }, 500);
+}
+
 // 事件處理函數
 
 // 點擊「程式碼」按鈕的事件處理
@@ -423,12 +679,16 @@ document.getElementById('code-button').onclick = () => {
     showCode = true;
     completionChecked = false;
     showWebsite = false;
+    showHint = false;
 
-    // 再次取得程式碼資料並設置時間軸
+    // 顯示時間軸
+    document.getElementById('timeline-container').style.display = 'block';
+
+    // 再次獲取程式碼資料並設置時間軸
     eel.get_exam_time_and_buttons(examCode, studentId)((response) => {
         if (response.error) {
             console.error(response.error);
-            document.getElementById('display-area').textContent += ' 無法取得程式碼資料。';
+            document.getElementById('display-area').textContent += ' 無法獲取程式碼資料。';
         } else {
             console.log('程式碼螢幕資料:', response);
             examStartTime = response.exam_start_time;
@@ -447,9 +707,10 @@ document.getElementById('completion-button').onclick = () => {
     completionChecked = true;
     showCode = false;
     showWebsite = false;
+    showHint = false;
     updateDisplayArea('');
 
-    // 顯示長條圖容器
+    // 顯示柱狀圖容器
     document.getElementById('bar-chart-container').style.display = 'block';
 
     // 調整界面佈局
@@ -457,10 +718,39 @@ document.getElementById('completion-button').onclick = () => {
     document.querySelector('.top-section').classList.add('top-section-hidden');
     document.getElementById('exit-button').classList.add('show');
 
+    // 不隱藏時間軸
+    // document.getElementById('timeline-container').style.display = 'none';
+
     regenerateTimeline(); // 重新生成時間軸項目
 
-    // 初始化長條圖，所有值為 0%
+    // 初始化柱狀圖，所有值為 0%
     initBarChartWithZero();
+};
+
+// 新增：點擊「提示」按鈕的事件處理
+document.getElementById('hint-button').onclick = () => {
+    showHint = true;
+    showCode = false;
+    completionChecked = false;
+    showWebsite = false;
+    updateDisplayArea('');
+
+    // 調整界面佈局（與完成度按鈕相同）
+    document.querySelector('.bottom-section').classList.add('expand-up');
+    document.querySelector('.top-section').classList.add('top-section-hidden');
+    document.getElementById('exit-button').classList.add('show');
+
+    // 隱藏時間軸
+    document.getElementById('timeline-container').style.display = 'none';
+
+    // 隱藏其他可能的內容
+    document.getElementById('bar-chart-container').style.display = 'none';
+
+    // 顯示樹狀圖容器
+    document.getElementById('tree-container').style.display = 'block';
+
+    // 初始化樹狀圖
+    initTreeDiagram();
 };
 
 // 點擊「退出」按鈕的事件處理，恢復原始界面
@@ -472,25 +762,32 @@ document.getElementById('exit-button').onclick = () => {
     document.getElementById('exit-button').classList.remove('show');
     document.getElementById('display-area').style.display = "block"; // 確保顯示區域可見
 
-    // 隱藏長條圖容器
+    // 隱藏柱狀圖容器
     document.getElementById('bar-chart-container').style.display = 'none';
 
-    // 清除長條圖資料
+    // 隱藏樹狀圖容器
+    document.getElementById('tree-container').style.display = 'none';
+
+    // 顯示時間軸
+    document.getElementById('timeline-container').style.display = 'block';
+
+    // 清除柱狀圖資料
     if (barChart) {
         barChart.destroy();
         barChart = null;
     }
 
-    // 重置狀態變數，不選擇任何功能
+    // 重置狀態變量，不選擇任何功能
     showCode = false;
     completionChecked = false;
     showWebsite = false;
+    showHint = false;
 
-    // 重新取得螢幕資料並設置時間軸
+    // 重新獲取螢幕資料並設置時間軸
     eel.get_exam_time_and_buttons(examCode, studentId)((response) => {
         if (response.error) {
             console.error(response.error);
-            document.getElementById('display-area').textContent += ' 無法取得螢幕資料。';
+            document.getElementById('display-area').textContent += ' 無法獲取螢幕資料。';
         } else {
             console.log('螢幕資料:', response);
             examStartTime = response.exam_start_time;
@@ -498,13 +795,22 @@ document.getElementById('exit-button').onclick = () => {
             studentStartTime = response.student_start_time;
             studentEndTime = response.student_end_time;
             currentScreenData = response.screen_data; // 保存當前螢幕資料
-            setupTimeline(); // 設置時間軸
-            updateDisplayArea(''); // 清空顯示區域
+
+            // 獲取 extra_points 資料
+            eel.get_extra_points(examCode, studentId)((extraPointsResponse) => {
+                if (extraPointsResponse) {
+                    extraPointsData = extraPointsResponse;
+                    setupTimeline(); // 設置時間軸
+                    updateDisplayArea(''); // 清空顯示區域
+                } else {
+                    console.error('無法獲取加分資料');
+                }
+            });
         }
     });
 };
 
-// 「設計規格花費時長」按鈕的事件處理
+// 「解題規格花費時長」按鈕的事件處理
 document.getElementById('design-specifications').onclick = () => {
     showDesignSpecifications();
 };
@@ -514,11 +820,15 @@ document.getElementById('show-website-button').onclick = () => {
     showWebsite = true;
     showCode = false;
     completionChecked = false;
+    showHint = false;
+
+    // 顯示時間軸
+    document.getElementById('timeline-container').style.display = 'block';
 
     eel.get_exam_time_and_buttons(examCode, studentId, true)((response) => {
         if (response.error) {
             console.error(response.error);
-            document.getElementById('display-area').textContent += ' 無法取得網站資料。';
+            document.getElementById('display-area').textContent += ' 無法獲取網站資料。';
         } else {
             console.log('網站螢幕資料:', response);
             examStartTime = response.exam_start_time;
@@ -526,8 +836,17 @@ document.getElementById('show-website-button').onclick = () => {
             studentStartTime = response.student_start_time;
             studentEndTime = response.student_end_time;
             currentScreenData = response.screen_data; // 保存當前螢幕資料
-            setupTimeline(); // 設置時間軸
-            updateDisplayArea('請選擇時間軸以顯示網站');
+
+            // 獲取 extra_points 資料
+            eel.get_extra_points(examCode, studentId)((extraPointsResponse) => {
+                if (extraPointsResponse) {
+                    extraPointsData = extraPointsResponse; // 保存 extra_points 資料
+                    setupTimeline(); // 設置時間軸
+                    updateDisplayArea('請選擇時間軸以顯示網站');
+                } else {
+                    console.error('無法獲取加分資料');
+                }
+            });
         }
     });
 };
@@ -539,3 +858,4 @@ document.getElementById('home-button').onclick = () => {
         window.location.href = "index.html";
     }, 500);
 };
+

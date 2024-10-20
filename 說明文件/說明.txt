@@ -6,12 +6,13 @@
 老師
 1.▲時間選擇器的按鈕會出現無法點選的問題(點選超過一定次數才會出現這個問題)
 2.▲顯示考試頁面的標題還需要做調整
+3.▲新增和修改考試頁面的欄位標題和欄位資料項還需要做調整
 eel 網頁
 1.時間軸時間改為從00:00開始
-2.團體分析頁面圖表資料連接資料庫
-yfiles
-1.https://www.youtube.com/watch?v=_1VGRYsslNo
-2.https://my.yworks.com/
+2.樹狀圖資料呈現
+3.熱圖熟悉各個按鍵的功能
+4.熱圖將自己的資料輸入進去
+
 SonarCube
 1.https://www.sonarsource.com/knowledge/languages/
 2.https://medium.com/@mizuno0927/%E5%AE%89%E8%A3%9D-sonarqube-%E5%8F%8A%E9%85%8D%E7%BD%AE-sql-server-00b11241bd0b
@@ -72,5 +73,11 @@ RoundedRectangle：
 
 
 我希望在按下顯示查詢網站的按鈕時，時間軸上的按鈕採取另一種規則生成，我之前按下程式碼按鈕後再時間軸上生成的按鈕是先從student_screen_image資料表用exam_code、student_id和content != ''塞選出end_time和content，然後利用end_time在時間軸上生成按鈕，按下對應的按鈕會顯示對應的content，現在顯示查詢網站的按鈕我需要稍微改變一下規則，變成從student_screen_image資料表用exam_code、student_id和content = ''塞選出end_time和website，後面就都一樣，利用end_time在時間軸上生成按鈕，按下對應的按鈕會顯示對應的website，你先理解一下，我等一下會給你資料庫的程式碼和js，再請你修改
+
+
+我現在需要將圖表的資料改成連接我的phpmyadmin資料庫，首先，我是在database.py寫下連接資料庫的語法，然後透過eel.expose讓js可以使用這些函數去進行數據的處理，現在我要跟你說我要更換圖表的哪一些資料
+1.評分圖表 : 在drawScoreChart函數有const scores，現在const scores是用假資料，我要換成到student_thinking資料表的score欄位取得，記得要先篩選exam_code
+2.解題規格花費時長圖表 : 在drawDesignChart函數有labels，這是用來儲存題號的，現在我要你從student_program_attainment資料表的sub_question欄位中取得，一樣要先用exam_code篩選，然後drawDesignChart函數裡面的參數lowRange、midRange、highRange，各個代表著對應的sub_question花費的時間，在資料庫裡面的欄位叫做total_time，我需要你將total_time用exam_code塞選出來後，看一下各個total_time花費了多少時間，0-30分鐘就放進lowRange，31-60分鐘放進midRange，60分鐘以上放到highRange
+
 
 

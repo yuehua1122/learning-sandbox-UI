@@ -44,20 +44,26 @@ class RecordingInProgressPage(Screen):
         # 中心對齊的題目下載部分，位於標題下方
         download_layout = AnchorLayout(size_hint_y=None, height=40, pos_hint={'center_x': 0.4})
         download_content = BoxLayout(orientation='horizontal', spacing=10, size_hint_x=None)
-        download_label = Label(text="題目下載 :", font_size=24, font_name="BiauKai", size_hint_x=None, width=100)
+        download_label = Label(text="題目下載 :", font_size=24, font_name="BiauKai", size_hint_x=None, width=130)
         download_content.add_widget(download_label)
 
         # 顯示文件名稱並設置按鈕可供點擊下載
-        download_link = Button(text="說明書.pdf", font_size=24, font_name="BiauKai", size_hint_x=None, width=200, background_color=(0, 0, 0, 0), color=(1, 0, 0, 1), underline=True)
+        download_link = Button(text="說明書.pdf", font_size=24, font_name="BiauKai", size_hint_x=None, width=220, background_color=(0, 0, 0, 0), color=(1, 0, 0, 1), underline=True)
         download_link.bind(on_press=self.download_file)
         download_content.add_widget(download_link)
 
         download_layout.add_widget(download_content)
         layout.add_widget(download_layout)
+        
+        # 在題目下載下方添加提示按鈕
+        tip_button_layout = AnchorLayout(anchor_x='center', anchor_y='center')
+        tip_button = Button(text="提示", font_size=24, size_hint=(0.1, 0.3), font_name="BiauKai")
+        tip_button_layout.add_widget(tip_button)
+        layout.add_widget(tip_button_layout)
 
         # 底部結束錄製按鈕
         bottom_layout = AnchorLayout(anchor_x='center', anchor_y='bottom')
-        end_btn = Button(text="結束錄製", font_size=24, size_hint=(0.6, 0.2), font_name="BiauKai")
+        end_btn = Button(text="結束錄製", font_size=24, size_hint=(0.6, 0.4), font_name="BiauKai")
         end_btn.bind(on_press=self.show_confirmation)  # 綁定結束錄製的確認框
         bottom_layout.add_widget(end_btn)
 
@@ -172,7 +178,7 @@ class RecordingInProgressPage(Screen):
         content.add_widget(buttons)
 
         # 彈出框設置
-        popup = Popup(title='', content=content, size_hint=(0.5, 0.3))
+        popup = Popup(title='', content=content, size_hint=(0.3, 0.3))
         cancel_btn.bind(on_press=popup.dismiss)  # 取消關閉彈出框
         confirm_btn.bind(on_press=lambda x: self.end_recording(popup))  # 確認結束錄製
 

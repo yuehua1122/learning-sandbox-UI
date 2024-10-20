@@ -52,15 +52,15 @@ class StudentLoginPage(Screen):
         
         # 使用 AnchorLayout 將按鈕固定在底部
         bottom_layout = AnchorLayout(anchor_x='center', anchor_y='bottom')
-        button_layout = BoxLayout(orientation='horizontal', size_hint=(1, None), height=80, spacing=20)
+        button_layout = BoxLayout(orientation='horizontal', size_hint=(0.6, None), height=80, spacing=20)
         
         # 上一頁按鈕
-        back_btn = Button(text="上一頁", font_size=24, size_hint=(0.5, 0.8), font_name="BiauKai")
+        back_btn = Button(text="上一頁", font_size=24, size_hint=(0.3, 0.8), font_name="BiauKai")
         back_btn.bind(on_press=self.go_to_home)  # 綁定返回首頁的函數
         button_layout.add_widget(back_btn)
 
         # 確認按鈕
-        start_btn = Button(text="確認", font_size=24, size_hint=(0.5, 0.8), font_name="BiauKai")
+        start_btn = Button(text="確認", font_size=24, size_hint=(0.3, 0.8), font_name="BiauKai")
         start_btn.bind(on_press=self.go_to_exam_interface)  # 綁定進入考試介面的函數
         button_layout.add_widget(start_btn)
         

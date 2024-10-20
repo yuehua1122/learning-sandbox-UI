@@ -1,8 +1,8 @@
-/* 全局樣式 */
-/* 設置全局樣式，包含背景的線性漸變、彈性佈局及高度和溢出控制 */
+/* 全域樣式 */
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
+  padding: 0;
   background: linear-gradient(135deg, #74ebd5, #acb6e5);
   display: flex;
   flex-direction: column;
@@ -11,53 +11,51 @@ body {
   color: #333;
 }
 
-/* 頁面過渡效果 */
-/* 定義上半區域的樣式，設置彈性佈局、陰影、邊框圓角及過渡動畫 */
+/* 上下半區域共用樣式 */
+.top-section,
+.bottom-section {
+  background-color: #fff;
+  margin: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* 上半區域樣式 */
 .top-section {
   flex: 15;
-  background-color: #ffffff;
   padding: 30px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
   display: flex;
   justify-content: space-between;
   overflow-y: auto;
-  margin: 20px;
-  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-  will-change: transform, opacity;
+  transition: transform 0.7s ease-out, opacity 0.7s ease-out;
 }
 
-/* 定義底部區域的樣式，並加入過渡效果和展開動畫 */
+/* 下半區域樣式 */
 .bottom-section {
   position: relative;
   height: 20%;
   padding: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-  background-color: #ffffff;
   box-sizing: border-box;
   overflow: hidden;
-  margin: 20px;
-  transition: height 0.5s ease-out, transform 0.5s ease-out;
-  will-change: transform;
+  transition: height 0.7s ease-out, transform 0.7s ease-out;
 }
 
-/* 展開時改變高度與邊距 */
+/* 展開時的樣式 */
 .expand-up {
   height: calc(100vh - 50px);
   margin-top: -80px;
   padding-top: 50px;
 }
 
-/* 隱藏上半區域的動畫效果 */
+/* 隱藏上半區域 */
 .top-section-hidden {
   transform: translateY(-100%) translateZ(0);
   opacity: 0;
 }
 
-/* 退出按鈕初始化設為隱藏，並在需要時顯示 */
+/* 退出按鈕樣式 */
 .exit-button {
-  display: none; 
+  display: none;
   position: absolute;
   top: 20px;
   right: 30px;
@@ -72,17 +70,15 @@ body {
   transition: background-color 0.3s ease;
 }
 
-/* 退出按鈕顯示時 */
 .exit-button.show {
-  display: block; 
+  display: block;
 }
 
-/* 退出按鈕懸停時的顏色變化 */
 .exit-button:hover {
   background-color: #ff1e2b;
 }
 
-/* 時間軸區域樣式，固定在頁面底部 */
+/* 時間軸區域樣式 */
 .timeline-container {
   position: absolute;
   bottom: 0;
@@ -91,7 +87,7 @@ body {
   background-color: inherit;
 }
 
-/* 左側按鈕與內容的佈局 */
+/* 左側區域樣式 */
 .left-section {
   width: 55%;
   display: flex;
@@ -99,7 +95,7 @@ body {
   align-items: flex-start;
 }
 
-/* 設置按鈕區域的彈性佈局與動畫效果 */
+/* 按鈕區域樣式 */
 .info-buttons {
   display: flex;
   gap: 20px;
@@ -107,7 +103,6 @@ body {
   animation: buttonFadeIn 0.8s ease-out;
 }
 
-/* 按鈕的基本樣式，包括背景、圓角和陰影 */
 .info-buttons button {
   padding: 12px 25px;
   background-color: #007BFF;
@@ -116,14 +111,12 @@ body {
   border-radius: 30px;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
   position: relative;
   overflow: hidden;
-  will-change: transform, background-color;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
 }
 
-/* 按鈕滑過的背景動畫效果 */
 .info-buttons button::before {
   content: '';
   position: absolute;
@@ -138,7 +131,6 @@ body {
   border-radius: 30px;
 }
 
-/* 滑過時背景變化與按鈕的縮放效果 */
 .info-buttons button:hover::before {
   transform: scaleX(1);
   transform-origin: left;
@@ -150,7 +142,7 @@ body {
   box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
 }
 
-/* 顯示區域樣式，包含字體和背景色等設置 */
+/* 顯示區域樣式 */
 .display-area {
   width: 95%;
   max-height: 90%;
@@ -166,33 +158,30 @@ body {
   opacity: 0;
   transform: scale(0.95);
   transition: opacity 0.3s ease, transform 0.3s ease;
-  box-sizing: border-box;  
-  will-change: opacity, transform;
+  box-sizing: border-box;
 }
 
-/* 顯示區域動畫效果 */
 .display-area.show {
   opacity: 1;
   transform: scale(1);
 }
 
-/* 右側圓餅圖區域的樣式，設置背景、圓角及內邊距 */
+/* 右側圖表區域樣式 */
 .chart-container {
   width: 40%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ffffff;
+  background-color: #fff;
   border-radius: 20px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   padding: 25px;
 }
 
-/* 圖表容器的樣式，控制圖表的寬高及定位 */
 #bar-chart-container {
   width: 100%;
   height: 85%;
-  margin: 0px 0px 15px 85px;
+  margin: 0 0 15px 85px;
 }
 
 #myBarChart {
@@ -200,11 +189,12 @@ body {
   height: 100%;
 }
 
-/* 元素淡出動畫 */
+/* 動畫效果 */
 @keyframes fadeOut {
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
     transform: scale(0.9);
@@ -215,26 +205,139 @@ body {
   animation: fadeOut 0.5s forwards;
 }
 
-/* 元素淡入動畫 */
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(-20px) translateZ(0);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) translateZ(0);
   }
 }
 
-/* 按鈕的淡入動畫效果 */
 @keyframes buttonFadeIn {
   from {
     opacity: 0;
     transform: translateY(10px) translateZ(0);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) translateZ(0);
   }
+}
+
+/* 狀態文字樣式 */
+.display-area-status {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* 加分和取消加分按鈕樣式 */
+.bonus-buttons {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.bonus-buttons button {
+  padding: 10px 20px;
+  background-color: #28a745; /* 綠色 */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.bonus-buttons button:hover {
+  background-color: #218838;
+}
+
+.bonus-buttons button:disabled {
+  background-color: #6c757d; /* 灰色 */
+  cursor: not-allowed;
+}
+
+.bonus-buttons .cancel-button {
+  background-color: #dc3545; /* 紅色 */
+}
+
+.bonus-buttons .cancel-button:hover {
+  background-color: #c82333;
+}
+
+/* 樹狀圖相關樣式 */
+#tree-container {
+  width: 100%;
+  height: 100vh;
+}
+
+.node {
+  background-color: #e0f7fa;
+  border: 2px solid #00838f;
+  border-radius: 8px;
+  color: #004d40;
+  padding: 10px;
+  font-weight: bold;
+  position: relative;
+  text-align: center;
+  min-width: 100px;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.Treant .node {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.Treant .collapse-switch {
+  background-color: #00838f;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  top: -12px;
+  right: -12px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Treant .collapse-switch:hover {
+  cursor: pointer;
+  background-color: #006064;
+}
+
+.Treant .connector {
+  stroke: #00838f;
+}
+
+/* 樹狀圖加分按鈕樣式 */
+.bonus-button {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateX(100%) translateY(-50%);
+  background-color: #ffca28; /* 黃色 */
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0;
+  transition: transform 1s ease, opacity 1s ease;
+}
+
+.node:hover .bonus-button {
+  transform: translateX(0) translateY(-50%);
+  opacity: 1;
+}
+
+.node-content {
+  display: inline-block;
 }

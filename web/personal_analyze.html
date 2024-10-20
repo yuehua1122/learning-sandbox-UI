@@ -1,13 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>個人考試分析頁面</title>
-    <link rel="icon" href="https://s10.aconvert.com/convert/p3r68-cdx67/askke-18k57-001.ico" type="image/x-icon">
-    <link href="https://unpkg.com/vis-timeline/dist/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="css/personal_analyze.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" href="https://s10.aconvert.com/convert/p3r68-cdx67/askke-18k57-001.ico" type="image/x-icon">    
+    <!-- 引入 vis-timeline 的 CSS -->
+    <link href="https://unpkg.com/vis-timeline/dist/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />    
+    <!-- 引入 Treant.js 的 CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/treant-js/1.0/Treant.css">    
+    <!-- 引入自訂的 CSS 文件 -->
+    <link rel="stylesheet" href="css/personal_analyze.css">    
+    <!-- 引入 Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    
+    <!-- 引入 Raphael.js（必須在 Treant.js 之前） -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>    
+    <!-- 引入 Treant.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/treant-js/1.0/Treant.min.js"></script>
 </head>
 <body>
     <!-- 上方內容區域 -->
@@ -17,6 +26,7 @@
             <h2 id="exam-info"></h2>
             <div class="info-buttons">
                 <button id="code-button">程式碼</button>
+                <button id="hint-button">提示</button>
                 <button id="completion-button">完成度</button>
                 <button id="design-specifications">解題規格</button>
                 <button id="show-website-button">顯示查詢網站</button>
@@ -31,23 +41,25 @@
         </div>
     </div>
 
-    <!-- 下方時間軸區域 -->
+    <!-- 下方區域 -->
     <div class="bottom-section">
         <!-- 返回按鈕 -->
         <button id="exit-button" class="exit-button">返回</button>
-        <!-- 顯示區域 -->
+        <!-- 長條圖容器 -->
         <div id="bar-chart-container" style="display: none;">
             <canvas id="myBarChart"></canvas>
         </div>
+        <!-- 樹狀圖容器 -->
+        <div id="tree-container" style="display: none;"></div>
         <!-- 原始的時間軸容器，放在最底部 -->
         <div id="timeline-container" class="timeline-container"></div>
     </div>
 
     <!-- 引入 Eel 的 JavaScript 文件 -->
     <script type="text/javascript" src="/eel.js"></script>
-
-    <!-- 引入vis-timeline的JS和自訂的JavaScript -->
+    <!-- 引入 vis-timeline 的 JS -->
     <script src="https://unpkg.com/vis-timeline/standalone/umd/vis-timeline-graph2d.min.js"></script>
+    <!-- 引入自訂的 JavaScript 文件 -->
     <script src="js/personal_analyze.js"></script>
 </body>
 </html>
