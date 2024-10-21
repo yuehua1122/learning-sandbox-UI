@@ -1,8 +1,19 @@
+// 獲取 Cookie 的值的函數
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+}
+
+// 從 Cookie 中獲取 examCode 和 studentId
+const examCode = getCookie('examCode');
+
 // 取得標題元素
 const titleElement = document.querySelector('.title-vertical');
 
 // 定義模式類別陣列
-const modes = ['score-mode', 'completion-mode', 'design-mode', 'show-website-mode'];
+const modes = ['score-mode', 'completion-mode', 'design-mode', 'show-website-mode', 'wordcloud-mode', 'heatmap-mode'];
 
 // 顯示標題並更新內容的函式
 function showTitle(content) {
@@ -69,11 +80,29 @@ document.getElementById('show-website-button').addEventListener('click', functio
     drawWebsiteChart();
 });
 
+//文字雲
+document.getElementById('wordcloud-button').addEventListener('click', function() {
+    showTitle('文字雲');
+    setupDisplayArea('<div id="wordcloud-container"></div>');
+    switchMode('wordcloud-mode');
+    displayWordcloudImage();
+});
+
+//熱圖
 document.getElementById('heatmap-button').addEventListener('click', function() {
-    document.body.classList.add('fade-out');
-    setTimeout(function() {
-        window.location.href = "heatmap.html";
-    }, 500);
+    showTitle('學生錯誤類型熱圖');
+    setupDisplayArea('<iframe id="heatmap-frame" style="width: 100%; height: 100%; border: none;"></iframe>');
+    switchMode('heatmap-mode');
+    
+    // 調用後端函數生成熱圖並取得 URL
+    eel.generate_heatmap()(function(url) {
+        if (url) {
+            // 將 iframe 的 src 設置為返回的 URL
+            document.getElementById('heatmap-frame').src = url;
+        } else {
+            alert('生成熱圖失敗。');
+        }
+    });
 });
 
 // 繪製成績分布圖的函式
@@ -480,5 +509,29 @@ function drawWebsiteChart() {
         type: 'bar',
         data: data,
         options: options
+    });
+}
+
+function displayWordcloudImage() {
+    // 使用已取得的 examCode
+    // 顯示載入訊息
+    const container = document.getElementById('wordcloud-container');
+    container.textContent = '載入中...';
+
+    // 調用後端函式取得圖片的 Base64 字串
+    eel.get_wordcloud_image(examCode)(function(imageData) {
+        if (imageData) {
+            // 創建圖片元素
+            const img = document.createElement('img');
+            img.src = 'data:image/png;base64,' + imageData;
+            img.alt = '文字雲';
+
+            // 清空容器並添加圖片
+            container.innerHTML = '';
+            container.appendChild(img);
+        } else {
+            // 處理沒有圖片的情況
+            container.textContent = '沒有找到文字雲圖片。';
+        }
     });
 }

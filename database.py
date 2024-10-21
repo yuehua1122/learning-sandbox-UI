@@ -3,6 +3,8 @@ import eel
 import mysql.connector
 from collections import defaultdict
 
+import requests
+
 # 初始化 Eel 並設定 web 資料夾為前端目錄
 eel.init('web')
 
@@ -529,3 +531,44 @@ def get_completion_data(exam_code):
         'sub_questions': sub_questions,
         'completion_data': completion_data
     }
+
+@eel.expose
+def get_wordcloud_image(exam_code):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    # 根據 exam_code 從 student_data 資料表中取得 wordcloud 欄位的資料
+    query = "SELECT wordcloud FROM student_data WHERE exam_code = %s"
+    cursor.execute(query, (exam_code,))
+    result = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if result and result[0]:
+        # 將 BLOB 資料轉換為 Base64 字串
+        import base64
+        image_data = base64.b64encode(result[0]).decode('utf-8')
+        return image_data
+    else:
+        # 如果沒有圖片，返回 None 或空字串
+        return None
+
+# 上傳並生成 Heatmap 的 Python 程式
+@eel.expose
+def generate_heatmap():
+    try:
+        filename = 'web/txt/test.txt'  # 您的矩陣文件
+        upload_url = 'http://amp.pharm.mssm.edu/clustergrammer/matrix_upload/'
+
+        # 上傳文件到 Clustergrammer
+        with open(filename, 'rb') as f:
+            r = requests.post(upload_url, files={'file': f})
+
+        # 返回視覺化結果的 URL
+        result_url = r.text
+        return result_url  # 回傳結果 URL 給前端
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return None  # 回傳 None 表示發生錯誤

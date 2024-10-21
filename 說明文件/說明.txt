@@ -11,7 +11,7 @@ eel 網頁
 1.時間軸時間改為從00:00開始
 2.樹狀圖資料呈現
 3.熱圖熟悉各個按鍵的功能
-4.熱圖將自己的資料輸入進去
+
 
 SonarCube
 1.https://www.sonarsource.com/knowledge/languages/

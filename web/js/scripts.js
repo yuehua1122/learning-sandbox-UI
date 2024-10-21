@@ -1,5 +1,5 @@
 // 設定視窗大小
-window.resizeTo(1500, 900);
+window.resizeTo(1500, 920);
 
 // 從 Cookie 中取得值的函數
 function getCookie(name) {
