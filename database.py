@@ -572,3 +572,37 @@ def generate_heatmap():
     except Exception as e:
         print(f"Error: {e}")
         return None  # 回傳 None 表示發生錯誤
+
+@eel.expose
+def get_student_hints(exam_code, student_id):
+    db = connect_db()
+    cursor = db.cursor(dictionary=True)
+    query = """
+        SELECT sub_question, code, request
+        FROM student_hints
+        WHERE exam_code = %s AND student_id = %s
+    """
+    cursor.execute(query, (exam_code, student_id))
+    results = cursor.fetchall()
+    cursor.close()
+    db.close()
+    return results
+
+@eel.expose
+def update_hint_extra_point(exam_code, student_id, sub_question, extra_point):
+    try:
+        db = connect_db()
+        cursor = db.cursor()
+        query = """
+            UPDATE student_hints
+            SET extra_point = %s
+            WHERE exam_code = %s AND student_id = %s AND sub_question = %s
+        """
+        cursor.execute(query, (extra_point, exam_code, student_id, sub_question))
+        db.commit()
+        cursor.close()
+        db.close()
+        return {'success': True}
+    except Exception as e:
+        print(f"Error updating extra_point: {e}")
+        return {'success': False, 'error': str(e)}

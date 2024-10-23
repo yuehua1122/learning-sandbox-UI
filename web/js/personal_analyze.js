@@ -12,6 +12,7 @@ let chartData = []; // 保存餅圖資料
 let attainmentData = []; // 保存 student_program_attainment 資料
 let barChart = null; // 水平柱狀圖
 let extraPointsData = null; // 保存 extra_points 資料
+let hintData = [];
 
 const colorPalette = [
     '#FF6384', // 紅色
@@ -96,6 +97,16 @@ window.onload = function () {
                 console.log('每一題在每個時間點的完成度:', attainmentData);
             } else {
                 console.error('無法獲取達成度資料');
+            }
+        });
+
+        // 獲取提示資料
+        eel.get_student_hints(examCode, studentId)((response) => {
+            if (response) {
+                hintData = response;
+                console.log('提示資料:', hintData);
+            } else {
+                console.error('無法獲取提示資料');
             }
         });
 
@@ -532,13 +543,51 @@ function updatePieChart() {
 
 // 初始化樹狀圖的函數
 function initTreeDiagram() {
-    // 引入 Treant.js 所需的設置
-    const nodeTemplate = function (data) {
-        return `
-            <div class="node-content">${data.text.name}</div>
-        `;
+    // 構建樹狀圖的資料結構
+    const treeStructure = {
+        text: { name: "提示功能" },
+        children: []
     };
 
+    // 根據 hintData 動態生成子節點
+    hintData.forEach((item) => {
+        const subQuestionNode = {
+            text: { name: `題號：${item.sub_question}` },
+            children: [
+                {
+                    text: { name: "當前程式碼" },
+                    children: [
+                        {
+                            text: { name: item.code },
+                            children: [
+                                {
+                                    text: { name: "提示回應" },
+                                    children: [
+                                        {
+                                            text: { name: item.request },
+                                            children: [
+                                                {
+                                                    text: { name: "加分"},
+                                                    action: 'add'
+                                                },
+                                                {
+                                                    text: { name: "取消加分"},
+                                                    action: 'cancel'
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+        treeStructure.children.push(subQuestionNode);
+    });
+
+    // 使用 Treant.js 繪製樹狀圖
     const config = {
         chart: {
             container: "#tree-container",
@@ -555,96 +604,11 @@ function initTreeDiagram() {
                 HTMLclass: 'node'
             },
             animation: {
-                nodeSpeed: 900,  // 將動畫速度調整為 1000ms
+                nodeSpeed: 900,
                 connectorsSpeed: 900
             }
         },
-        nodeStructure: {
-            text: { name: "假日要不要出門?" },
-            innerHTML: nodeTemplate({ text: { name: "假日要不要出門?" } }),
-            children: [
-                {
-                    text: { name: "No" },
-                    innerHTML: nodeTemplate({ text: { name: "No" } }),
-                    children: [
-                        {
-                            text: { name: "要不要念書?" },
-                            innerHTML: nodeTemplate({ text: { name: "要不要念書?" } }),
-                            children: [
-                                {
-                                    text: { name: "No - 追劇" },
-                                    innerHTML: nodeTemplate({ text: { name: "No - 追劇" } }),
-                                    children: [
-                                        {
-                                            text: { name: "加分" },
-                                            innerHTML: nodeTemplate({ text: { name: "加分" } })
-                                        },
-                                        {
-                                            text: { name: "取消加分" },
-                                            innerHTML: nodeTemplate({ text: { name: "取消加分" } })
-                                        }
-                                    ]
-                                },
-                                {
-                                    text: { name: "Yes - 看線上課程" },
-                                    innerHTML: nodeTemplate({ text: { name: "Yes - 看線上課程" } }),
-                                    children: [
-                                        {
-                                            text: { name: "加分" },
-                                            innerHTML: nodeTemplate({ text: { name: "加分" } })
-                                        },
-                                        {
-                                            text: { name: "取消加分" },
-                                            innerHTML: nodeTemplate({ text: { name: "取消加分" } })
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    text: { name: "Yes" },
-                    innerHTML: nodeTemplate({ text: { name: "Yes" } }),
-                    children: [
-                        {
-                            text: { name: "要不要去戶外?" },
-                            innerHTML: nodeTemplate({ text: { name: "要不要去戶外?" } }),
-                            children: [
-                                {
-                                    text: { name: "No - 看電影" },
-                                    innerHTML: nodeTemplate({ text: { name: "No - 看電影" } }),
-                                    children: [
-                                        {
-                                            text: { name: "加分" },
-                                            innerHTML: nodeTemplate({ text: { name: "加分" } })
-                                        },
-                                        {
-                                            text: { name: "取消加分" },
-                                            innerHTML: nodeTemplate({ text: { name: "取消加分" } })
-                                        }
-                                    ]
-                                },
-                                {
-                                    text: { name: "Yes - 爬山" },
-                                    innerHTML: nodeTemplate({ text: { name: "Yes - 爬山" } }),
-                                    children: [
-                                        {
-                                            text: { name: "加分" },
-                                            innerHTML: nodeTemplate({ text: { name: "加分" } })
-                                        },
-                                        {
-                                            text: { name: "取消加分" },
-                                            innerHTML: nodeTemplate({ text: { name: "取消加分" } })
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
+        nodeStructure: treeStructure
     };
 
     // 檢查是否已經初始化過
@@ -655,21 +619,6 @@ function initTreeDiagram() {
 
     // 創建樹狀圖
     window.myTreeChart = new Treant(config);
-
-    // 添加節點點擊事件
-    setTimeout(() => { // 確保 DOM 已經生成
-        const nodes = document.querySelectorAll('.node');
-        nodes.forEach(node => {
-            node.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const nodeName = node.textContent.trim();
-                if (nodeName === '加分' || nodeName === '取消加分') {
-                    alert(`您為 "${nodeName}" 節點點擊了按鈕！`);
-                }
-                // 其他節點不進行提示
-            });
-        });
-    }, 500);
 }
 
 // 事件處理函數
