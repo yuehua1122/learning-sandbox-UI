@@ -18,6 +18,16 @@ SonarCube
 2.https://medium.com/@mizuno0927/%E5%AE%89%E8%A3%9D-sonarqube-%E5%8F%8A%E9%85%8D%E7%BD%AE-sql-server-00b11241bd0b
 3.https://ithelp.ithome.com.tw/articles/10282651
 
+問題
+大一是否會選擇使用
+怎麼定義個性化
+	強或弱的學生是否會有不同的提示
+有沒有跟其他產品比較
+
+系統的問題
+模型怎麼train的，數據是什麼，怎麼確定一定正確
+資料過少，無法提供個性化
+
 
 
 

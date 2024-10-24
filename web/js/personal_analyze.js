@@ -549,6 +549,36 @@ function initTreeDiagram() {
         children: []
     };
 
+    // 定義一個函數，用於截斷文字並添加省略號
+    function truncateText(text, maxLength = 15) {
+        if (text.length > maxLength) {
+            return text.substring(0, maxLength) + '...';
+        }
+        return text;
+    }
+
+    // 定義一個函數，生成節點的內容，包括截斷文字和完整文字作為 Tooltip
+    function createNodeContent(text) {
+        const truncatedText = truncateText(text);
+        // 移除前後多餘的空白，並將多個換行符替換為單個換行符
+        const trimmedText = text.trim().replace(/\n+/g, '\n');
+        // 將換行符替換為 <br> 標籤
+        const tooltipText = trimmedText.replace(/\n/g, '<br>');
+        // 轉義特殊字元
+        const escapedFullText = tooltipText
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+        return `
+            <div class="node-content">
+                ${truncatedText}
+                <div class="tooltip-content">
+                    ${escapedFullText}
+                </div>
+            </div>`;
+    }
+    
+
     // 根據 hintData 動態生成子節點
     hintData.forEach((item) => {
         const subQuestionNode = {
@@ -558,20 +588,20 @@ function initTreeDiagram() {
                     text: { name: "當前程式碼" },
                     children: [
                         {
-                            text: { name: item.code },
+                            innerHTML: createNodeContent(item.code),
                             children: [
                                 {
                                     text: { name: "提示回應" },
                                     children: [
                                         {
-                                            text: { name: item.request },
+                                            innerHTML: createNodeContent(item.request),
                                             children: [
                                                 {
-                                                    text: { name: "加分"},
+                                                    text: { name: "加分" },
                                                     action: 'add'
                                                 },
                                                 {
-                                                    text: { name: "取消加分"},
+                                                    text: { name: "取消加分" },
                                                     action: 'cancel'
                                                 }
                                             ]
@@ -620,6 +650,7 @@ function initTreeDiagram() {
     // 創建樹狀圖
     window.myTreeChart = new Treant(config);
 }
+
 
 // 事件處理函數
 
